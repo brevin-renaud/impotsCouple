@@ -1,0 +1,52 @@
+// Schéma Prisma pour Fiscal Couple Optimizer
+// Base de données PostgreSQL hébergée sur Supabase
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Simulation {
+  id String @id @default(uuid()) @db.Uuid
+
+  // Conjoint A
+  incomeA          Float
+  fraisReelsA      Float   @default(0)
+  partsA           Float   @default(0)
+  pensionVerseeA   Float   @default(0)
+  patrimoineImmoA  Float   @default(0)
+  epargneRetraiteA Float   @default(0)
+
+  // Conjoint B
+  incomeB          Float
+  fraisReelsB      Float   @default(0)
+  partsB           Float   @default(0)
+  pensionVerseeB   Float   @default(0)
+  patrimoineImmoB  Float   @default(0)
+  epargneRetraiteB Float   @default(0)
+
+  // Foyer
+  children      Int     @default(0)
+  gardeAlternee Boolean @default(false)
+
+  // Charges et crédits d'impôt
+  fraisGardeEnfants Float @default(0)
+  emploiDomicile    Float @default(0)
+  donsAssociations  Float @default(0)
+
+  // Résultats calculés (stocké en JSON pour flexibilité)
+  results Json
+
+  // Metadata
+  createdAt DateTime @default(now())
+  expiresAt DateTime
+
+  // Index pour optimiser les requêtes de purge et de recherche
+  @@index([expiresAt])
+  @@index([createdAt])
+}
