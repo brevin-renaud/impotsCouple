@@ -1,12 +1,12 @@
-import Link from "next/link";
-import { Button, Card, CardContent } from "@/components/ui";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { Button, Card, CardContent } from "@/components/ui";
+import Link from "next/link";
 
 export default function Home() {
   return (
     <>
       <JsonLd />
-      
+
       {/* Hero Section */}
       <section className="relative overflow-hidden bg-gradient-to-b from-orange-50 to-stone-50 pt-16 pb-24">
         <div className="container mx-auto px-4">
@@ -17,17 +17,17 @@ export default function Home() {
               </svg>
               100% gratuit et anonyme
             </div>
-            
+
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 mb-6 leading-tight">
               PACS ou Mariage ?
               <span className="text-orange-500"> Calculez votre économie d&apos;impôts</span>
             </h1>
-            
+
             <p className="text-lg md:text-xl text-stone-600 mb-8 max-w-2xl mx-auto">
-              Comparez en 2 minutes l&apos;impact fiscal du célibat, PACS et mariage. 
+              Comparez en 2 minutes l&apos;impact fiscal du célibat, PACS et mariage.
               Découvrez combien vous pourriez économiser chaque année.
             </p>
-            
+
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link href="/simulateur">
                 <Button size="lg" className="w-full sm:w-auto">
@@ -45,10 +45,10 @@ export default function Home() {
             </div>
           </div>
         </div>
-        
+
         {/* Decorative elements */}
-        <div className="absolute top-1/4 left-0 w-64 h-64 bg-orange-200 rounded-full filter blur-3xl opacity-20 -translate-x-1/2"></div>
-        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full filter blur-3xl opacity-10 translate-x-1/3"></div>
+        <div className="absolute top-1/4 left-0 w-64 h-64 bg-orange-200 rounded-full filter blur-3xl opacity-20 -translate-x-1/2 pointer-events-none"></div>
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-orange-300 rounded-full filter blur-3xl opacity-10 translate-x-1/3 pointer-events-none"></div>
       </section>
 
       {/* Features Section */}
@@ -62,7 +62,7 @@ export default function Home() {
               Un processus simple en 4 étapes pour obtenir votre simulation personnalisée
             </p>
           </div>
-          
+
           <div className="grid md:grid-cols-4 gap-6 max-w-5xl mx-auto">
             {[
               {
@@ -175,8 +175,8 @@ export default function Home() {
                 <div>
                   <h3 className="font-semibold text-stone-900 mb-2">Respect de votre vie privée</h3>
                   <p className="text-stone-600 text-sm">
-                    Nous ne collectons aucune donnée personnelle identifiante. Pas de nom, pas d&apos;email, 
-                    pas d&apos;adresse IP. Vos données de simulation sont anonymes et automatiquement supprimées 
+                    Nous ne collectons aucune donnée personnelle identifiante. Pas de nom, pas d&apos;email,
+                    pas d&apos;adresse IP. Vos données de simulation sont anonymes et automatiquement supprimées
                     après 30 jours. Conforme RGPD.
                   </p>
                 </div>

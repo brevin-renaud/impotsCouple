@@ -1,21 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { Card, CardContent, Button } from '@/components/ui'
 import {
-  StepIndicator,
   Step1Form,
   Step2Form,
   Step3Form,
   Step4Form,
+  StepIndicator,
 } from '@/components/simulator'
-import { simulationSchema, type SimulationFormData, defaultSimulationValues } from '@/lib/validation/schemas'
-import { simulateFiscalScenarios } from '@/lib/fiscal'
-import type { SimulationResult, SimulationInput } from '@/lib/fiscal/types'
-import { formatCurrency } from '@/lib/utils'
+import { Button, Card, CardContent } from '@/components/ui'
+import { defaultSimulationValues, simulationSchema, type SimulationFormData } from '@/lib/validation/schemas'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
 const STEPS = [
   { label: 'Conjoint A' },
@@ -33,7 +30,6 @@ export default function SimulateurPage() {
   const {
     register,
     handleSubmit,
-    watch,
     trigger,
     formState: { errors },
   } = useForm<SimulationFormData>({
@@ -63,7 +59,8 @@ export default function SimulateurPage() {
     return await trigger(fieldsToValidate)
   }
 
-  const nextStep = async () => {
+  const nextStep = async (e?: React.MouseEvent<HTMLButtonElement>) => {
+    e?.preventDefault()
     const isValid = await validateCurrentStep()
     if (isValid && currentStep < STEPS.length) {
       setCurrentStep((prev) => prev + 1)
