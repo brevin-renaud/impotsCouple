@@ -2,7 +2,7 @@ import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import prisma from '@/lib/db/prisma'
 import { ResultsDisplay } from './ResultsDisplay'
-import type { SimulationResult } from '@/lib/fiscal/types'
+import type { SimulationResult } from '@/lib/fiscal/calculator'
 
 interface ResultsPageProps {
   params: Promise<{ uuid: string }>
@@ -62,7 +62,6 @@ export default async function ResultsPage({ params }: ResultsPageProps) {
       inputs={{
         incomeA: simulation.incomeA,
         incomeB: simulation.incomeB,
-        children: simulation.children,
       }}
     />
   )

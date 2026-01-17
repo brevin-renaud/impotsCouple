@@ -1,107 +1,61 @@
-/**
- * FISCAL & PATRIMONIAL OPTIMIZER - v2.0
- * Intègre : IR, IFI, Charges Déductibles, Crédits d'Impôt et Alertes Juridiques
- */
+import { TAX_BRACKETS, DECOTE } from './constants'
 
-import {
-  TAX_BRACKETS,
-  STANDARD_DEDUCTION,
-  FAMILY_QUOTIENT,
-  DECOTE,
-  IFI,
-  TAX_CREDITS,
-} from './constants'
-import type {
-  PersonInput,
-  FoyerInput,
-  TaxResult,
-  ScenarioResult,
-  SimulationResult,
-  SimulationInput,
-  LegalAdvice,
-  HouseholdCharges,
-} from './types'
+export type Situation = 'couple' | 'single'
 
-/**
- * Conseils juridiques pour l'union (PACS ou Mariage)
- */
-export function getLegalAdvice(): LegalAdvice {
-  return {
-    succession: "✅ Exonération de droits de succession. Pour le mariage : héritage automatique. Pour le PACS : nécessite un testament.",
-    reversion: "ℹ️ Pension de réversion : uniquement pour les couples mariés.",
-    rupture: "⚖️ Mariage : prestation compensatoire possible. PACS : pas de prestation compensatoire."
+export interface SimulationInput {
+  incomeA: number
+  incomeB: number
+  partsA: number
+  partsB: number
+}
+
+export interface PersonDetail {
+  revenuImposable: number
+  parts: number
+  quotientFamilial: number
+  impotNet: number
+}
+
+export interface SimulationResult {
+  celibat: {
+    taxA: number
+    taxB: number
+    totalTax: number
+    partsA: number
+    partsB: number
+    conjointA: PersonDetail
+    conjointB: PersonDetail
   }
-}
-
-/**
- * Calcule l'abattement forfaitaire de 10%
- */
-function calculateStandardDeduction(income: number): number {
-  const deduction = income * STANDARD_DEDUCTION.rate
-  return Math.min(Math.max(deduction, STANDARD_DEDUCTION.min), STANDARD_DEDUCTION.max)
-}
-
-/**
- * Calcule le Revenu Net Global (RNG) après déductions
- * Intègre : pensions alimentaires, épargne retraite (PER/PERP)
- */
-function calculateRNG(person: PersonInput): number {
-  // Abattement professionnel (10% ou frais réels)
-  const abattement = person.fraisReels > 0 
-    ? person.fraisReels 
-    : calculateStandardDeduction(person.income)
-  
-  const netProfessionnel = Math.max(0, person.income - abattement)
-  
-  // Déductions du revenu global
-  const deductions = person.pensionVersee + person.epargneRetraite
-  
-  return Math.max(0, netProfessionnel - deductions)
-}
-
-/**
- * Calcule le nombre de parts fiscales pour les enfants
- */
-function calculateChildrenParts(children: number, gardeAlternee: boolean): number {
-  if (children === 0) return 0
-
-  let parts = 0
-  // 2 premiers enfants : 0.5 part chacun
-  const firstTwo = Math.min(children, 2)
-  parts += firstTwo * FAMILY_QUOTIENT.firstTwoChildrenParts
-
-  // Enfants suivants : 1 part chacun
-  if (children > 2) {
-    parts += (children - 2) * FAMILY_QUOTIENT.additionalChildParts
+  union: {
+    totalTax: number
+    parts: number
+    revenuImposable: number
+    quotientFamilial: number
   }
-
-  // Garde alternée : parts divisées par 2
-  if (gardeAlternee) {
-    parts = parts / FAMILY_QUOTIENT.gardeAlterneeDivisor
-  }
-
-  return parts
+  bestScenario: Situation
+  gain: number
+  message: string
 }
 
 /**
- * Calcule l'impôt avec le barème progressif 2025 (revenus 2024)
- * Source: https://www.service-public.gouv.fr/particuliers/vosdroits/F1419
+ * Calcule le revenu imposable par part
  */
-function calculateTaxFromBrackets(quotientFamilial: number): number {
-  // Barème officiel 2025 pour les revenus 2024
-  const brackets = [
-    { min: 0, max: 11497, rate: 0 },
-    { min: 11497, max: 29315, rate: 0.11 },
-    { min: 29315, max: 83823, rate: 0.30 },
-    { min: 83823, max: 180294, rate: 0.41 },
-    { min: 180294, max: Infinity, rate: 0.45 },
-  ]
+const taxableIncome = (income: number, parts: number): number => {
+  return income / parts
+}
 
+/**
+ * Calcule l'impôt brut selon le barème progressif
+ */
+const calculateTaxFromBrackets = (quotientFamilial: number): number => {
+  let remainingIncome = quotientFamilial
   let tax = 0
-  for (const bracket of brackets) {
-    if (quotientFamilial > bracket.min) {
-      const taxableInBracket = Math.min(quotientFamilial, bracket.max) - bracket.min
-      tax += taxableInBracket * bracket.rate
+
+  for (const bracket of TAX_BRACKETS) {
+    if (remainingIncome > bracket.threshold) {
+      const taxableAtThisRate = remainingIncome - bracket.threshold
+      tax += taxableAtThisRate * bracket.rate
+      remainingIncome = bracket.threshold
     }
   }
 
@@ -109,316 +63,85 @@ function calculateTaxFromBrackets(quotientFamilial: number): number {
 }
 
 /**
- * Applique la décote si applicable
- * Source: https://www.economie.gouv.fr/particuliers/decote-impot-revenu
- * Formule officielle: Décote = Forfait - (Impôt brut × 0.4525)
- * La décote s'applique si l'impôt brut < seuil (1964€ célibataire, 3249€ couple)
+ * Calcule l'impôt net après décote
  */
-function applyDecote(impotBrut: number, isCouple: boolean): number {
-  const threshold = isCouple ? DECOTE.coupleThreshold : DECOTE.singleThreshold
-  const forfait = isCouple ? DECOTE.coupleForfait : DECOTE.singleForfait
+const calculateTax = (income: number, parts: number, isCouple: boolean): number => {
+  const quotient = taxableIncome(income, parts)
+  let tax = calculateTaxFromBrackets(quotient) * parts
 
-  // Si l'impôt brut dépasse le seuil, pas de décote
-  if (impotBrut >= threshold) {
-    return impotBrut
+  // Application de la décote
+  const decote = isCouple ? DECOTE.couple : DECOTE.single
+  if (tax > 0 && tax < decote.threshold) {
+    const decoteAmount = decote.forfait - tax * DECOTE.coefficient
+    tax = Math.max(0, tax - decoteAmount)
   }
 
-  // Formule officielle: Décote = Forfait - (Impôt brut × 0.4525)
-  const decote = forfait - (impotBrut * DECOTE.coefficient)
-  
-  // La décote ne peut pas être négative
-  if (decote <= 0) {
-    return impotBrut
-  }
-
-  return Math.max(0, impotBrut - decote)
+  return Math.round(tax)
 }
 
 /**
- * Plafonnement du quotient familial
+ * Simule les deux scénarios et retourne les résultats complets
  */
-function applyQuotientFamilialCeiling(
-  impotAvecQF: number,
-  impotSansQF: number,
-  halfPartsCount: number
-): number {
-  const maxAdvantage = halfPartsCount * FAMILY_QUOTIENT.halfPartCeiling * 2
-  const actualAdvantage = impotSansQF - impotAvecQF
+export const simulateFiscalScenarios = (input: SimulationInput): SimulationResult => {
+  const { incomeA, incomeB, partsA, partsB } = input
 
-  if (actualAdvantage > maxAdvantage) {
-    return impotSansQF - maxAdvantage
-  }
+  // Scénario Célibat : chacun déclare séparément avec 1 part de base + parts supplémentaires
+  const partsATot = 1 + partsA
+  const partsBTot = 1 + partsB
+  const quotientA = taxableIncome(incomeA, partsATot)
+  const quotientB = taxableIncome(incomeB, partsBTot)
+  const taxA = calculateTax(incomeA, partsATot, false)
+  const taxB = calculateTax(incomeB, partsBTot, false)
+  const totalTaxCelibat = taxA + taxB
 
-  return impotAvecQF
-}
+  // Scénario Union : déclaration commune avec 2 parts de base + parts supplémentaires
+  const totalIncome = incomeA + incomeB
+  const totalParts = 2 + partsA + partsB
+  const quotientUnion = taxableIncome(totalIncome, totalParts)
+  const totalTaxUnion = calculateTax(totalIncome, totalParts, true)
 
-/**
- * Calcule les crédits et réductions d'impôt
- */
-function calculateTaxCredits(
-  charges: HouseholdCharges | undefined,
-  children: number,
-  revenuImposable: number
-): number {
-  if (!charges) return 0
+  // Déterminer le meilleur scénario
+  const gain = totalTaxCelibat - totalTaxUnion
+  const bestScenario: Situation = gain > 0 ? 'couple' : 'single'
 
-  let totalCredits = 0
-
-  // Crédit d'impôt garde d'enfants (50% plafonné)
-  if (charges.fraisGardeEnfants > 0) {
-    const maxCredit = children * TAX_CREDITS.gardeEnfant.plafondParEnfant
-    totalCredits += Math.min(charges.fraisGardeEnfants * TAX_CREDITS.gardeEnfant.rate, maxCredit)
-  }
-
-  // Crédit d'impôt emploi à domicile (50% plafonné)
-  if (charges.emploiDomicile > 0) {
-    totalCredits += Math.min(
-      charges.emploiDomicile * TAX_CREDITS.emploiDomicile.rate,
-      TAX_CREDITS.emploiDomicile.plafondStandard
-    )
-  }
-
-  // Réduction d'impôt dons aux associations (66% plafonné à 20% du RNI)
-  if (charges.donsAssociations > 0) {
-    const plafondDons = revenuImposable * TAX_CREDITS.donsAssociations.plafond
-    totalCredits += Math.min(
-      charges.donsAssociations * TAX_CREDITS.donsAssociations.rate,
-      plafondDons
-    )
-  }
-
-  return Math.round(totalCredits)
-}
-
-/**
- * Calcule l'impôt pour une personne seule
- */
-function calculateSingleTax(person: PersonInput, charges?: HouseholdCharges): TaxResult {
-  const revenuImposable = calculateRNG(person)
-  const baseParts = 1
-  const totalParts = baseParts + person.partsSupp
-
-  const quotientFamilial = revenuImposable / totalParts
-  const impotParPart = calculateTaxFromBrackets(quotientFamilial)
-  let impotBrut = impotParPart * totalParts
-
-  // Plafonnement QF si parts supplémentaires
-  if (person.partsSupp > 0) {
-    const impotSansQF = calculateTaxFromBrackets(revenuImposable)
-    impotBrut = applyQuotientFamilialCeiling(impotBrut, impotSansQF, person.partsSupp)
-  }
-
-  // Décote
-  let impotNet = applyDecote(impotBrut, false)
-
-  // Crédits d'impôt
-  const credits = calculateTaxCredits(charges, 0, revenuImposable)
-  impotNet = Math.max(0, impotNet - credits)
-
-  return {
-    revenuImposable: Math.round(revenuImposable),
-    parts: totalParts,
-    quotientFamilial: Math.round(quotientFamilial),
-    impotBrut: Math.round(impotBrut),
-    impotNet: Math.round(impotNet),
-    credits,
-  }
-}
-
-/**
- * Calcule l'impôt pour un couple (PACS ou Mariage)
- */
-function calculateCoupleTax(foyer: FoyerInput): TaxResult {
-  const revenuA = calculateRNG(foyer.conjointA)
-  const revenuB = calculateRNG(foyer.conjointB)
-  const revenuImposable = revenuA + revenuB
-
-  // Parts du couple
-  const baseParts = 2
-  const childrenParts = calculateChildrenParts(foyer.children, foyer.gardeAlternee)
-  const additionalParts = foyer.conjointA.partsSupp + foyer.conjointB.partsSupp
-  const totalParts = baseParts + childrenParts + additionalParts
-
-  const quotientFamilial = revenuImposable / totalParts
-  const impotParPart = calculateTaxFromBrackets(quotientFamilial)
-  let impotBrut = impotParPart * totalParts
-
-  // Plafonnement QF
-  const extraHalfParts = childrenParts + additionalParts
-  if (extraHalfParts > 0) {
-    const qfSansEnfants = revenuImposable / baseParts
-    const impotSansQF = calculateTaxFromBrackets(qfSansEnfants) * baseParts
-    impotBrut = applyQuotientFamilialCeiling(impotBrut, impotSansQF, extraHalfParts)
-  }
-
-  // Décote
-  let impotNet = applyDecote(impotBrut, true)
-
-  // Crédits d'impôt
-  const credits = calculateTaxCredits(foyer.charges, foyer.children, revenuImposable)
-  impotNet = Math.max(0, impotNet - credits)
-
-  return {
-    revenuImposable: Math.round(revenuImposable),
-    parts: totalParts,
-    quotientFamilial: Math.round(quotientFamilial),
-    impotBrut: Math.round(impotBrut),
-    impotNet: Math.round(impotNet),
-    credits,
-  }
-}
-
-/**
- * Analyse IFI et conseil stratégique
- */
-function analyzeIFI(patrimoineTotal: number): string {
-  if (patrimoineTotal >= IFI.threshold) {
-    return `⚠️ ALERTE IFI : Votre patrimoine immobilier total (${Math.round(patrimoineTotal).toLocaleString('fr-FR')} €) dépasse le seuil de ${IFI.threshold.toLocaleString('fr-FR')} €. Vous serez soumis à l'Impôt sur la Fortune Immobilière.`
-  }
-  return "✅ Pas d'impact IFI sur votre situation."
-}
-
-/**
- * Conseil stratégique personnalisé
- */
-function getStrategicAdvice(
-  personA: PersonInput,
-  personB: PersonInput,
-  patrimoineTotal: number,
-  gainFiscal: number
-): string {
-  // IFI annule le gain fiscal
-  if (patrimoineTotal >= IFI.threshold && gainFiscal < 5000) {
-    return "⚠️ PRUDENCE : Le coût de l'IFI pourrait annuler votre gain sur l'impôt sur le revenu. Consultez un CGP."
-  }
-
-  // Fort écart de revenus
-  const ecartRevenus = Math.abs(personA.income - personB.income)
-  if (ecartRevenus > 20000 && gainFiscal > 2000) {
-    return "✅ FAVORABLE : L'écart de revenus justifie une union rapide pour optimiser votre fiscalité."
-  }
-
-  // Gain fiscal marginal
-  if (gainFiscal < 500) {
-    return "⚖️ NEUTRE : Gain fiscal faible, décidez selon vos critères de protection juridique et patrimoniale."
-  }
-
-  // Gain modéré
-  if (gainFiscal >= 500 && gainFiscal < 2000) {
-    return "💡 INTÉRESSANT : Gain fiscal modéré. Prenez en compte également les aspects juridiques."
-  }
-
-  // Fort gain
-  return "🎯 TRÈS AVANTAGEUX : Fort gain fiscal. L'union est financièrement pertinente."
-}
-
-/**
- * Simulation complète avec tous les scénarios
- */
-export function simulateFiscalScenarios(input: SimulationInput): SimulationResult {
-  const personA: PersonInput = {
-    income: input.incomeA,
-    fraisReels: input.fraisReelsA,
-    partsSupp: input.partsA,
-    pensionVersee: input.pensionVerseeA || 0,
-    patrimoineImmo: input.patrimoineImmoA || 0,
-    epargneRetraite: input.epargneRetraiteA || 0,
-  }
-
-  const personB: PersonInput = {
-    income: input.incomeB,
-    fraisReels: input.fraisReelsB,
-    partsSupp: input.partsB,
-    pensionVersee: input.pensionVerseeB || 0,
-    patrimoineImmo: input.patrimoineImmoB || 0,
-    epargneRetraite: input.epargneRetraiteB || 0,
-  }
-
-  const charges: HouseholdCharges | undefined = 
-    (input.fraisGardeEnfants || input.emploiDomicile || input.donsAssociations)
-      ? {
-          fraisGardeEnfants: input.fraisGardeEnfants || 0,
-          emploiDomicile: input.emploiDomicile || 0,
-          donsAssociations: input.donsAssociations || 0,
-        }
-      : undefined
-
-  // Scénario 1 : Célibat (imposition séparée)
-  const taxA = calculateSingleTax(personA, charges)
-  const taxB = calculateSingleTax(personB, charges)
-  const celibat: ScenarioResult = {
-    label: 'Célibat',
-    conjointA: taxA,
-    conjointB: taxB,
-    totalImpot: taxA.impotNet + taxB.impotNet,
-    totalParts: taxA.parts + taxB.parts,
-  }
-
-  // Scénario 2 : Union (PACS ou Mariage - fiscalement identiques)
-  const foyer: FoyerInput = {
-    conjointA: personA,
-    conjointB: personB,
-    children: input.children,
-    gardeAlternee: input.gardeAlternee,
-    charges,
-  }
-  const coupleTax = calculateCoupleTax(foyer)
-  
-  const union: ScenarioResult = {
-    label: 'Union',
-    conjointA: null,
-    conjointB: null,
-    totalImpot: coupleTax.impotNet,
-    totalParts: coupleTax.parts,
-  }
-
-  // Analyse IFI
-  const patrimoineTotal = personA.patrimoineImmo + personB.patrimoineImmo
-  const ifiAlert = analyzeIFI(patrimoineTotal)
-
-  // Optimisation : comparaison Célibat vs Union
-  const gainUnion = celibat.totalImpot - union.totalImpot
-  const bestScenario: 'celibat' | 'union' = gainUnion > 0 ? 'union' : 'celibat'
-  const gain = Math.max(0, gainUnion)
-  const gainPourcentage = celibat.totalImpot > 0 
-    ? (gain / celibat.totalImpot) * 100 
-    : 0
-
-  let message = ''
-  let timing = ''
-
-  if (bestScenario === 'celibat') {
-    message = "Rester célibataire est fiscalement plus avantageux dans votre situation."
-    timing = "Pas d'urgence à vous unir sur le plan fiscal."
+  let message: string
+  if (gain > 0) {
+    message = `L'union (PACS ou Mariage) vous permettrait d'économiser ${gain} € d'impôts par an.`
+  } else if (gain < 0) {
+    message = `Rester célibataires vous permettrait d'économiser ${Math.abs(gain)} € d'impôts par an.`
   } else {
-    const economy = Math.round(gain)
-    message = `L'union vous permet d'économiser ${economy.toLocaleString('fr-FR')} € par an.`
-    
-    if (gain > 3000) {
-      timing = "⏰ Agissez rapidement : le gain fiscal est significatif !"
-    } else if (gain > 1000) {
-      timing = "📅 À envisager cette année pour optimiser vos impôts."
-    } else {
-      timing = "💡 Gain modéré, d'autres critères peuvent primer."
-    }
+    message = `Les deux situations sont fiscalement équivalentes.`
   }
-
-  const strategicAdvice = getStrategicAdvice(personA, personB, patrimoineTotal, gain)
 
   return {
-    celibat,
-    union,
-    optimization: {
-      bestScenario,
-      gain: Math.round(gain),
-      gainPourcentage: Math.round(gainPourcentage * 10) / 10,
-      message,
-      timing,
+    celibat: {
+      taxA,
+      taxB,
+      totalTax: totalTaxCelibat,
+      partsA: partsATot,
+      partsB: partsBTot,
+      conjointA: {
+        revenuImposable: incomeA,
+        parts: partsATot,
+        quotientFamilial: Math.round(quotientA),
+        impotNet: taxA,
+      },
+      conjointB: {
+        revenuImposable: incomeB,
+        parts: partsBTot,
+        quotientFamilial: Math.round(quotientB),
+        impotNet: taxB,
+      },
     },
-    alerts: {
-      ifiAlert,
-      strategicAdvice,
+    union: {
+      totalTax: totalTaxUnion,
+      parts: totalParts,
+      revenuImposable: totalIncome,
+      quotientFamilial: Math.round(quotientUnion),
     },
-    legalAdvice: getLegalAdvice(),
+    bestScenario,
+    gain: Math.abs(gain),
+    message,
   }
 }
+
