@@ -6,7 +6,7 @@ import { getAllPosts } from '@/lib/blog'
 export const metadata: Metadata = {
   title: 'Guide Fiscal | Blog',
   description:
-    'Guides et articles pour comprendre la fiscalité des couples en France. Quotient familial, PACS, mariage et optimisation fiscale.',
+    'Guides et articles pour comprendre la fiscalité des couples en France. Quotient familial, union et optimisation fiscale.',
 }
 
 export default function BlogPage() {
@@ -23,7 +23,7 @@ export default function BlogPage() {
             </h1>
             <p className="text-lg text-stone-600 max-w-2xl mx-auto">
               Tout comprendre sur la fiscalité des couples en France : quotient familial, 
-              PACS, mariage et optimisation de vos impôts.
+              union et optimisation de vos impôts.
             </p>
           </div>
 

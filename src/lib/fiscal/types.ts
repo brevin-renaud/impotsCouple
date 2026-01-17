@@ -48,10 +48,9 @@ export interface LegalAdvice {
 
 export interface SimulationResult {
   celibat: ScenarioResult    // Scénario A : imposition séparée
-  pacs: ScenarioResult       // Scénario B : union PACS
-  mariage: ScenarioResult    // Scénario C : union Mariage
+  union: ScenarioResult      // Scénario B : union (PACS ou Mariage - fiscalement identiques)
   optimization: {
-    bestScenario: 'celibat' | 'pacs' | 'mariage'
+    bestScenario: 'celibat' | 'union'
     gain: number              // Économie vs célibat
     gainPourcentage: number   // Gain en %
     message: string           // Recommandation textuelle
@@ -61,10 +60,7 @@ export interface SimulationResult {
     ifiAlert: string          // Alerte IFI si patrimoine > 1.3M€
     strategicAdvice: string   // Conseil stratégique personnalisé
   }
-  legalAdvice: {
-    pacs: LegalAdvice
-    mariage: LegalAdvice
-  }
+  legalAdvice: LegalAdvice   // Conseils juridiques pour l'union
 }
 
 export interface SimulationInput {

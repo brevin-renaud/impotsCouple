@@ -59,17 +59,43 @@ export default function SimulateurPage() {
     return await trigger(fieldsToValidate)
   }
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const scrollToFirstError = () => {
+    // Trouver le premier élément avec une erreur et scroller vers lui
+    setTimeout(() => {
+      const firstErrorElement = document.querySelector('[data-error="true"]') || 
+                                document.querySelector('.text-red-600')?.closest('div')?.querySelector('input, select')
+      if (firstErrorElement) {
+        firstErrorElement.scrollIntoView({ behavior: 'smooth', block: 'center' })
+        // Focus sur l'élément si c'est un input
+        if (firstErrorElement instanceof HTMLInputElement || firstErrorElement instanceof HTMLSelectElement) {
+          firstErrorElement.focus()
+        }
+      } else {
+        // Si on ne trouve pas d'élément spécifique, scroller vers le haut du formulaire
+        scrollToTop()
+      }
+    }, 100)
+  }
+
   const nextStep = async (e?: React.MouseEvent<HTMLButtonElement>) => {
     e?.preventDefault()
     const isValid = await validateCurrentStep()
     if (isValid && currentStep < STEPS.length) {
       setCurrentStep((prev) => prev + 1)
+      scrollToTop()
+    } else if (!isValid) {
+      scrollToFirstError()
     }
   }
 
   const prevStep = () => {
     if (currentStep > 1) {
       setCurrentStep((prev) => prev - 1)
+      scrollToTop()
     }
   }
 
@@ -147,7 +173,7 @@ export default function SimulateurPage() {
               Simulateur fiscal
             </h1>
             <p className="text-stone-600">
-              Comparez l&apos;impact du célibat, PACS et mariage sur vos impôts
+              Comparez l&apos;impact du célibat et de l&apos;union sur vos impôts
             </p>
           </div>
 

@@ -7,11 +7,11 @@ export const FISCAL_YEAR = 2024
 // Tranches d'imposition 2025 (revenus 2024)
 // Source: https://www.service-public.gouv.fr/particuliers/vosdroits/F1419
 export const TAX_BRACKETS = [
-  { threshold: 180294, rate: 0.45 },
-  { threshold: 83823, rate: 0.41 },
-  { threshold: 29315, rate: 0.30 },
-  { threshold: 11497, rate: 0.11 },
-  { threshold: 0, rate: 0.00 },
+  { threshold: 180295, rate: 0.45 },
+  { threshold: 83824, rate: 0.41 },
+  { threshold: 29316, rate: 0.30 },
+  { threshold: 11498, rate: 0.11 },
+  { threshold: 0, rate: 0 },
 ] as const
 
 // Abattement forfaitaire de 10%

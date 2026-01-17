@@ -30,8 +30,7 @@ export function Footer() {
               </span>
             </Link>
             <p className="text-sm text-stone-600 max-w-sm">
-              Simulateur fiscal gratuit et anonyme pour comparer l&apos;impact du célibat, 
-              PACS et mariage sur vos impôts.
+              Simulateur fiscal gratuit et anonyme pour comparer l&apos;impact du célibat et de l&apos;union sur vos impôts.
             </p>
           </div>
 

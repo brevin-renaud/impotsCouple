@@ -30,7 +30,7 @@ export function Step4Form({ register, errors }: Step4FormProps) {
             <p className="font-semibold mb-2">💡 Dépenses du foyer (les 2 conjoints ensemble)</p>
             <p className="mb-2">
               Indiquez ici le <strong>total des dépenses du couple</strong>, peu importe qui a payé. 
-              Ces avantages fiscaux sont calculés sur la déclaration commune (PACS/Mariage) ou répartis 
+              Ces avantages fiscaux sont calculés sur la déclaration commune (Union) ou répartis 
               équitablement entre les deux déclarations séparées (Célibat).
             </p>
             <p className="text-xs text-blue-700">

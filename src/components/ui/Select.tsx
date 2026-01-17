@@ -24,6 +24,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
         <select
           id={selectId}
           ref={ref}
+          data-error={error ? 'true' : undefined}
           className={cn(
             'block w-full rounded-xl border bg-white px-4 py-3 text-stone-900',
             'transition-all duration-200',

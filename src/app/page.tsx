@@ -19,12 +19,12 @@ export default function Home() {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-stone-900 mb-6 leading-tight">
-              PACS ou Mariage ?
+              Célibataire ou en couple ?
               <span className="text-orange-500"> Calculez votre économie d&apos;impôts</span>
             </h1>
 
             <p className="text-lg md:text-xl text-stone-600 mb-8 max-w-2xl mx-auto">
-              Comparez en 2 minutes l&apos;impact fiscal du célibat, PACS et mariage.
+              Comparez en 2 minutes l&apos;impact fiscal du célibat et de l&apos;union.
               Découvrez combien vous pourriez économiser chaque année.
             </p>
 
@@ -148,7 +148,7 @@ export default function Home() {
             Prêt à optimiser vos impôts ?
           </h2>
           <p className="text-orange-100 mb-8 max-w-xl mx-auto">
-            Découvrez en quelques clics si le PACS ou le mariage peut vous faire économiser de l&apos;argent.
+            Découvrez en quelques clics si l&apos;union peut vous faire économiser de l&apos;argent.
           </p>
           <Link href="/simulateur">
             <Button

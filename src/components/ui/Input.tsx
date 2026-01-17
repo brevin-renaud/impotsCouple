@@ -49,6 +49,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           )}
           <input
             id={inputId}
+            data-error={error ? 'true' : undefined}
             className={cn(
               'block w-full rounded-xl border bg-white px-4 py-3 text-stone-900 placeholder:text-stone-400',
               'transition-all duration-200',

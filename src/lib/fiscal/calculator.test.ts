@@ -39,7 +39,7 @@ function testCelibataire32000() {
   console.log('')
 }
 
-// Test 2: Couple marié/pacsé avec 2 enfants et 55 950€ de revenu net imposable
+// Test 2: Couple uni avec 2 enfants et 55 950€ de revenu net imposable
 // Source: https://www.economie.gouv.fr/particuliers/tranches-imposition-impot-revenu
 // Parts: 2 (couple) + 0.5 + 0.5 (2 enfants) = 3 parts
 // Quotient familial: 55 950 / 3 = 18 650€
@@ -64,8 +64,8 @@ function testCoupleAvec2Enfants() {
   })
   
   console.log('Revenus bruts:', revenuBrutTotal / 2, '€ + ', revenuBrutTotal / 2, '€')
-  console.log('Parts fiscales (PACS):', result.pacs.totalParts)
-  console.log('Impôt PACS:', result.pacs.totalImpot, '€')
+  console.log('Parts fiscales (Union):', result.union.totalParts)
+  console.log('Impôt Union:', result.union.totalImpot, '€')
   console.log('Impôt attendu (environ): 2 360€')
   console.log('')
 }
@@ -83,10 +83,10 @@ function testDecote() {
   console.log('')
 }
 
-// Test 4: Comparaison Célibat vs PACS
+// Test 4: Comparaison Célibat vs Union
 // Cas typique: Conjoint A gagne 50 000€, Conjoint B gagne 20 000€
-function testComparaisonCelibatVsPacs() {
-  console.log('=== Test 4: Comparaison Célibat vs PACS ===')
+function testComparaisonCelibatVsUnion() {
+  console.log('=== Test 4: Comparaison Célibat vs Union ===')
   
   const result = simulateFiscalScenarios({
     incomeA: 50000,
@@ -107,11 +107,11 @@ function testComparaisonCelibatVsPacs() {
   console.log('  - Conjoint B impôt:', result.celibat.conjointB?.impotNet, '€')
   console.log('  - Total:', result.celibat.totalImpot, '€')
   console.log('')
-  console.log('Scénario PACS/Mariage:')
-  console.log('  - Parts:', result.pacs.totalParts)
-  console.log('  - Total:', result.pacs.totalImpot, '€')
+  console.log('Scénario Union (PACS/Mariage):')
+  console.log('  - Parts:', result.union.totalParts)
+  console.log('  - Total:', result.union.totalImpot, '€')
   console.log('')
-  console.log('Économie PACS:', result.optimization.gain, '€')
+  console.log('Économie Union:', result.optimization.gain, '€')
   console.log('Meilleur scénario:', result.optimization.bestScenario)
   console.log('')
 }
@@ -136,9 +136,9 @@ function testCoupleAvecEnfants() {
   console.log('Scénario Célibat (sans enfants rattachés):')
   console.log('  - Total:', result.celibat.totalImpot, '€')
   console.log('')
-  console.log('Scénario PACS/Mariage avec 2 enfants:')
-  console.log('  - Parts:', result.pacs.totalParts, '(2 + 0.5 + 0.5)')
-  console.log('  - Total:', result.pacs.totalImpot, '€')
+  console.log('Scénario Union (PACS/Mariage) avec 2 enfants:')
+  console.log('  - Parts:', result.union.totalParts, '(2 + 0.5 + 0.5)')
+  console.log('  - Total:', result.union.totalImpot, '€')
   console.log('')
   console.log('Économie:', result.optimization.gain, '€')
   console.log('')

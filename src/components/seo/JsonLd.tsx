@@ -8,7 +8,7 @@ export function JsonLd() {
         url: "https://fiscalcouple.fr",
         name: "FiscalCouple",
         description:
-          "Simulateur fiscal gratuit pour comparer PACS, Mariage et Célibat en France",
+          "Simulateur fiscal gratuit pour comparer Célibat et Union en France",
         inLanguage: "fr-FR",
       },
       {
@@ -16,7 +16,7 @@ export function JsonLd() {
         "@id": "https://fiscalcouple.fr/#service",
         name: "Simulateur Fiscal Couple",
         description:
-          "Calculez et comparez l'impact fiscal du célibat, PACS et mariage. Service gratuit et anonyme.",
+          "Calculez et comparez l'impact fiscal du célibat et de l'union. Service gratuit et anonyme.",
         serviceType: "Tax Calculation",
         provider: {
           "@type": "Organization",
@@ -41,12 +41,12 @@ export function JsonLd() {
             name: "Le PACS et le mariage ont-ils le même impact fiscal ?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Oui, du point de vue fiscal, le PACS et le mariage sont équivalents. Les deux permettent une imposition commune dès l'année de l'union. La différence est principalement juridique (droits successoraux, etc.).",
+              text: "Oui, du point de vue fiscal, le PACS et le mariage sont équivalents. Les deux permettent une imposition commune dès l'année de l'union. C'est pourquoi notre simulateur compare célibat vs union.",
             },
           },
           {
             "@type": "Question",
-            name: "Quand faut-il se pacser pour optimiser ses impôts ?",
+            name: "Quand faut-il s'unir pour optimiser ses impôts ?",
             acceptedAnswer: {
               "@type": "Answer",
               text: "Pour bénéficier de l'imposition commune sur une année entière, il faut se pacser ou se marier avant le 31 décembre de l'année en cours. L'avantage fiscal s'applique alors sur tous les revenus de l'année.",

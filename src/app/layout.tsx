@@ -11,15 +11,15 @@ const inter = Inter({
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://fiscalcouple.fr"),
   title: {
-    default: "FiscalCouple - Simulateur PACS vs Mariage | Optimisez vos impôts",
+    default: "FiscalCouple - Simulateur Célibat vs Union | Optimisez vos impôts",
     template: "%s | FiscalCouple",
   },
   description:
-    "Calculez et comparez gratuitement l'impact fiscal du célibat, PACS et mariage. Simulateur anonyme et 100% gratuit pour optimiser votre situation fiscale en France.",
+    "Calculez et comparez gratuitement l'impact fiscal du célibat et de l'union (PACS ou mariage). Simulateur anonyme et 100% gratuit pour optimiser votre situation fiscale en France.",
   keywords: [
     "simulateur impôts",
-    "PACS",
-    "mariage",
+    "union",
+    "célibat",
     "impôt sur le revenu",
     "quotient familial",
     "optimisation fiscale",
@@ -33,9 +33,9 @@ export const metadata: Metadata = {
     locale: "fr_FR",
     url: "https://fiscalcouple.fr",
     siteName: "FiscalCouple",
-    title: "FiscalCouple - Simulateur PACS vs Mariage",
+    title: "FiscalCouple - Simulateur Célibat vs Union",
     description:
-      "Calculez et comparez gratuitement l'impact fiscal du célibat, PACS et mariage en France.",
+      "Calculez et comparez gratuitement l'impact fiscal du célibat et de l'union (PACS ou mariage) en France.",
     images: [
       {
         url: "/og-image.png",
@@ -47,9 +47,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FiscalCouple - Simulateur PACS vs Mariage",
+    title: "FiscalCouple - Simulateur Célibat vs Union",
     description:
-      "Calculez et comparez gratuitement l'impact fiscal du célibat, PACS et mariage.",
+      "Calculez et comparez gratuitement l'impact fiscal du célibat et de l'union (PACS ou mariage).",
     images: ["/og-image.png"],
   },
   robots: {

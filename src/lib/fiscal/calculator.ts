@@ -23,20 +23,13 @@ import type {
 } from './types'
 
 /**
- * Conseils juridiques selon le type d'union
+ * Conseils juridiques pour l'union (PACS ou Mariage)
  */
-export function getLegalAdvice(isMarriage: boolean): LegalAdvice {
-  if (isMarriage) {
-    return {
-      succession: "✅ Exonération de droits de succession + Part réservataire automatique.",
-      reversion: "✅ Éligible à la pension de réversion (sécurité en cas de décès).",
-      rupture: "⚖️ Prestation compensatoire possible pour équilibrer les niveaux de vie."
-    }
-  }
+export function getLegalAdvice(): LegalAdvice {
   return {
-    succession: "⚠️ Exonération de droits MAIS nécessite un testament pour hériter.",
-    reversion: "❌ Aucun droit à la réversion de retraite.",
-    rupture: "❌ Aucune prestation compensatoire prévue par la loi."
+    succession: "✅ Exonération de droits de succession. Pour le mariage : héritage automatique. Pour le PACS : nécessite un testament.",
+    reversion: "ℹ️ Pension de réversion : uniquement pour les couples mariés.",
+    rupture: "⚖️ Mariage : prestation compensatoire possible. PACS : pas de prestation compensatoire."
   }
 }
 
@@ -361,7 +354,7 @@ export function simulateFiscalScenarios(input: SimulationInput): SimulationResul
     totalParts: taxA.parts + taxB.parts,
   }
 
-  // Scénario 2 : PACS / Mariage (imposition commune)
+  // Scénario 2 : Union (PACS ou Mariage - fiscalement identiques)
   const foyer: FoyerInput = {
     conjointA: personA,
     conjointB: personB,
@@ -371,16 +364,8 @@ export function simulateFiscalScenarios(input: SimulationInput): SimulationResul
   }
   const coupleTax = calculateCoupleTax(foyer)
   
-  const pacs: ScenarioResult = {
-    label: 'PACS',
-    conjointA: null,
-    conjointB: null,
-    totalImpot: coupleTax.impotNet,
-    totalParts: coupleTax.parts,
-  }
-
-  const mariage: ScenarioResult = {
-    label: 'Mariage',
+  const union: ScenarioResult = {
+    label: 'Union',
     conjointA: null,
     conjointB: null,
     totalImpot: coupleTax.impotNet,
@@ -391,17 +376,10 @@ export function simulateFiscalScenarios(input: SimulationInput): SimulationResul
   const patrimoineTotal = personA.patrimoineImmo + personB.patrimoineImmo
   const ifiAlert = analyzeIFI(patrimoineTotal)
 
-  // Optimisation
-  const scenarios = [
-    { name: 'celibat' as const, impot: celibat.totalImpot },
-    { name: 'pacs' as const, impot: pacs.totalImpot },
-    { name: 'mariage' as const, impot: mariage.totalImpot },
-  ]
-  const best = scenarios.reduce((prev, curr) => 
-    curr.impot < prev.impot ? curr : prev
-  )
-
-  const gain = celibat.totalImpot - best.impot
+  // Optimisation : comparaison Célibat vs Union
+  const gainUnion = celibat.totalImpot - union.totalImpot
+  const bestScenario: 'celibat' | 'union' = gainUnion > 0 ? 'union' : 'celibat'
+  const gain = Math.max(0, gainUnion)
   const gainPourcentage = celibat.totalImpot > 0 
     ? (gain / celibat.totalImpot) * 100 
     : 0
@@ -409,12 +387,12 @@ export function simulateFiscalScenarios(input: SimulationInput): SimulationResul
   let message = ''
   let timing = ''
 
-  if (best.name === 'celibat') {
+  if (bestScenario === 'celibat') {
     message = "Rester célibataire est fiscalement plus avantageux dans votre situation."
     timing = "Pas d'urgence à vous unir sur le plan fiscal."
   } else {
     const economy = Math.round(gain)
-    message = `${best.name === 'pacs' ? 'Le PACS' : 'Le mariage'} vous permet d'économiser ${economy.toLocaleString('fr-FR')} € par an.`
+    message = `L'union vous permet d'économiser ${economy.toLocaleString('fr-FR')} € par an.`
     
     if (gain > 3000) {
       timing = "⏰ Agissez rapidement : le gain fiscal est significatif !"
@@ -429,10 +407,9 @@ export function simulateFiscalScenarios(input: SimulationInput): SimulationResul
 
   return {
     celibat,
-    pacs,
-    mariage,
+    union,
     optimization: {
-      bestScenario: best.name,
+      bestScenario,
       gain: Math.round(gain),
       gainPourcentage: Math.round(gainPourcentage * 10) / 10,
       message,
@@ -442,9 +419,6 @@ export function simulateFiscalScenarios(input: SimulationInput): SimulationResul
       ifiAlert,
       strategicAdvice,
     },
-    legalAdvice: {
-      pacs: getLegalAdvice(false),
-      mariage: getLegalAdvice(true),
-    },
+    legalAdvice: getLegalAdvice(),
   }
 }

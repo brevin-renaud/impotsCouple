@@ -33,12 +33,9 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
     }
   }
 
-  const { celibat, pacs, optimization } = results
+  const { celibat, union, optimization } = results
 
-  // Fusionner PACS et Mariage s'ils ont le même impôt
-  const pacsMariageSameImpot = pacs.totalImpot === pacs.totalImpot // PACS et Mariage ont toujours le même calcul fiscal
-
-  const scenarios = pacsMariageSameImpot ? [
+  const scenarios = [
     {
       key: 'celibat',
       label: 'Célibat',
@@ -50,39 +47,11 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
     },
     {
       key: 'union',
-      label: 'PACS ou Mariage',
-      sublabel: 'Imposition commune (fiscalité identique)',
-      impot: pacs.totalImpot,
-      parts: pacs.totalParts,
-      isBest: optimization.bestScenario === 'pacs' || optimization.bestScenario === 'mariage',
-      color: 'orange',
-    },
-  ] : [
-    {
-      key: 'celibat',
-      label: 'Célibat',
-      sublabel: 'Imposition séparée',
-      impot: celibat.totalImpot,
-      parts: celibat.totalParts,
-      isBest: optimization.bestScenario === 'celibat',
-      color: 'stone',
-    },
-    {
-      key: 'pacs',
-      label: 'PACS',
-      sublabel: 'Imposition commune',
-      impot: pacs.totalImpot,
-      parts: pacs.totalParts,
-      isBest: optimization.bestScenario === 'pacs',
-      color: 'orange',
-    },
-    {
-      key: 'mariage',
-      label: 'Mariage',
-      sublabel: 'Imposition commune',
-      impot: pacs.totalImpot,
-      parts: pacs.totalParts,
-      isBest: optimization.bestScenario === 'mariage',
+      label: 'Union',
+      sublabel: 'Imposition commune (PACS ou Mariage)',
+      impot: union.totalImpot,
+      parts: union.totalParts,
+      isBest: optimization.bestScenario === 'union',
       color: 'orange',
     },
   ]
@@ -156,7 +125,7 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
           </Card>
 
           {/* Comparison Cards */}
-          <div className={`grid gap-4 mb-8 ${pacsMariageSameImpot ? 'md:grid-cols-2' : 'md:grid-cols-3'}`}>
+          <div className="grid gap-4 mb-8 md:grid-cols-2">
             {scenarios.map((scenario) => (
               <Card
                 key={scenario.key}
@@ -200,12 +169,12 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
             ))}
           </div>
 
-          {/* Tableau comparatif PACS vs Mariage */}
+          {/* Tableau comparatif PACS vs Mariage - informations juridiques */}
           <Card variant="default" className="mb-8">
             <CardHeader>
-              <CardTitle>Différences entre PACS et Mariage</CardTitle>
+              <CardTitle>PACS ou Mariage ? Différences juridiques</CardTitle>
               <p className="text-sm text-stone-600 mt-1">
-                Sur le plan fiscal, ils sont identiques. Voici les différences sur les autres aspects :
+                Sur le plan fiscal, PACS et mariage sont strictement identiques. Voici les différences juridiques pour vous aider à choisir :
               </p>
             </CardHeader>
             <CardContent>
@@ -398,60 +367,35 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
             </div>
           )}
 
-          {/* Conseils juridiques PACS vs Mariage */}
+          {/* Conseils juridiques pour l'union */}
           {results.legalAdvice && (
             <Card variant="default" className="mb-8">
               <CardHeader>
-                <CardTitle>Aspects juridiques : PACS vs Mariage</CardTitle>
+                <CardTitle>Aspects juridiques de l'union</CardTitle>
                 <p className="text-sm text-stone-500 mt-1">
-                  Au-delà de la fiscalité, comparez les protections juridiques offertes par chaque statut
+                  Au-delà de la fiscalité (identique pour PACS et Mariage), voici les points juridiques importants
                 </p>
               </CardHeader>
               <CardContent>
-                <div className="grid md:grid-cols-2 gap-6">
-                  {/* PACS */}
-                  <div className="bg-orange-50 rounded-xl p-5">
-                    <h4 className="font-semibold text-orange-900 mb-4 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-orange-200 rounded-lg flex items-center justify-center text-sm">📝</span>
-                      PACS
-                    </h4>
-                    <dl className="space-y-3 text-sm">
-                      <div>
-                        <dt className="font-medium text-stone-700 mb-1">🏠 Succession</dt>
-                        <dd className="text-stone-600">{results.legalAdvice.pacs.succession}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-medium text-stone-700 mb-1">💰 Réversion</dt>
-                        <dd className="text-stone-600">{results.legalAdvice.pacs.reversion}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-medium text-stone-700 mb-1">⚖️ Rupture</dt>
-                        <dd className="text-stone-600">{results.legalAdvice.pacs.rupture}</dd>
-                      </div>
-                    </dl>
-                  </div>
-
-                  {/* Mariage */}
-                  <div className="bg-green-50 rounded-xl p-5">
-                    <h4 className="font-semibold text-green-900 mb-4 flex items-center gap-2">
-                      <span className="w-8 h-8 bg-green-200 rounded-lg flex items-center justify-center text-sm">💍</span>
-                      Mariage
-                    </h4>
-                    <dl className="space-y-3 text-sm">
-                      <div>
-                        <dt className="font-medium text-stone-700 mb-1">🏠 Succession</dt>
-                        <dd className="text-stone-600">{results.legalAdvice.mariage.succession}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-medium text-stone-700 mb-1">💰 Réversion</dt>
-                        <dd className="text-stone-600">{results.legalAdvice.mariage.reversion}</dd>
-                      </div>
-                      <div>
-                        <dt className="font-medium text-stone-700 mb-1">⚖️ Rupture</dt>
-                        <dd className="text-stone-600">{results.legalAdvice.mariage.rupture}</dd>
-                      </div>
-                    </dl>
-                  </div>
+                <div className="bg-orange-50 rounded-xl p-5">
+                  <h4 className="font-semibold text-orange-900 mb-4 flex items-center gap-2">
+                    <span className="w-8 h-8 bg-orange-200 rounded-lg flex items-center justify-center text-sm">💍</span>
+                    Union (PACS ou Mariage)
+                  </h4>
+                  <dl className="space-y-3 text-sm">
+                    <div>
+                      <dt className="font-medium text-stone-700 mb-1">🏠 Succession</dt>
+                      <dd className="text-stone-600">{results.legalAdvice.succession}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-stone-700 mb-1">💰 Réversion</dt>
+                      <dd className="text-stone-600">{results.legalAdvice.reversion}</dd>
+                    </div>
+                    <div>
+                      <dt className="font-medium text-stone-700 mb-1">⚖️ Rupture</dt>
+                      <dd className="text-stone-600">{results.legalAdvice.rupture}</dd>
+                    </div>
+                  </dl>
                 </div>
 
                 <div className="mt-4 p-4 bg-stone-100 rounded-lg">
