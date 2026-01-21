@@ -2,7 +2,14 @@
 
 import { SimulatorForm } from '@/components/simulator'
 import { Button, Card, CardContent } from '@/components/ui'
-import { defaultSimulationValues, simulationSchema, type SimulationFormData } from '@/lib/validation/schemas'
+import { 
+  defaultSimulationValues, 
+  simulationSchema, 
+  calculateSingleParts, 
+  calculateCoupleParts,
+  defaultPartsOptions,
+  type SimulationFormData 
+} from '@/lib/validation/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -12,10 +19,14 @@ export default function SimulateurPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [currentStep, setCurrentStep] = useState(1)
 
   const {
     register,
     handleSubmit,
+    watch,
+    setValue,
+    trigger,
     formState: { errors },
   } = useForm<SimulationFormData>({
     resolver: zodResolver(simulationSchema),
@@ -23,16 +34,58 @@ export default function SimulateurPage() {
     mode: 'onBlur',
   })
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
+  const handleNextStep = async () => {
+    let isValid = true
+    
+    // Validation par étape
+    if (currentStep === 1) {
+      isValid = await trigger('incomeA')
+    } else if (currentStep === 2) {
+      isValid = await trigger('incomeB')
+    }
+
+    if (isValid && currentStep < 3) {
+      setCurrentStep(currentStep + 1)
+      scrollToTop()
+    }
+  }
+
+  const handlePrevStep = () => {
+    if (currentStep > 1) {
+      setCurrentStep(currentStep - 1)
+      scrollToTop()
+    }
+  }
+
   const onSubmit = async (data: SimulationFormData) => {
     setIsSubmitting(true)
     setError(null)
 
     try {
-      const cleanedData: SimulationFormData = {
+      // Calculer les parts automatiquement
+      const partsOptionsA = data.partsOptionsA || defaultPartsOptions
+      const partsOptionsB = data.partsOptionsB || defaultPartsOptions
+      const childrenCount = data.childrenCount || 0
+      const children = data.children || []
+
+      const partsA = calculateSingleParts(partsOptionsA, childrenCount, children)
+      const partsB = calculateSingleParts(partsOptionsB, 0, []) // Conjoint B seul n'a pas les enfants
+      const partsCouple = calculateCoupleParts(partsOptionsA, partsOptionsB, childrenCount, children)
+
+      const cleanedData = {
         incomeA: data.incomeA || 0,
-        partsA: data.partsA || 1,
+        partsA,
         incomeB: data.incomeB || 0,
-        partsB: data.partsB || 1,
+        partsB,
+        childrenCount,
+        children,
+        partsOptionsA,
+        partsOptionsB,
+        partsCouple,
       }
 
       const response = await fetch('/api/simulate', {
@@ -76,7 +129,15 @@ export default function SimulateurPage() {
           <Card variant="elevated">
             <CardContent className="p-8">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <SimulatorForm register={register} errors={errors} />
+                <SimulatorForm 
+                  register={register} 
+                  watch={watch}
+                  setValue={setValue}
+                  errors={errors}
+                  currentStep={currentStep}
+                  onNextStep={handleNextStep}
+                  onPrevStep={handlePrevStep}
+                />
 
                 {/* Error message */}
                 {error && (
@@ -85,12 +146,14 @@ export default function SimulateurPage() {
                   </div>
                 )}
 
-                {/* Submit Button */}
-                <div className="mt-8 pt-6 border-t border-stone-100">
-                  <Button type="submit" isLoading={isSubmitting} className="w-full">
-                    {isSubmitting ? 'Calcul en cours...' : 'Calculer mes impôts'}
-                  </Button>
-                </div>
+                {/* Submit Button - Only on last step */}
+                {currentStep === 3 && (
+                  <div className="mt-8 pt-6 border-t border-stone-100">
+                    <Button type="submit" isLoading={isSubmitting} className="w-full">
+                      {isSubmitting ? 'Calcul en cours...' : 'Calculer mes impôts'}
+                    </Button>
+                  </div>
+                )}
               </form>
             </CardContent>
           </Card>

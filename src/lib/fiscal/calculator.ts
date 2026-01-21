@@ -7,6 +7,7 @@ export interface SimulationInput {
     incomeB: number
     partsA: number
     partsB: number
+    partsCouple?: number
 }
 
 export interface PersonDetail {
@@ -71,7 +72,7 @@ const calculateTax = (income: number, parts: number, isCouple: boolean): number 
 }
 
 export const simulateFiscalScenarios = (input: SimulationInput): SimulationResult => {
-    const { incomeA, incomeB, partsA, partsB } = input
+    const { incomeA, incomeB, partsA, partsB, partsCouple } = input
 
     const quotientA = taxableIncome(incomeA, partsA)
     const quotientB = taxableIncome(incomeB, partsB)
@@ -80,7 +81,7 @@ export const simulateFiscalScenarios = (input: SimulationInput): SimulationResul
     const totalTaxCelibat = taxA + taxB
 
     const totalIncome = incomeA + incomeB
-    const totalParts = partsA + partsB
+    const totalParts = partsCouple ?? (partsA + partsB)
     const quotientUnion = taxableIncome(totalIncome, totalParts)
     const totalTaxUnion = calculateTax(totalIncome, totalParts, true)
 
