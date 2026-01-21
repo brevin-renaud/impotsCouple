@@ -1,8 +1,4 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
-
-const contentDirectory = path.join(process.cwd(), 'content/blog')
+import prisma from '@/lib/db/prisma'
 
 export interface BlogPost {
   slug: string
@@ -32,69 +28,88 @@ function calculateReadingTime(content: string): string {
   return `${minutes} min`
 }
 
-export function getAllPosts(): BlogPostMeta[] {
-  // Vérifier si le dossier existe
-  if (!fs.existsSync(contentDirectory)) {
+// Récupère tous les articles publiés depuis la base de données
+export async function getAllPostsAsync(): Promise<BlogPostMeta[]> {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { isDraft: false },
+      orderBy: { publishedAt: 'desc' },
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return articles.map((article: any) => ({
+      slug: article.slug,
+      title: article.title,
+      description: article.description,
+      date: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+      author: article.author,
+      category: article.category,
+      readingTime: calculateReadingTime(article.content),
+    }))
+  } catch (error) {
+    console.warn('Database not available for blog posts:', error)
     return []
   }
-
-  const files = fs.readdirSync(contentDirectory)
-
-  const posts = files
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => {
-      const filePath = path.join(contentDirectory, file)
-      const fileContent = fs.readFileSync(filePath, 'utf8')
-      const { data, content } = matter(fileContent)
-
-      return {
-        slug: file.replace('.mdx', ''),
-        title: data.title || 'Sans titre',
-        description: data.description || '',
-        date: data.date || new Date().toISOString(),
-        author: data.author || 'FiscalCouple',
-        category: data.category || 'Fiscalité',
-        readingTime: calculateReadingTime(content),
-      }
-    })
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-
-  return posts
 }
 
-export function getPostBySlug(slug: string): BlogPost | null {
-  try {
-    const filePath = path.join(contentDirectory, `${slug}.mdx`)
+// Alias pour rétrocompatibilité
+export function getAllPosts(): BlogPostMeta[] {
+  // Version synchrone - retourne un tableau vide, utilisez getAllPostsAsync à la place
+  console.warn('getAllPosts() is deprecated, use getAllPostsAsync() instead')
+  return []
+}
 
-    if (!fs.existsSync(filePath)) {
+// Récupère un article par son slug
+export async function getPostBySlugAsync(slug: string): Promise<BlogPost | null> {
+  try {
+    const article = await prisma.article.findUnique({
+      where: { slug },
+    })
+
+    if (!article || article.isDraft) {
       return null
     }
 
-    const fileContent = fs.readFileSync(filePath, 'utf8')
-    const { data, content } = matter(fileContent)
-
     return {
-      slug,
-      title: data.title || 'Sans titre',
-      description: data.description || '',
-      date: data.date || new Date().toISOString(),
-      author: data.author || 'FiscalCouple',
-      category: data.category || 'Fiscalité',
-      readingTime: calculateReadingTime(content),
-      content,
+      slug: article.slug,
+      title: article.title,
+      description: article.description,
+      date: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+      author: article.author,
+      category: article.category,
+      readingTime: calculateReadingTime(article.content),
+      content: article.content,
     }
-  } catch {
+  } catch (error) {
+    console.warn('Database not available for blog post lookup:', error)
     return null
   }
 }
 
-export function getAllSlugs(): string[] {
-  if (!fs.existsSync(contentDirectory)) {
+// Alias pour rétrocompatibilité
+export function getPostBySlug(slug: string): BlogPost | null {
+  console.warn('getPostBySlug() is deprecated, use getPostBySlugAsync() instead')
+  void slug
+  return null
+}
+
+// Récupère tous les slugs des articles publiés
+export async function getAllSlugsAsync(): Promise<string[]> {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { isDraft: false },
+      select: { slug: true },
+    })
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return articles.map((a: any) => a.slug)
+  } catch (error) {
+    console.warn('Database not available for slugs:', error)
     return []
   }
+}
 
-  const files = fs.readdirSync(contentDirectory)
-  return files
-    .filter((file) => file.endsWith('.mdx'))
-    .map((file) => file.replace('.mdx', ''))
+// Alias pour rétrocompatibilité
+export function getAllSlugs(): string[] {
+  console.warn('getAllSlugs() is deprecated, use getAllSlugsAsync() instead')
+  return []
 }

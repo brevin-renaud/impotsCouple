@@ -50,3 +50,33 @@ model Simulation {
   @@index([expiresAt])
   @@index([createdAt])
 }
+
+// Articles de blog
+model Article {
+  id        String   @id @default(uuid()) @db.Uuid
+  slug      String   @unique
+  
+  // Metadata SEO
+  title       String
+  description String
+  
+  // Metadata article
+  author    String   @default("FiscalCouple")
+  category  String   @default("Fiscalité")
+  
+  // Contenu MDX
+  content   String   @db.Text
+  
+  // Dates
+  publishedAt DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  
+  // Statut
+  isDraft   Boolean  @default(true)
+  
+  // Index pour optimiser les requêtes
+  @@index([slug])
+  @@index([publishedAt])
+  @@index([isDraft])
+}

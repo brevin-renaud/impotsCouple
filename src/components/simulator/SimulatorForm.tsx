@@ -1,8 +1,9 @@
 'use client'
 
+import { Fragment } from 'react'
 import { UseFormRegister, UseFormWatch, UseFormSetValue, FieldErrors } from 'react-hook-form'
 import { Input, Button } from '@/components/ui'
-import { PartsCalculator, ChildrenSection } from './PartsCalculator'
+import { PartsCalculator } from './PartsCalculator'
 import type { SimulationFormData } from '@/lib/validation/schemas'
 import { calculateSingleParts, defaultPartsOptions } from '@/lib/validation/schemas'
 
@@ -17,52 +18,50 @@ interface SimulatorFormProps {
 }
 
 // Composant Step Indicator
-function StepIndicator({ currentStep, totalSteps }: { currentStep: number; totalSteps: number }) {
+function StepIndicator({ currentStep }: { currentStep: number }) {
   const steps = [
     { number: 1, label: 'Conjoint A' },
     { number: 2, label: 'Conjoint B' },
-    { number: 3, label: 'Enfants' },
   ]
 
   return (
     <div className="mb-8">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
-          <div key={step.number} className="flex items-center flex-1">
-            <div className="flex flex-col items-center">
-              <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${
-                  currentStep === step.number
+          <Fragment key={step.number}>
+            <div className="flex items-center">
+              <div className="flex flex-col items-center">
+                <div
+                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${currentStep === step.number
                     ? 'bg-orange-500 text-white'
                     : currentStep > step.number
-                    ? 'bg-orange-400 text-white'
-                    : 'bg-stone-200 text-stone-500'
-                }`}
-              >
-                {currentStep > step.number ? (
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                ) : (
-                  step.number
-                )}
+                      ? 'bg-orange-400 text-white'
+                      : 'bg-stone-200 text-stone-500'
+                    }`}
+                >
+                  {currentStep > step.number ? (
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                    </svg>
+                  ) : (
+                    step.number
+                  )}
+                </div>
+                <span
+                  className={`mt-2 text-xs font-medium ${currentStep === step.number ? 'text-orange-600' : currentStep > step.number ? 'text-orange-500' : 'text-stone-500'
+                    }`}
+                >
+                  {step.label}
+                </span>
               </div>
-              <span
-                className={`mt-2 text-xs font-medium ${
-                  currentStep === step.number ? 'text-orange-600' : currentStep > step.number ? 'text-orange-500' : 'text-stone-500'
-                }`}
-              >
-                {step.label}
-              </span>
             </div>
             {index < steps.length - 1 && (
               <div
-                className={`flex-1 h-1 mx-2 rounded ${
-                  currentStep > step.number ? 'bg-orange-400' : 'bg-stone-200'
-                }`}
+                className={`flex-1 h-1 mx-2 rounded ${currentStep > step.number ? 'bg-orange-400' : 'bg-stone-200'
+                  }`}
               />
             )}
-          </div>
+          </Fragment>
         ))}
       </div>
     </div>
@@ -72,9 +71,9 @@ function StepIndicator({ currentStep, totalSteps }: { currentStep: number; total
 // Step 1: Conjoint A
 function StepConjointA({ register, watch, setValue, errors }: Omit<SimulatorFormProps, 'currentStep' | 'onNextStep' | 'onPrevStep'>) {
   const partsOptionsA = watch('partsOptionsA') || defaultPartsOptions
-  const childrenCount = watch('childrenCount') || 0
-  const children = watch('children') || []
-  const calculatedParts = calculateSingleParts(partsOptionsA, childrenCount, children)
+  const childrenCountA = watch('childrenCountA') || 0
+  const childrenA = watch('childrenA') || []
+  const calculatedParts = calculateSingleParts(partsOptionsA, childrenCountA, childrenA)
 
   return (
     <div className="space-y-6">
@@ -83,7 +82,7 @@ function StepConjointA({ register, watch, setValue, errors }: Omit<SimulatorForm
           Informations du Conjoint A
         </h2>
         <p className="text-stone-600 text-sm">
-          Renseignez les revenus et la situation fiscale
+          Renseignez les revenus, enfants à charge et la situation fiscale
         </p>
       </div>
 
@@ -126,7 +125,9 @@ function StepConjointA({ register, watch, setValue, errors }: Omit<SimulatorForm
 // Step 2: Conjoint B
 function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorFormProps, 'currentStep' | 'onNextStep' | 'onPrevStep'>) {
   const partsOptionsB = watch('partsOptionsB') || defaultPartsOptions
-  const calculatedParts = calculateSingleParts(partsOptionsB, 0, [])
+  const childrenCountB = watch('childrenCountB') || 0
+  const childrenB = watch('childrenB') || []
+  const calculatedParts = calculateSingleParts(partsOptionsB, childrenCountB, childrenB)
 
   return (
     <div className="space-y-6">
@@ -135,7 +136,7 @@ function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorForm
           Informations du Conjoint B
         </h2>
         <p className="text-stone-600 text-sm">
-          Renseignez les revenus et la situation fiscale
+          Renseignez les revenus, enfants à charge et la situation fiscale
         </p>
       </div>
 
@@ -171,29 +172,6 @@ function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorForm
           />
         </div>
       </div>
-    </div>
-  )
-}
-
-// Step 3: Enfants
-function StepEnfants({ register, watch, setValue, errors }: Omit<SimulatorFormProps, 'currentStep' | 'onNextStep' | 'onPrevStep'>) {
-  return (
-    <div className="space-y-6">
-      <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900 mb-2">
-          Enfants à charge
-        </h2>
-        <p className="text-stone-600 text-sm">
-          Renseignez les informations sur vos enfants à charge
-        </p>
-      </div>
-
-      <ChildrenSection 
-        register={register} 
-        watch={watch} 
-        setValue={setValue} 
-        errors={errors} 
-      />
 
       {/* Info Box */}
       <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
@@ -218,21 +196,15 @@ function StepEnfants({ register, watch, setValue, errors }: Omit<SimulatorFormPr
 export function SimulatorForm({ register, watch, setValue, errors, currentStep, onNextStep, onPrevStep }: SimulatorFormProps) {
   return (
     <div className="space-y-6">
-      {/* Step Indicator */}
-      <StepIndicator currentStep={currentStep} totalSteps={3} />
+      <StepIndicator currentStep={currentStep} />
 
-      {/* Step Content */}
       {currentStep === 1 && (
         <StepConjointA register={register} watch={watch} setValue={setValue} errors={errors} />
       )}
       {currentStep === 2 && (
         <StepConjointB register={register} watch={watch} setValue={setValue} errors={errors} />
       )}
-      {currentStep === 3 && (
-        <StepEnfants register={register} watch={watch} setValue={setValue} errors={errors} />
-      )}
 
-      {/* Navigation Buttons */}
       <div className="flex justify-between pt-6 border-t border-stone-100">
         {currentStep > 1 ? (
           <Button
@@ -249,7 +221,7 @@ export function SimulatorForm({ register, watch, setValue, errors, currentStep, 
           <div />
         )}
 
-        {currentStep < 3 ? (
+        {currentStep < 2 ? (
           <Button
             type="button"
             onClick={onNextStep}

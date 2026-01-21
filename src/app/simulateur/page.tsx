@@ -48,7 +48,7 @@ export default function SimulateurPage() {
       isValid = await trigger('incomeB')
     }
 
-    if (isValid && currentStep < 3) {
+    if (isValid && currentStep < 2) {
       setCurrentStep(currentStep + 1)
       scrollToTop()
     }
@@ -69,20 +69,28 @@ export default function SimulateurPage() {
       // Calculer les parts automatiquement
       const partsOptionsA = data.partsOptionsA || defaultPartsOptions
       const partsOptionsB = data.partsOptionsB || defaultPartsOptions
-      const childrenCount = data.childrenCount || 0
-      const children = data.children || []
+      
+      // Enfants de chaque conjoint
+      const childrenCountA = data.childrenCountA || 0
+      const childrenA = data.childrenA || []
+      const childrenCountB = data.childrenCountB || 0
+      const childrenB = data.childrenB || []
+      
+      // Total des enfants pour le couple (combinaison des deux)
+      const totalChildrenCount = childrenCountA + childrenCountB
+      const allChildren = [...childrenA, ...childrenB]
 
-      const partsA = calculateSingleParts(partsOptionsA, childrenCount, children)
-      const partsB = calculateSingleParts(partsOptionsB, 0, []) // Conjoint B seul n'a pas les enfants
-      const partsCouple = calculateCoupleParts(partsOptionsA, partsOptionsB, childrenCount, children)
+      const partsA = calculateSingleParts(partsOptionsA, childrenCountA, childrenA)
+      const partsB = calculateSingleParts(partsOptionsB, childrenCountB, childrenB)
+      const partsCouple = calculateCoupleParts(partsOptionsA, partsOptionsB, totalChildrenCount, allChildren)
 
       const cleanedData = {
         incomeA: data.incomeA || 0,
         partsA,
         incomeB: data.incomeB || 0,
         partsB,
-        childrenCount,
-        children,
+        childrenCount: totalChildrenCount,
+        children: allChildren,
         partsOptionsA,
         partsOptionsB,
         partsCouple,
@@ -147,7 +155,7 @@ export default function SimulateurPage() {
                 )}
 
                 {/* Submit Button - Only on last step */}
-                {currentStep === 3 && (
+                {currentStep === 2 && (
                   <div className="mt-8 pt-6 border-t border-stone-100">
                     <Button type="submit" isLoading={isSubmitting} className="w-full">
                       {isSubmitting ? 'Calcul en cours...' : 'Calculer mes impôts'}

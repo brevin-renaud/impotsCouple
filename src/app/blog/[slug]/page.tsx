@@ -1,22 +1,22 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { MDXRemote } from 'next-mdx-remote/rsc'
-import { getPostBySlug, getAllSlugs } from '@/lib/blog'
+import { getPostBySlugAsync, getAllSlugsAsync } from '@/lib/blog'
 import { Card, CardContent } from '@/components/ui'
+import { MarkdownRenderer } from '@/components/blog'
 
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }
 
 export async function generateStaticParams() {
-  const slugs = getAllSlugs()
+  const slugs = await getAllSlugsAsync()
   return slugs.map((slug) => ({ slug }))
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const post = await getPostBySlugAsync(slug)
 
   if (!post) {
     return {
@@ -37,58 +37,9 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   }
 }
 
-// Composants MDX personnalisés
-const components = {
-  h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="text-2xl font-bold text-stone-900 mt-8 mb-4" {...props} />
-  ),
-  h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="text-xl font-semibold text-stone-800 mt-6 mb-3" {...props} />
-  ),
-  p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
-    <p className="text-stone-600 leading-relaxed mb-4" {...props} />
-  ),
-  ul: (props: React.HTMLAttributes<HTMLUListElement>) => (
-    <ul className="list-disc list-inside text-stone-600 mb-4 space-y-1" {...props} />
-  ),
-  ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
-    <ol className="list-decimal list-inside text-stone-600 mb-4 space-y-1" {...props} />
-  ),
-  li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="text-stone-600" {...props} />
-  ),
-  a: (props: React.AnchorHTMLAttributes<HTMLAnchorElement>) => (
-    <a className="text-orange-600 hover:text-orange-700 underline" {...props} />
-  ),
-  blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
-    <blockquote className="border-l-4 border-orange-300 pl-4 py-2 my-4 bg-orange-50 rounded-r-lg italic text-stone-700" {...props} />
-  ),
-  code: (props: React.HTMLAttributes<HTMLElement>) => (
-    <code className="bg-stone-100 px-1.5 py-0.5 rounded text-sm font-mono text-stone-800" {...props} />
-  ),
-  pre: (props: React.HTMLAttributes<HTMLPreElement>) => (
-    <pre className="bg-stone-900 text-stone-100 p-4 rounded-xl overflow-x-auto my-4 text-sm" {...props} />
-  ),
-  table: (props: React.TableHTMLAttributes<HTMLTableElement>) => (
-    <div className="overflow-x-auto my-4">
-      <table className="min-w-full divide-y divide-stone-200 border border-stone-200 rounded-lg" {...props} />
-    </div>
-  ),
-  th: (props: React.ThHTMLAttributes<HTMLTableCellElement>) => (
-    <th className="px-4 py-3 text-left text-sm font-semibold text-stone-900 bg-stone-50" {...props} />
-  ),
-  td: (props: React.TdHTMLAttributes<HTMLTableCellElement>) => (
-    <td className="px-4 py-3 text-sm text-stone-600 border-t border-stone-100" {...props} />
-  ),
-  strong: (props: React.HTMLAttributes<HTMLElement>) => (
-    <strong className="font-semibold text-stone-900" {...props} />
-  ),
-  hr: () => <hr className="my-8 border-stone-200" />,
-}
-
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params
-  const post = getPostBySlug(slug)
+  const post = await getPostBySlugAsync(slug)
 
   if (!post) {
     notFound()
@@ -164,9 +115,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             {/* Content */}
             <Card variant="elevated">
               <CardContent className="p-8 md:p-12">
-                <div className="prose prose-stone max-w-none">
-                  <MDXRemote source={post.content} components={components} />
-                </div>
+                <MarkdownRenderer content={post.content} />
               </CardContent>
             </Card>
 

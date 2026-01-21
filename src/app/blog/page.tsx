@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui'
-import { getAllPosts } from '@/lib/blog'
+import { getAllPostsAsync } from '@/lib/blog'
 
 export const metadata: Metadata = {
   title: 'Guide Fiscal | Blog',
@@ -9,8 +9,8 @@ export const metadata: Metadata = {
     'Guides et articles pour comprendre la fiscalité des couples en France. Quotient familial, union et optimisation fiscale.',
 }
 
-export default function BlogPage() {
-  const posts = getAllPosts()
+export default async function BlogPage() {
+  const posts = await getAllPostsAsync()
 
   return (
     <div className="min-h-screen py-12 bg-gradient-to-b from-orange-50 to-stone-50">

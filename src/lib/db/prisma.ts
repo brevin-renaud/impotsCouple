@@ -42,7 +42,30 @@ try {
         return { count: 0 }
       },
     },
+    article: {
+      create: async (data: any) => {
+        console.log('[Mock] Création article:', data)
+        return { id: crypto.randomUUID(), ...data.data, createdAt: new Date(), updatedAt: new Date() }
+      },
+      findUnique: async () => {
+        console.log('[Mock] Recherche article')
+        return null
+      },
+      findMany: async () => {
+        console.log('[Mock] Liste articles')
+        return []
+      },
+      update: async (data: any) => {
+        console.log('[Mock] Mise à jour article:', data)
+        return { id: data.where?.id, ...data.data, updatedAt: new Date() }
+      },
+      delete: async () => {
+        console.log('[Mock] Suppression article')
+        return {}
+      },
+    },
   }
 }
 
 export default prisma
+export { prisma }

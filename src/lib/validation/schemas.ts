@@ -24,6 +24,8 @@ export const simulationSchema = z.object({
     .min(0, 'Le revenu ne peut pas être négatif')
     .max(10000000, 'Le revenu semble trop élevé'),
   partsOptionsA: partsOptionsSchema.optional(),
+  childrenCountA: z.number().min(0).max(20).optional(),
+  childrenA: z.array(childSchema).optional(),
 
   // Conjoint B
   incomeB: z
@@ -31,8 +33,10 @@ export const simulationSchema = z.object({
     .min(0, 'Le revenu ne peut pas être négatif')
     .max(10000000, 'Le revenu semble trop élevé'),
   partsOptionsB: partsOptionsSchema.optional(),
+  childrenCountB: z.number().min(0).max(20).optional(),
+  childrenB: z.array(childSchema).optional(),
 
-  // Enfants à charge (commun aux deux conjoints en cas d'union)
+  // Champs legacy pour compatibilité (seront calculés automatiquement)
   childrenCount: z.number().min(0).max(20).optional(),
   children: z.array(childSchema).optional(),
 })
@@ -54,8 +58,12 @@ export const defaultPartsOptions: PartsOptions = {
 export const defaultSimulationValues: SimulationFormData = {
   incomeA: undefined as unknown as number,
   partsOptionsA: defaultPartsOptions,
+  childrenCountA: 0,
+  childrenA: [],
   incomeB: undefined as unknown as number,
   partsOptionsB: defaultPartsOptions,
+  childrenCountB: 0,
+  childrenB: [],
   childrenCount: 0,
   children: [],
 }

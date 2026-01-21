@@ -1,2 +1,2 @@
 export { SimulatorForm } from './SimulatorForm'
-export { PartsCalculator, ChildrenSection } from './PartsCalculator'
+export { PartsCalculator } from './PartsCalculator'
