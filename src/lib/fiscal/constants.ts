@@ -15,12 +15,12 @@ type DecoteSituation = {
 
 export const DECOTE: { single: DecoteSituation; couple: DecoteSituation; coefficient: number } = {
     single: {
-        threshold: 3249,
-        forfait: 890,
+        threshold: 1964,
+        forfait: 889,
     },
     couple: {
-        threshold: 1964,
-        forfait: 1471,
+        threshold: 3249,
+        forfait: 1470,
     },
     coefficient: 0.4525,
 }

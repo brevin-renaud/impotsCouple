@@ -30,9 +30,9 @@ export default function SimulateurPage() {
     try {
       const cleanedData: SimulationFormData = {
         incomeA: data.incomeA || 0,
-        partsA: data.partsA || 0,
+        partsA: data.partsA || 1,
         incomeB: data.incomeB || 0,
-        partsB: data.partsB || 0,
+        partsB: data.partsB || 1,
       }
 
       const response = await fetch('/api/simulate', {
@@ -59,7 +59,7 @@ export default function SimulateurPage() {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-orange-50 to-stone-50">
+    <div className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}

@@ -21,7 +21,7 @@ try {
   }
 } catch {
   // Mock Prisma pour le développement sans base de données
-  console.warn('⚠️ Prisma Client non disponible. Exécutez: npx prisma generate')
+  console.warn('Prisma Client non disponible. Exécutez: npx prisma generate')
   
   prisma = {
     simulation: {

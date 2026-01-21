@@ -27,8 +27,8 @@ export async function POST(request: NextRequest) {
     const results = simulateFiscalScenarios({
       incomeA: data.incomeA,
       incomeB: data.incomeB,
-      partsA: data.partsA ?? 0,
-      partsB: data.partsB ?? 0,
+      partsA: data.partsA ?? 1,
+      partsB: data.partsB ?? 1,
     })
 
     // Calcul de la date d'expiration (30 jours)

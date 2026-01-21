@@ -48,12 +48,12 @@ export function SimulatorForm({ register, errors }: SimulatorFormProps) {
           <Input
             label="Parts fiscales supplémentaires (optionnel)"
             type="number"
-            step="0.5"
+            step="0.25"
             placeholder="0"
             error={errors.partsA?.message}
             hint="Ex: 0.5 pour un enfant en garde exclusive, 0.25 pour garde alternée..."
             infoTooltip="Parts supplémentaires pour enfants à charge, invalidité, ancien combattant, etc. Les 2 premiers enfants donnent 0.5 part chacun, puis 1 part à partir du 3ème."
-            {...register('partsA', { setValueAs: (v) => v === '' || isNaN(v) ? undefined : Number(v) })}
+            {...register('partsA', { setValueAs: (v) => v === '' || isNaN(v) ? 1 : Number(v) })}
           />
         </div>
       </div>
@@ -85,12 +85,12 @@ export function SimulatorForm({ register, errors }: SimulatorFormProps) {
           <Input
             label="Parts fiscales supplémentaires (optionnel)"
             type="number"
-            step="0.5"
+            step="0.25"
             placeholder="0"
             error={errors.partsB?.message}
             hint="Ex: 0.5 pour un enfant en garde exclusive, 0.25 pour garde alternée..."
             infoTooltip="Parts supplémentaires pour enfants à charge, invalidité, ancien combattant, etc. Les 2 premiers enfants donnent 0.5 part chacun, puis 1 part à partir du 3ème."
-            {...register('partsB', { setValueAs: (v) => v === '' || isNaN(v) ? undefined : Number(v) })}
+            {...register('partsB', { setValueAs: (v) => v === '' || isNaN(v) ? 1 : Number(v) })}
           />
         </div>
       </div>
@@ -104,7 +104,7 @@ export function SimulatorForm({ register, errors }: SimulatorFormProps) {
           <div className="text-sm text-blue-800">
             <p className="font-medium mb-1">💡 Comment ça marche ?</p>
             <p>
-              Nous comparons l&apos;impôt que vous payeriez séparément (célibataires) 
+              Nous comparons l&apos;impôt que vous payeriez séparément (célibataires)
               versus ensemble (PACS ou mariage) pour déterminer la situation la plus avantageuse.
             </p>
           </div>
