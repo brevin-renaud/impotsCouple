@@ -4,84 +4,106 @@ export function Footer() {
   const currentYear = new Date().getFullYear()
 
   return (
-    <footer className="bg-stone-50 border-t border-stone-200">
-      <div className="container mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
+    <footer className="bg-stone-900 text-stone-300">
+      <div className="container mx-auto px-3 sm:px-4 py-8 sm:py-12">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-8">
           {/* Brand */}
-          <div className="md:col-span-2">
-            <Link href="/" className="flex items-center gap-2 mb-4">
-              <div className="w-8 h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
-                <svg
-                  className="w-5 h-5 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"
-                  />
-                </svg>
+          <div className="col-span-2 md:col-span-1">
+            <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4" title="ImpotsCouple - Accueil">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+                <span className="text-white font-bold text-xs sm:text-sm">IC</span>
               </div>
-              <span className="font-semibold text-stone-900">
-                Fiscal<span className="text-orange-500">Couple</span>
+              <span className="font-semibold text-white text-sm sm:text-base">
+                Impots<span className="text-orange-500">Couple</span>
               </span>
             </Link>
-            <p className="text-sm text-stone-600 max-w-sm">
-              Simulateur fiscal gratuit et anonyme pour comparer l&apos;impact du célibat et de l&apos;union sur vos impôts.
+            <p className="text-xs sm:text-sm text-stone-400 max-w-xs">
+              Simulateur fiscal gratuit et anonyme pour calculer l&apos;avantage du PACS 
+              ou du mariage sur vos impôts.
             </p>
           </div>
 
-          {/* Links */}
+          {/* Outils */}
           <div>
-            <h3 className="font-semibold text-stone-900 mb-4">Navigation</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-white mb-3 sm:mb-4 text-sm sm:text-base">Outil</h3>
+            <ul className="space-y-1.5 sm:space-y-2">
               <li>
-                <Link href="/simulateur" className="text-sm text-stone-600 hover:text-orange-500 transition-colors">
-                  Simulateur
-                </Link>
-              </li>
-              <li>
-                <Link href="/blog" className="text-sm text-stone-600 hover:text-orange-500 transition-colors">
-                  Guide fiscal
-                </Link>
-              </li>
-              <li>
-                <Link href="/a-propos" className="text-sm text-stone-600 hover:text-orange-500 transition-colors">
-                  À propos
+                <Link href="/simulateur" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  Comparateur Pacs, Mariage, Célibataire
                 </Link>
               </li>
             </ul>
           </div>
 
-          {/* Legal */}
+          {/* Guides */}
           <div>
-            <h3 className="font-semibold text-stone-900 mb-4">Légal</h3>
-            <ul className="space-y-2">
+            <h3 className="font-semibold text-white mb-3 sm:mb-4 text-sm sm:text-base">Guides</h3>
+            <ul className="space-y-1.5 sm:space-y-2">
               <li>
-                <Link href="/mentions-legales" className="text-sm text-stone-600 hover:text-orange-500 transition-colors">
+                <Link href="/pacs" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  Guide PACS 2026
+                </Link>
+              </li>
+              <li>
+                <Link href="/mariage" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  Guide Mariage impôts
+                </Link>
+              </li>
+              <li>
+                <Link href="/quotient-familial" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  Quotient familial
+                </Link>
+              </li>
+              <li>
+                <Link href="/faq" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  FAQ impôts couple
+                </Link>
+              </li>
+              <li>
+                <Link href="/blog" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  Blog fiscalité
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          {/* Légal */}
+          <div>
+            <h3 className="font-semibold text-white mb-3 sm:mb-4 text-sm sm:text-base">Informations</h3>
+            <ul className="space-y-1.5 sm:space-y-2">
+              <li>
+                <Link href="/a-propos" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  À propos
+                </Link>
+              </li>
+              <li>
+                <Link href="/mentions-legales" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
                   Mentions légales
                 </Link>
               </li>
               <li>
-                <Link href="/confidentialite" className="text-sm text-stone-600 hover:text-orange-500 transition-colors">
+                <Link href="/confidentialite" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
                   Confidentialité
                 </Link>
+              </li>
+              <li>
+                <a href="mailto:contact@impotscouple.fr" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
+                  Contact
+                </a>
               </li>
             </ul>
           </div>
         </div>
 
+
         {/* Bottom */}
-        <div className="mt-12 pt-8 border-t border-stone-200">
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-            <p className="text-sm text-stone-500">
-              © {currentYear} FiscalCouple. Tous droits réservés.
+        <div className="mt-6 sm:mt-4 pt-4 border-t border-stone-800">
+          <div className="flex flex-col md:flex-row justify-between items-center gap-2 sm:gap-4">
+            <p className="text-xs sm:text-sm text-stone-500">
+              © {currentYear} ImpotsCouple. Tous droits réservés.
             </p>
-            <p className="text-xs text-stone-400">
-              ⚠️ Simulation à titre indicatif uniquement, non contractuelle.
+            <p className="text-[10px] sm:text-xs text-stone-500 text-center">
+              Simulation à titre indicatif, basée sur le barème fiscal {currentYear}.
             </p>
           </div>
         </div>

@@ -45,21 +45,21 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
     ]
 
     return (
-        <div className="min-h-screen py-12 bg-gradient-to-b from-orange-50 to-stone-50">
-            <div className="container mx-auto px-4">
+        <div className="min-h-screen py-6 sm:py-12 bg-gradient-to-b from-orange-50 to-stone-50">
+            <div className="container mx-auto px-3 sm:px-4">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
-                    <div className="text-center mb-8">
-                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-4 py-2 rounded-full text-sm font-medium mb-4">
-                            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <div className="text-center mb-6 sm:mb-8">
+                        <div className="inline-flex items-center gap-2 bg-green-100 text-green-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-3 sm:mb-4">
+                            <svg className="w-3.5 h-3.5 sm:w-4 sm:h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                             </svg>
                             Simulation terminee
                         </div>
-                        <h1 className="text-3xl font-bold text-stone-900 mb-2">
+                        <h1 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2">
                             Vos resultats
                         </h1>
-                        <p className="text-stone-600">
+                        <p className="text-stone-600 text-sm sm:text-base">
                             Revenus declares : {formatCurrency(inputs.incomeA)} + {formatCurrency(inputs.incomeB)}
                         </p>
                     </div>
@@ -103,15 +103,15 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                     </Card>
 
                     {/* Detail Section */}
-                    <Card variant="default" className="mb-8">
+                    <Card variant="default" className="mb-6 sm:mb-8">
                         <CardHeader>
-                            <CardTitle>Détail du scénario Célibat</CardTitle>
+                            <CardTitle className="text-base sm:text-lg">Détail du scénario Célibat</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="grid md:grid-cols-2 gap-6">
-                                <div className="bg-stone-50 rounded-xl p-4">
-                                    <h4 className="font-medium text-stone-900 mb-3">Conjoint A</h4>
-                                    <dl className="space-y-2 text-sm">
+                            <div className="grid gap-4 sm:gap-6 md:grid-cols-2">
+                                <div className="bg-stone-50 rounded-xl p-3 sm:p-4">
+                                    <h4 className="font-medium text-stone-900 mb-2 sm:mb-3 text-sm sm:text-base">Conjoint A</h4>
+                                    <dl className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                                         <div className="flex justify-between">
                                             <dt className="text-stone-500">Revenu imposable</dt>
                                             <dd className="font-medium">{formatCurrency(celibat.conjointA.revenuImposable)}</dd>
@@ -130,9 +130,9 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                                         </div>
                                     </dl>
                                 </div>
-                                <div className="bg-stone-50 rounded-xl p-4">
-                                    <h4 className="font-medium text-stone-900 mb-3">Conjoint B</h4>
-                                    <dl className="space-y-2 text-sm">
+                                <div className="bg-stone-50 rounded-xl p-3 sm:p-4">
+                                    <h4 className="font-medium text-stone-900 mb-2 sm:mb-3 text-sm sm:text-base">Conjoint B</h4>
+                                    <dl className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                                         <div className="flex justify-between">
                                             <dt className="text-stone-500">Revenu imposable</dt>
                                             <dd className="font-medium">{formatCurrency(celibat.conjointB.revenuImposable)}</dd>
@@ -156,14 +156,14 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                     </Card>
 
                     {/* Detail Union */}
-                    <Card variant="default" className="mb-8">
+                    <Card variant="default" className="mb-6 sm:mb-8">
                         <CardHeader>
-                            <CardTitle>Détail du scénario Union</CardTitle>
+                            <CardTitle className="text-base sm:text-lg">Détail du scénario Union</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="bg-orange-50 rounded-xl p-4">
-                                <h4 className="font-medium text-stone-900 mb-3">Foyer fiscal commun</h4>
-                                <dl className="space-y-2 text-sm">
+                            <div className="bg-orange-50 rounded-xl p-3 sm:p-4">
+                                <h4 className="font-medium text-stone-900 mb-2 sm:mb-3 text-sm sm:text-base">Foyer fiscal commun</h4>
+                                <dl className="space-y-1.5 sm:space-y-2 text-xs sm:text-sm">
                                     <div className="flex justify-between">
                                         <dt className="text-stone-500">Revenu imposable total</dt>
                                         <dd className="font-medium">{formatCurrency(union.revenuImposable)}</dd>
@@ -187,7 +187,7 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
 
 
                     {/* Comparison Cards */}
-                    <div className="grid gap-4 mb-8 md:grid-cols-2">
+                    <div className="grid gap-3 sm:gap-4 mb-6 sm:mb-8 grid-cols-2">
                         {scenarios.map((scenario) => (
                             <Card
                                 key={scenario.key}
@@ -198,31 +198,31 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                                     }`}
                             >
                                 {scenario.isBest && (
-                                    <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                                        <span className="bg-orange-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
+                                    <div className="absolute -top-2.5 sm:-top-3 left-1/2 -translate-x-1/2">
+                                        <span className="bg-orange-500 text-white text-[10px] sm:text-xs font-semibold px-2 sm:px-3 py-0.5 sm:py-1 rounded-full whitespace-nowrap">
                                             Le plus avantageux
                                         </span>
                                     </div>
                                 )}
-                                <CardHeader className="text-center pb-2">
-                                    <CardTitle className={scenario.isBest ? 'text-orange-600' : 'text-stone-700'}>
+                                <CardHeader className="text-center pb-1 sm:pb-2">
+                                    <CardTitle className={`text-sm sm:text-base ${scenario.isBest ? 'text-orange-600' : 'text-stone-700'}`}>
                                         {scenario.label}
                                     </CardTitle>
-                                    <p className="text-xs text-stone-500">{scenario.sublabel}</p>
+                                    <p className="text-[10px] sm:text-xs text-stone-500 hidden sm:block">{scenario.sublabel}</p>
                                 </CardHeader>
-                                <CardContent className="text-center">
-                                    <div className={`text-3xl font-bold mb-2 ${scenario.isBest ? 'text-orange-600' : 'text-stone-900'
+                                <CardContent className="text-center pt-0">
+                                    <div className={`text-xl sm:text-3xl font-bold mb-1 sm:mb-2 ${scenario.isBest ? 'text-orange-600' : 'text-stone-900'
                                         }`}>
                                         {formatCurrency(scenario.impot)}
                                     </div>
-                                    <p className="text-sm text-stone-500">
-                                        {scenario.parts} part{scenario.parts > 1 ? 's' : ''} fiscale{scenario.parts > 1 ? 's' : ''}
+                                    <p className="text-xs sm:text-sm text-stone-500">
+                                        {scenario.parts} part{scenario.parts > 1 ? 's' : ''}
                                     </p>
 
                                     {scenario.key === 'celibat' && (
-                                        <div className="mt-4 pt-4 border-t border-stone-100 text-sm text-stone-600">
-                                            <p>Conjoint A : {formatCurrency(celibat.taxA)}</p>
-                                            <p>Conjoint B : {formatCurrency(celibat.taxB)}</p>
+                                        <div className="mt-2 sm:mt-4 pt-2 sm:pt-4 border-t border-stone-100 text-xs sm:text-sm text-stone-600">
+                                            <p>A : {formatCurrency(celibat.taxA)}</p>
+                                            <p>B : {formatCurrency(celibat.taxB)}</p>
                                         </div>
                                     )}
                                 </CardContent>
@@ -231,12 +231,12 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                     </div>
 
                     {/* Info juridique */}
-                    <Card variant="default" className="mb-8">
+                    <Card variant="default" className="mb-6 sm:mb-8">
                         <CardHeader>
-                            <CardTitle>Bon a savoir</CardTitle>
+                            <CardTitle className="text-base sm:text-lg">Bon a savoir</CardTitle>
                         </CardHeader>
                         <CardContent>
-                            <div className="space-y-3 text-sm text-stone-600">
+                            <div className="space-y-2 sm:space-y-3 text-xs sm:text-sm text-stone-600">
                                 <p>
                                     <strong>Sur le plan fiscal</strong>, le PACS et le mariage sont strictement identiques :
                                     declaration commune et meme bareme d&apos;imposition.
@@ -249,21 +249,21 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                         </CardContent>
                     </Card>
 
-                    <Card variant="default" className="mb-8">
+                    <Card variant="default" className="mb-6 sm:mb-8">
                         <CardHeader>
-                            <CardTitle>PACS ou Mariage ? Différences juridiques</CardTitle>
-                            <p className="text-sm text-stone-600 mt-1">
-                                Sur le plan fiscal, PACS et mariage sont strictement identiques. Voici les différences juridiques pour vous aider à choisir :
+                            <CardTitle className="text-base sm:text-lg">PACS ou Mariage ? Différences juridiques</CardTitle>
+                            <p className="text-xs sm:text-sm text-stone-600 mt-1">
+                                Sur le plan fiscal, PACS et mariage sont strictement identiques.
                             </p>
                         </CardHeader>
                         <CardContent>
-                            <div className="overflow-x-auto">
-                                <table className="w-full text-sm">
+                            <div className="overflow-x-auto -mx-4 sm:mx-0">
+                                <table className="w-full text-xs sm:text-sm min-w-[500px] sm:min-w-0">
                                     <thead>
                                         <tr className="border-b border-stone-200">
-                                            <th className="text-left py-3 px-4 font-medium text-stone-700">Critère</th>
-                                            <th className="text-left py-3 px-4 font-semibold">PACS</th>
-                                            <th className="text-left py-3 px-4 font-semibold">Mariage</th>
+                                            <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-medium text-stone-700">Critère</th>
+                                            <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-semibold">PACS</th>
+                                            <th className="text-left py-2 sm:py-3 px-3 sm:px-4 font-semibold">Mariage</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -332,9 +332,9 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
 
 
                     {/* Actions */}
-                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
                         <Link href={`/resultats/${uuid}/partage`}>
-                            <Button variant="outline">
+                            <Button variant="outline" size="sm" className="w-full sm:w-auto">
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
                                 </svg>
@@ -342,7 +342,7 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                             </Button>
                         </Link>
                         <Link href="/simulateur">
-                            <Button>
+                            <Button size="sm" className="w-full sm:w-auto">
                                 <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                                 </svg>
@@ -352,8 +352,8 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                     </div>
 
                     {/* Disclaimer */}
-                    <div className="mt-8 p-4 bg-stone-100 rounded-xl text-center">
-                        <p className="text-xs text-stone-500">
+                    <div className="mt-6 sm:mt-8 p-3 sm:p-4 bg-stone-100 rounded-xl text-center">
+                        <p className="text-[10px] sm:text-xs text-stone-500">
                             Cette simulation est fournie a titre indicatif uniquement et ne constitue pas un conseil fiscal.
                             Les resultats sont bases sur le bareme 2025 et peuvent varier selon votre situation reelle.
                             Consultez un professionnel pour une analyse personnalisee.

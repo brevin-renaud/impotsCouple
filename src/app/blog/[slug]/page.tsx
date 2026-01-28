@@ -64,7 +64,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
     },
     publisher: {
       '@type': 'Organization',
-      name: 'FiscalCouple',
+      name: 'ImpotsCouple',
     },
   }
 

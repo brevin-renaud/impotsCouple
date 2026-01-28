@@ -9,7 +9,7 @@ const createArticleSchema = z.object({
   slug: z.string().min(1, 'Le slug est requis').regex(/^[a-z0-9-]+$/, 'Le slug ne peut contenir que des lettres minuscules, chiffres et tirets'),
   description: z.string().min(1, 'La description est requise'),
   content: z.string().min(1, 'Le contenu est requis'),
-  author: z.string().optional().default('FiscalCouple'),
+  author: z.string().optional().default('ImpotsCouple'),
   category: z.string().optional().default('Fiscalité'),
   publishedAt: z.string().nullable().optional(),
   isDraft: z.boolean().optional().default(true),

@@ -9,7 +9,7 @@ interface SharePageProps {
 }
 
 export const metadata: Metadata = {
-  title: 'Partager vos résultats | FiscalCouple',
+  title: 'Partager vos résultats | ImpotsCouple',
   description: 'Partagez ou téléchargez vos résultats de simulation fiscale.',
   robots: {
     index: false,

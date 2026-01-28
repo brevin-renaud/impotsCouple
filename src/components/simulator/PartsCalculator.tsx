@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { UseFormRegister, UseFormWatch, UseFormSetValue, FieldErrors } from 'react-hook-form'
 import { Checkbox, Select } from '@/components/ui'
 import type { SimulationFormData, ChildOptions } from '@/lib/validation/schemas'
-import { calculateSingleParts, defaultPartsOptions } from '@/lib/validation/schemas'
+import { calculateSingleParts, calculateChildrenParts, defaultPartsOptions } from '@/lib/validation/schemas'
 
 interface PartsCalculatorProps {
   register: UseFormRegister<SimulationFormData>
@@ -69,6 +69,7 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
 
   // Calculer les parts en temps réel
   const calculatedParts = calculateSingleParts(partsOptions, childrenCount, children)
+  const childrenParts = calculateChildrenParts(childrenCount, children)
 
   return (
     <div className="space-y-4 mt-4">
@@ -79,6 +80,11 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           Enfants à charge
+          {childrenCount > 0 && (
+            <span className="text-stone-500 font-normal">
+              ({childrenParts} part{childrenParts > 1 ? 's' : ''})
+            </span>
+          )}
         </h4>
         
         <div className="space-y-3">
@@ -123,9 +129,6 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
                         </span>
                         <span className="text-xs font-medium text-stone-700">
                           Enfant {index + 1}
-                          <span className="text-stone-400 font-normal ml-1">
-                            ({index < 2 ? '0.5' : '1'} part)
-                          </span>
                         </span>
                         {hasSpecialOptions && !isExpanded && (
                           <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded">
@@ -225,17 +228,4 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
       </div>
     </div>
   )
-}
-
-// Fonction helper pour calculer les parts des enfants
-function calculateChildrenParts(children: ChildOptions[], count: number): number {
-  let parts = 0
-  for (let i = 0; i < count; i++) {
-    const child = children[i] || { isSharedCustody: false, isInvalid: false }
-    let childPart = i < 2 ? 0.5 : 1
-    if (child.isSharedCustody) childPart = childPart / 2
-    if (child.isInvalid) childPart += child.isSharedCustody ? 0.25 : 0.5
-    parts += childPart
-  }
-  return parts
 }

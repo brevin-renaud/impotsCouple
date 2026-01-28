@@ -3,7 +3,7 @@ import { Card, CardContent } from '@/components/ui'
 
 export const metadata: Metadata = {
   title: 'Politique de confidentialité',
-  description: 'Politique de confidentialité et protection des données personnelles de FiscalCouple.',
+  description: 'Politique de confidentialité et protection des données personnelles de ImpotsCouple.',
 }
 
 export default function ConfidentialitePage() {
@@ -23,7 +23,7 @@ export default function ConfidentialitePage() {
 
               <h2 className="text-xl font-bold text-stone-900 mb-4">Notre engagement</h2>
               <p className="text-stone-600 mb-6">
-                FiscalCouple s&apos;engage à protéger votre vie privée. Cette politique de 
+                ImpotsCouple s&apos;engage à protéger votre vie privée. Cette politique de 
                 confidentialité explique comment nous collectons, utilisons et protégeons 
                 vos informations.
               </p>
@@ -146,7 +146,7 @@ export default function ConfidentialitePage() {
               </h2>
               <p className="text-stone-600 mb-6">
                 Pour toute question relative à cette politique de confidentialité, 
-                contactez-nous à : <a href="mailto:privacy@fiscalcouple.fr" className="text-orange-600 hover:text-orange-700">privacy@fiscalcouple.fr</a>
+                contactez-nous à : <a href="mailto:privacy@impotscouple.fr" className="text-orange-600 hover:text-orange-700">privacy@impotscouple.fr</a>
               </p>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">

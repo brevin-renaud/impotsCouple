@@ -4,23 +4,23 @@ export function JsonLd() {
     "@graph": [
       {
         "@type": "WebSite",
-        "@id": "https://fiscalcouple.fr/#website",
-        url: "https://fiscalcouple.fr",
-        name: "FiscalCouple",
+        "@id": "https://impotscouple.fr/#website",
+        url: "https://impotscouple.fr",
+        name: "ImpotsCouple",
         description:
           "Simulateur fiscal gratuit pour comparer Célibat et Union en France",
         inLanguage: "fr-FR",
       },
       {
         "@type": "FinancialService",
-        "@id": "https://fiscalcouple.fr/#service",
+        "@id": "https://impotscouple.fr/#service",
         name: "Simulateur Fiscal Couple",
         description:
           "Calculez et comparez l'impact fiscal du célibat et de l'union. Service gratuit et anonyme.",
         serviceType: "Tax Calculation",
         provider: {
           "@type": "Organization",
-          name: "FiscalCouple",
+          name: "ImpotsCouple",
         },
         areaServed: {
           "@type": "Country",
@@ -28,13 +28,13 @@ export function JsonLd() {
         },
         availableChannel: {
           "@type": "ServiceChannel",
-          serviceUrl: "https://fiscalcouple.fr/simulateur",
+          serviceUrl: "https://impotscouple.fr/simulateur",
           serviceType: "Online",
         },
       },
       {
         "@type": "FAQPage",
-        "@id": "https://fiscalcouple.fr/#faq",
+        "@id": "https://impotscouple.fr/#faq",
         mainEntity: [
           {
             "@type": "Question",

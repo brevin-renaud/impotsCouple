@@ -68,6 +68,64 @@ export const defaultSimulationValues: SimulationFormData = {
   children: [],
 }
 
+// Fonction helper pour calculer les parts des enfants de manière cohérente
+// La garde alternée est appliquée en priorité sur les parts les plus faibles (1er et 2ème enfant)
+// pour maximiser l'avantage fiscal et avoir un résultat cohérent peu importe l'ordre
+export function calculateChildrenParts(
+  childrenCount: number,
+  children: ChildOptions[] = []
+): number {
+  if (childrenCount === 0) return 0
+
+  // Compter les enfants en garde alternée et invalides
+  let sharedCustodyCount = 0
+  let invalidFullCustodyCount = 0
+  let invalidSharedCustodyCount = 0
+
+  for (let i = 0; i < childrenCount; i++) {
+    const child = children[i] || { isSharedCustody: false, isInvalid: false }
+    if (child.isSharedCustody) {
+      sharedCustodyCount++
+      if (child.isInvalid) invalidSharedCustodyCount++
+    } else {
+      if (child.isInvalid) invalidFullCustodyCount++
+    }
+  }
+
+  const fullCustodyCount = childrenCount - sharedCustodyCount
+
+  // Calculer les parts de base des enfants
+  // Les enfants en garde alternée sont comptés en dernier pour maximiser l'avantage
+  let parts = 0
+
+  // D'abord les enfants à charge complète
+  for (let i = 0; i < fullCustodyCount; i++) {
+    if (i < 2) {
+      parts += 0.5  // 1er et 2ème enfant
+    } else {
+      parts += 1    // 3ème et suivants
+    }
+  }
+
+  // Ensuite les enfants en garde alternée (comptés après les enfants à charge complète)
+  for (let i = 0; i < sharedCustodyCount; i++) {
+    const position = fullCustodyCount + i
+    if (position < 2) {
+      parts += 0.25  // 1er ou 2ème enfant en garde alternée (0.5 / 2)
+    } else {
+      parts += 0.5   // 3ème et suivants en garde alternée (1 / 2)
+    }
+  }
+
+  // Ajouter les parts pour invalidité des enfants
+  // +0.5 part pour enfant invalide à charge complète
+  // +0.25 part pour enfant invalide en garde alternée
+  parts += invalidFullCustodyCount * 0.5
+  parts += invalidSharedCustodyCount * 0.25
+
+  return parts
+}
+
 // Fonction pour calculer les parts fiscales d'un célibataire
 export function calculateSingleParts(
   options: PartsOptions,
@@ -78,31 +136,7 @@ export function calculateSingleParts(
   let parts = 1
 
   // Parts pour les enfants
-  for (let i = 0; i < childrenCount; i++) {
-    const child = children[i] || { isSharedCustody: false, isInvalid: false }
-    
-    // Part de base de l'enfant
-    let childPart: number
-    if (i < 2) {
-      // 1er et 2ème enfant : 0.5 part
-      childPart = 0.5
-    } else {
-      // 3ème enfant et suivants : 1 part
-      childPart = 1
-    }
-
-    // Garde alternée : divise la part par 2
-    if (child.isSharedCustody) {
-      childPart = childPart / 2
-    }
-
-    // Enfant invalide : +0.5 part (ou +0.25 si garde alternée)
-    if (child.isInvalid) {
-      childPart += child.isSharedCustody ? 0.25 : 0.5
-    }
-
-    parts += childPart
-  }
+  parts += calculateChildrenParts(childrenCount, children)
 
   // Parts supplémentaires pour le contribuable
   if (options.isInvalid) parts += 0.5
@@ -125,31 +159,7 @@ export function calculateCoupleParts(
   let parts = 2
 
   // Parts pour les enfants
-  for (let i = 0; i < childrenCount; i++) {
-    const child = children[i] || { isSharedCustody: false, isInvalid: false }
-    
-    // Part de base de l'enfant
-    let childPart: number
-    if (i < 2) {
-      // 1er et 2ème enfant : 0.5 part
-      childPart = 0.5
-    } else {
-      // 3ème enfant et suivants : 1 part
-      childPart = 1
-    }
-
-    // Garde alternée : divise la part par 2
-    if (child.isSharedCustody) {
-      childPart = childPart / 2
-    }
-
-    // Enfant invalide : +0.5 part (ou +0.25 si garde alternée)
-    if (child.isInvalid) {
-      childPart += child.isSharedCustody ? 0.25 : 0.5
-    }
-
-    parts += childPart
-  }
+  parts += calculateChildrenParts(childrenCount, children)
 
   // Parts supplémentaires pour chaque conjoint
   if (optionsA.isInvalid) parts += 0.5

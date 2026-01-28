@@ -42,7 +42,7 @@ export default function ArticleFormClient({ mode, article }: ArticleFormClientPr
   const [slug, setSlug] = useState(article?.slug || '')
   const [description, setDescription] = useState(article?.description || '')
   const [content, setContent] = useState(article?.content || '')
-  const [author, setAuthor] = useState(article?.author || 'FiscalCouple')
+  const [author, setAuthor] = useState(article?.author || 'ImpotsCouple')
   const [category, setCategory] = useState(article?.category || 'Fiscalité')
   const [publishedAt, setPublishedAt] = useState(
     article?.publishedAt 
@@ -259,7 +259,7 @@ export default function ArticleFormClient({ mode, article }: ArticleFormClientPr
                         value={author}
                         onChange={(e) => setAuthor(e.target.value)}
                         className="w-full px-4 py-3 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
-                        placeholder="FiscalCouple"
+                        placeholder="ImpotsCouple"
                       />
                     </div>
 

@@ -61,7 +61,7 @@ model Article {
   description String
   
   // Metadata article
-  author    String   @default("FiscalCouple")
+  author    String   @default("ImpotsCouple")
   category  String   @default("Fiscalité")
   
   // Contenu MDX

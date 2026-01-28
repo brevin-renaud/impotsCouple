@@ -4,9 +4,19 @@ import { Card, CardContent } from '@/components/ui'
 import { getAllPostsAsync } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title: 'Guide Fiscal | Blog',
+  title: 'Blog Fiscalité Couple 2026 : Guides PACS, Mariage, Quotient Familial',
   description:
-    'Guides et articles pour comprendre la fiscalité des couples en France. Quotient familial, union et optimisation fiscale.',
+    'Articles et guides complets sur la fiscalité des couples en France : PACS, mariage, quotient familial, impôts, optimisation fiscale. Conseils pratiques et informations à jour.',
+  alternates: {
+    canonical: 'https://impotscouple.fr/blog',
+  },
+  openGraph: {
+    title: 'Blog Fiscalité Couple : Guides PACS, Mariage, Impôts',
+    description:
+      'Guides et articles pour comprendre la fiscalité des couples en France.',
+    url: 'https://impotscouple.fr/blog',
+    type: 'website',
+  },
 }
 
 export default async function BlogPage() {

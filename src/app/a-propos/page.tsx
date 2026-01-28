@@ -2,8 +2,17 @@ import type { Metadata } from 'next'
 import { Card, CardContent } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'À propos',
-  description: 'Découvrez FiscalCouple, le simulateur fiscal gratuit et anonyme pour comparer PACS, mariage et célibat.',
+  title: 'À propos de ImpotsCouple - Simulateur Fiscal Gratuit',
+  description: 'Découvrez ImpotsCouple, le simulateur fiscal gratuit et anonyme pour comparer PACS, mariage et célibat. Notre mission : rendre la fiscalité des couples accessible à tous.',
+  alternates: {
+    canonical: 'https://impotscouple.fr/a-propos',
+  },
+  openGraph: {
+    title: 'À propos de ImpotsCouple - Simulateur Fiscal Gratuit',
+    description: 'Découvrez notre mission : rendre la fiscalité des couples accessible à tous avec un simulateur gratuit et anonyme.',
+    url: 'https://impotscouple.fr/a-propos',
+    type: 'website',
+  },
 }
 
 export default function AboutPage() {
@@ -12,14 +21,14 @@ export default function AboutPage() {
       <div className="container mx-auto px-4">
         <div className="max-w-3xl mx-auto">
           <h1 className="text-4xl font-bold text-stone-900 mb-6 text-center">
-            À propos de FiscalCouple
+            À propos de ImpotsCouple
           </h1>
 
           <Card variant="elevated">
             <CardContent className="p-8 md:p-12 prose prose-stone max-w-none">
               <h2 className="text-2xl font-bold text-stone-900 mb-4">Notre mission</h2>
               <p className="text-stone-600 mb-6">
-                FiscalCouple est né d&apos;un constat simple : beaucoup de couples se demandent si le PACS 
+                ImpotsCouple est né d&apos;un constat simple : beaucoup de couples se demandent si le PACS 
                 ou le mariage pourrait leur faire économiser des impôts, mais les calculs sont complexes 
                 et les informations souvent confuses.
               </p>
@@ -58,7 +67,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold text-stone-900 mb-4 mt-8">Avertissement</h2>
               <div className="bg-orange-50 border border-orange-200 rounded-xl p-4 text-sm text-stone-600">
                 <p className="mb-2">
-                  <strong>⚠️ Information importante :</strong>
+                  <strong>Information importante :</strong>
                 </p>
                 <p>
                   Les résultats de ce simulateur sont fournis à titre indicatif uniquement et ne 
@@ -74,7 +83,7 @@ export default function AboutPage() {
               <h2 className="text-2xl font-bold text-stone-900 mb-4 mt-8">Contact</h2>
               <p className="text-stone-600">
                 Une question, une suggestion ? N&apos;hésitez pas à nous contacter via 
-                l&apos;adresse : <a href="mailto:contact@fiscalcouple.fr" className="text-orange-600 hover:text-orange-700">contact@fiscalcouple.fr</a>
+                l&apos;adresse : <a href="mailto:contact@impotscouple.fr" className="text-orange-600 hover:text-orange-700">contact@impotscouple.fr</a>
               </p>
             </CardContent>
           </Card>

@@ -75,7 +75,7 @@ export function SharePageClient({ uuid, results, inputs }: SharePageClientProps)
 
       pdf.setFontSize(14)
       pdf.setTextColor(...orange)
-      pdf.text('FiscalCouple', pageWidth / 2, y, { align: 'center' })
+      pdf.text('ImpotsCouple', pageWidth / 2, y, { align: 'center' })
       y += 10
 
       // Date
@@ -189,7 +189,7 @@ export function SharePageClient({ uuid, results, inputs }: SharePageClientProps)
       
       if (bestScenario === 'couple') {
         pdf.setTextColor(...orange)
-        pdf.text('✓ Le plus avantageux', unionX + 5, y + 38)
+        pdf.text('Le plus avantageux', unionX + 5, y + 38)
       }
 
       y += boxHeight + 20
@@ -203,7 +203,7 @@ export function SharePageClient({ uuid, results, inputs }: SharePageClientProps)
       pdf.setTextColor(...gray)
       pdf.text('Cette simulation est fournie à titre indicatif uniquement et ne constitue pas un conseil fiscal.', pageWidth / 2, y, { align: 'center' })
       y += 4
-      pdf.text('Basée sur le barème 2025 - fiscalcouple.fr', pageWidth / 2, y, { align: 'center' })
+      pdf.text('Basée sur le barème 2025 - impotscouple.fr', pageWidth / 2, y, { align: 'center' })
 
       pdf.save(`simulation-fiscale-${new Date().toISOString().split('T')[0]}.pdf`)
     } catch (error) {

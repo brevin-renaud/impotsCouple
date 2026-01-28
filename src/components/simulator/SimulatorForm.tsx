@@ -25,22 +25,23 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
   ]
 
   return (
-    <div className="mb-8">
+    <div className="mb-6 sm:mb-8">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => (
           <Fragment key={step.number}>
             <div className="flex items-center">
               <div className="flex flex-col items-center">
                 <div
-                  className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold text-sm transition-colors ${currentStep === step.number
-                    ? 'bg-orange-500 text-white'
-                    : currentStep > step.number
-                      ? 'bg-orange-400 text-white'
-                      : 'bg-stone-200 text-stone-500'
-                    }`}
+                  className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold text-xs sm:text-sm transition-colors ${
+                    currentStep === step.number
+                      ? 'bg-orange-500 text-white'
+                      : currentStep > step.number
+                        ? 'bg-orange-400 text-white'
+                        : 'bg-stone-200 text-stone-500'
+                  }`}
                 >
                   {currentStep > step.number ? (
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
@@ -48,8 +49,9 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
                   )}
                 </div>
                 <span
-                  className={`mt-2 text-xs font-medium ${currentStep === step.number ? 'text-orange-600' : currentStep > step.number ? 'text-orange-500' : 'text-stone-500'
-                    }`}
+                  className={`mt-1.5 sm:mt-2 text-[10px] sm:text-xs font-medium ${
+                    currentStep === step.number ? 'text-orange-600' : currentStep > step.number ? 'text-orange-500' : 'text-stone-500'
+                  }`}
                 >
                   {step.label}
                 </span>
@@ -57,8 +59,9 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
             </div>
             {index < steps.length - 1 && (
               <div
-                className={`flex-1 h-1 mx-2 rounded ${currentStep > step.number ? 'bg-orange-400' : 'bg-stone-200'
-                  }`}
+                className={`flex-1 h-0.5 sm:h-1 mx-2 rounded ${
+                  currentStep > step.number ? 'bg-orange-400' : 'bg-stone-200'
+                }`}
               />
             )}
           </Fragment>
@@ -76,25 +79,25 @@ function StepConjointA({ register, watch, setValue, errors }: Omit<SimulatorForm
   const calculatedParts = calculateSingleParts(partsOptionsA, childrenCountA, childrenA)
 
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900 mb-2">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="text-center mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-bold text-stone-900 mb-1 sm:mb-2">
           Informations du Conjoint A
         </h2>
-        <p className="text-stone-600 text-sm">
+        <p className="text-stone-600 text-xs sm:text-sm">
           Renseignez les revenus, enfants à charge et la situation fiscale
         </p>
       </div>
 
-      <div className="bg-orange-50 rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
-            <span className="text-orange-600 font-semibold">A</span>
+      <div className="bg-orange-50 rounded-xl p-4 sm:p-6">
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-orange-100 rounded-full flex items-center justify-center">
+            <span className="text-orange-600 font-semibold text-sm sm:text-base">A</span>
           </div>
-          <h3 className="font-semibold text-stone-900">Conjoint A</h3>
+          <h3 className="font-semibold text-stone-900 text-sm sm:text-base">Conjoint A</h3>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <Input
             label="Revenu net annuel imposable"
             type="number"
@@ -130,25 +133,25 @@ function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorForm
   const calculatedParts = calculateSingleParts(partsOptionsB, childrenCountB, childrenB)
 
   return (
-    <div className="space-y-6">
-      <div className="text-center mb-6">
-        <h2 className="text-xl font-bold text-stone-900 mb-2">
+    <div className="space-y-4 sm:space-y-6">
+      <div className="text-center mb-4 sm:mb-6">
+        <h2 className="text-lg sm:text-xl font-bold text-stone-900 mb-1 sm:mb-2">
           Informations du Conjoint B
         </h2>
-        <p className="text-stone-600 text-sm">
+        <p className="text-stone-600 text-xs sm:text-sm">
           Renseignez les revenus, enfants à charge et la situation fiscale
         </p>
       </div>
 
-      <div className="bg-stone-50 rounded-xl p-6">
-        <div className="flex items-center gap-3 mb-4">
-          <div className="w-10 h-10 bg-stone-200 rounded-full flex items-center justify-center">
-            <span className="text-stone-600 font-semibold">B</span>
+      <div className="bg-stone-50 rounded-xl p-4 sm:p-6">
+        <div className="flex items-center gap-2 sm:gap-3 mb-3 sm:mb-4">
+          <div className="w-8 h-8 sm:w-10 sm:h-10 bg-stone-200 rounded-full flex items-center justify-center">
+            <span className="text-stone-600 font-semibold text-sm sm:text-base">B</span>
           </div>
-          <h3 className="font-semibold text-stone-900">Conjoint B</h3>
+          <h3 className="font-semibold text-stone-900 text-sm sm:text-base">Conjoint B</h3>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           <Input
             label="Revenu net annuel imposable"
             type="number"
@@ -174,17 +177,16 @@ function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorForm
       </div>
 
       {/* Info Box */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4">
-        <div className="flex items-start gap-3">
-          <svg className="w-5 h-5 text-blue-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4">
+        <div className="flex items-start gap-2 sm:gap-3">
+          <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
-          <div className="text-sm text-blue-800">
-            <p className="font-medium mb-1">💡 Comment ça marche ?</p>
+          <div className="text-xs sm:text-sm text-blue-800">
+            <p className="font-medium mb-1">Comment ça marche ?</p>
             <p>
               Nous comparons l&apos;impôt que vous payeriez séparément (célibataires)
               versus ensemble (PACS ou mariage) pour déterminer la situation la plus avantageuse.
-              Les parts fiscales sont calculées automatiquement selon vos situations.
             </p>
           </div>
         </div>
@@ -195,7 +197,7 @@ function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorForm
 
 export function SimulatorForm({ register, watch, setValue, errors, currentStep, onNextStep, onPrevStep }: SimulatorFormProps) {
   return (
-    <div className="space-y-6">
+    <div className="space-y-4 sm:space-y-6">
       <StepIndicator currentStep={currentStep} />
 
       {currentStep === 1 && (
@@ -205,17 +207,19 @@ export function SimulatorForm({ register, watch, setValue, errors, currentStep, 
         <StepConjointB register={register} watch={watch} setValue={setValue} errors={errors} />
       )}
 
-      <div className="flex justify-between pt-6 border-t border-stone-100">
+      <div className="flex justify-between pt-4 sm:pt-6 border-t border-stone-100">
         {currentStep > 1 ? (
           <Button
             type="button"
             variant="outline"
             onClick={onPrevStep}
+            size="sm"
           >
-            <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
-            Précédent
+            <span className="hidden sm:inline">Précédent</span>
+            <span className="sm:hidden">Retour</span>
           </Button>
         ) : (
           <div />
@@ -225,9 +229,10 @@ export function SimulatorForm({ register, watch, setValue, errors, currentStep, 
           <Button
             type="button"
             onClick={onNextStep}
+            size="sm"
           >
             Suivant
-            <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 ml-1 sm:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Button>

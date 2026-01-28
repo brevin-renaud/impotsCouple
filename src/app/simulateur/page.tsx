@@ -120,22 +120,22 @@ export default function SimulateurPage() {
   }
 
   return (
-    <div className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
-      <div className="container mx-auto px-4">
+    <div className="min-h-screen py-6 sm:py-12 bg-linear-to-b from-orange-50 to-stone-50">
+      <div className="container mx-auto px-3 sm:px-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}
-          <div className="text-center mb-8">
-            <h1 className="text-3xl font-bold text-stone-900 mb-2">
+          <div className="text-center mb-6 sm:mb-8">
+            <h1 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-2">
               Simulateur fiscal
             </h1>
-            <p className="text-stone-600">
+            <p className="text-stone-600 text-sm sm:text-base">
               Comparez l&apos;impact du célibat et de l&apos;union sur vos impôts
             </p>
           </div>
 
           {/* Form */}
           <Card variant="elevated">
-            <CardContent className="p-8">
+            <CardContent className="p-4 sm:p-8">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <SimulatorForm 
                   register={register} 
