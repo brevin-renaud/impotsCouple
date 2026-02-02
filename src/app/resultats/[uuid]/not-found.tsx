@@ -3,7 +3,7 @@ import { Button } from '@/components/ui'
 
 export default function ResultsNotFound() {
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 bg-gradient-to-b from-orange-50 to-stone-50">
+    <div className="min-h-screen flex items-center justify-center py-12 bg-linear-to-b from-orange-50 to-stone-50">
       <div className="container mx-auto px-4">
         <div className="max-w-md mx-auto text-center">
           <div className="w-20 h-20 bg-stone-100 rounded-full flex items-center justify-center mx-auto mb-6">

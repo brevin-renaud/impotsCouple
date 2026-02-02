@@ -135,7 +135,7 @@ export default function SimulateurPage() {
 
           {/* Form */}
           <Card variant="elevated">
-            <CardContent className="p-4 sm:p-8">
+            <CardContent>
               <form onSubmit={handleSubmit(onSubmit)}>
                 <SimulatorForm 
                   register={register} 

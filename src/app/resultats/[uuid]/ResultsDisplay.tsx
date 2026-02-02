@@ -45,7 +45,7 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
     ]
 
     return (
-        <div className="min-h-screen py-6 sm:py-12 bg-gradient-to-b from-orange-50 to-stone-50">
+        <div className="min-h-screen py-6 sm:py-12 bg-linear-to-b from-orange-50 to-stone-50">
             <div className="container mx-auto px-3 sm:px-4">
                 <div className="max-w-4xl mx-auto">
                     {/* Header */}
@@ -68,7 +68,7 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                     <Card
                         variant="elevated"
                         className={`mb-8 border-2 ${gain > 0
-                            ? 'border-green-200 bg-gradient-to-br from-green-50 to-white'
+                            ? 'border-green-200 bg-linear-to-br from-green-50 to-white'
                             : 'border-stone-200'
                             }`}
                     >

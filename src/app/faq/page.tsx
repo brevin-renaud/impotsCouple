@@ -164,7 +164,7 @@ export default function FaqPage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
       />
 
-      <div className="min-h-screen py-12 bg-gradient-to-b from-orange-50 to-stone-50">
+      <div className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             {/* Breadcrumb */}
@@ -193,7 +193,7 @@ export default function FaqPage() {
             </header>
 
             {/* CTA Principal */}
-            <Card variant="elevated" className="mb-12 bg-gradient-to-r from-orange-500 to-orange-600 border-0">
+            <Card variant="elevated" className="mb-12 bg-linear-to-r from-orange-500 to-orange-600 border-0">
               <CardContent className="p-8 text-center">
                 <h2 className="text-2xl font-bold text-white mb-3">
                   Vous avez une question spécifique à votre situation ?
@@ -249,7 +249,7 @@ export default function FaqPage() {
             ))}
 
             {/* CTA Final */}
-            <Card variant="elevated" className="bg-gradient-to-r from-orange-500 to-orange-600 border-0">
+            <Card variant="elevated" className="bg-linear-to-r from-orange-500 to-orange-600 border-0">
               <CardContent className="p-8 text-center">
                 <h2 className="text-2xl font-bold text-white mb-3">
                   Vous n&apos;avez pas trouvé votre réponse ?
