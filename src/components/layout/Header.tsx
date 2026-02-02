@@ -24,7 +24,7 @@ export function Header() {
         <div className="flex h-14 sm:h-16 items-center justify-between">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2" title="ImpotsCouple - Simulateur PACS Mariage" onClick={closeMenu}>
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-linear-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-xs sm:text-sm">IC</span>
             </div>
             <span className="font-semibold text-stone-900 text-sm sm:text-base">

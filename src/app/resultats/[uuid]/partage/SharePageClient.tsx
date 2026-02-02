@@ -215,7 +215,7 @@ export function SharePageClient({ uuid, results, inputs }: SharePageClientProps)
   }
 
   return (
-    <div className="min-h-screen py-12 bg-gradient-to-b from-orange-50 to-stone-50">
+    <div className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
       <div className="container mx-auto px-4">
         <div className="max-w-2xl mx-auto">
           {/* Header */}

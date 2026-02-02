@@ -10,7 +10,7 @@ export function Footer() {
           {/* Brand */}
           <div className="col-span-2 md:col-span-1">
             <Link href="/" className="flex items-center gap-2 mb-3 sm:mb-4" title="ImpotsCouple - Accueil">
-              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-gradient-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
+              <div className="w-7 h-7 sm:w-8 sm:h-8 bg-linear-to-br from-orange-400 to-orange-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xs sm:text-sm">IC</span>
               </div>
               <span className="font-semibold text-white text-sm sm:text-base">

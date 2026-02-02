@@ -18,7 +18,7 @@ export default function Home() {
       <JsonLd />
 
       {/* Hero Section - Optimisé SEO */}
-      <section className="relative overflow-hidden bg-gradient-to-b from-orange-50 to-stone-50 pt-8 pb-12 sm:pt-16 sm:pb-24">
+      <section className="relative overflow-hidden bg-linear-to-b from-orange-50 to-stone-50 pt-8 pb-12 sm:pt-16 sm:pb-24">
         <div className="container mx-auto px-3 sm:px-4">
           <div className="max-w-3xl mx-auto text-center">
             <div className="inline-flex items-center gap-2 bg-orange-100 text-orange-700 px-3 py-1.5 sm:px-4 sm:py-2 rounded-full text-xs sm:text-sm font-medium mb-4 sm:mb-6">
@@ -126,7 +126,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-12 sm:py-20 bg-gradient-to-b from-stone-50 to-white">
+      <section className="py-12 sm:py-20 bg-linear-to-b from-stone-50 to-white">
         <div className="container mx-auto px-3 sm:px-4">
           <div className="text-center mb-8 sm:mb-12">
             <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-3 sm:mb-4">
@@ -261,7 +261,7 @@ export default function Home() {
       </section>
 
       {/* CTA Section */}
-      <section className="py-12 sm:py-20 bg-gradient-to-br from-orange-500 to-orange-600">
+      <section className="py-12 sm:py-20 bg-linear-to-br from-orange-500 to-orange-600">
         <div className="container mx-auto px-3 sm:px-4 text-center">
           <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-3 sm:mb-4">
             Prêt à calculer votre économie d&apos;impôts ?
@@ -344,7 +344,7 @@ export default function Home() {
           <div className="max-w-3xl mx-auto">
             <div className="bg-white rounded-2xl p-4 sm:p-8 shadow-sm border border-stone-200">
               <div className="flex items-start gap-3 sm:gap-4">
-                <div className="flex-shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center">
+                <div className="shrink-0 w-10 h-10 sm:w-12 sm:h-12 bg-green-100 rounded-full flex items-center justify-center">
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                   </svg>
