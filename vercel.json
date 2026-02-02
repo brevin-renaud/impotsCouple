@@ -2,12 +2,94 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "framework": "nextjs",
   "regions": ["cdg1"],
+
   "crons": [
     {
       "path": "/api/cleanup",
       "schedule": "0 3 * * *"
     }
   ],
+
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.impotscouple.fr"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "impotscouple.com"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.impotscouple.com"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "impotscouple.info"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.impotscouple.info"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "impotscouple.store"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.impotscouple.store"
+        }
+      ],
+      "destination": "https://impotscouple.fr/$1",
+      "permanent": true
+    }
+  ],
+
   "headers": [
     {
       "source": "/(.*)",
