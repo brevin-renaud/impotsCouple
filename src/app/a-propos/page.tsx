@@ -12,6 +12,20 @@ export const metadata: Metadata = {
     description: 'Découvrez notre mission : rendre la fiscalité des couples accessible à tous avec un simulateur gratuit et anonyme.',
     url: 'https://impotscouple.fr/a-propos',
     type: 'website',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'À propos de ImpotsCouple - Simulateur Fiscal Gratuit',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'À propos de ImpotsCouple - Simulateur Fiscal Gratuit',
+    description: 'Découvrez notre mission : rendre la fiscalité des couples accessible à tous.',
+    images: ['https://impotscouple.fr/social-image.png'],
   },
 }
 

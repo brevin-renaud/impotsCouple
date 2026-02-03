@@ -15,6 +15,25 @@ export const metadata: Metadata = {
     index: false,
     follow: false,
   },
+  openGraph: {
+    title: 'Résultats de simulation fiscale - ImpotsCouple',
+    description: 'Découvrez les résultats de cette simulation PACS/Mariage.',
+    type: 'website',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Résultats de simulation fiscale - ImpotsCouple',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Résultats de simulation fiscale - ImpotsCouple',
+    description: 'Découvrez les résultats de cette simulation PACS/Mariage.',
+    images: ['https://impotscouple.fr/social-image.png'],
+  },
 }
 
 async function getSimulation(uuid: string) {

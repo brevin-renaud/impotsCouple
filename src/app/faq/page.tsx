@@ -15,6 +15,20 @@ export const metadata: Metadata = {
       'Toutes les réponses à vos questions sur la fiscalité des couples : PACS, mariage, quotient familial.',
     url: 'https://impotscouple.fr/faq',
     type: 'website',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'FAQ Impôts Couple 2026 : Questions Fréquentes',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'FAQ Impôts Couple 2026 : Questions Fréquentes',
+    description: 'Toutes les réponses à vos questions sur la fiscalité des couples.',
+    images: ['https://impotscouple.fr/social-image.png'],
   },
 }
 
