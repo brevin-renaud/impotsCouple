@@ -79,9 +79,9 @@ export default function QuotientFamilialPage() {
 
             {/* CTA Principal */}
             <Card variant="elevated" className="mb-12 bg-linear-to-r from-orange-500 to-orange-600 border-0">
-              <CardContent className="p-8 text-center">
+              <CardContent className="p-4 md:p-8 text-center">
                 <h2 className="text-2xl font-bold text-white mb-3 flex items-center justify-center gap-2">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-7 h-7  hidden md:inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                   Calculez vos parts fiscales automatiquement
@@ -150,7 +150,7 @@ export default function QuotientFamilialPage() {
             <article className="prose prose-stone max-w-none">
               {/* Définition */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="definition" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     1. Qu&apos;est-ce que le quotient familial ?
                   </h2>
@@ -178,7 +178,7 @@ export default function QuotientFamilialPage() {
 
               {/* Calcul */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="calcul" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     2. Comment se calcule le quotient familial ?
                   </h2>
@@ -245,7 +245,7 @@ export default function QuotientFamilialPage() {
 
               {/* Tableau des parts */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="nombre-parts" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     3. Tableau des parts fiscales 2026
                   </h2>
@@ -329,7 +329,7 @@ export default function QuotientFamilialPage() {
 
               {/* Plafonnement */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="plafonnement" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     4. Le plafonnement du quotient familial
                   </h2>
@@ -362,7 +362,7 @@ export default function QuotientFamilialPage() {
 
               {/* Exemple */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="exemple" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     5. Exemple de calcul détaillé
                   </h2>
@@ -403,7 +403,7 @@ export default function QuotientFamilialPage() {
 
               {/* Cas particuliers */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="cas-particuliers" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     6. Cas particuliers
                   </h2>

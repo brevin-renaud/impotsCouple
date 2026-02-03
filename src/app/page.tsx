@@ -34,8 +34,8 @@ export default function Home() {
             </h1>
 
             <p className="text-base sm:text-lg md:text-xl text-stone-600 mb-6 sm:mb-8 max-w-2xl mx-auto">
-              Comparez <strong>célibat vs PACS vs mariage</strong> en 2 minutes. 
-              Découvrez combien vous pourriez économiser chaque année grâce au quotient familial 
+              Comparez <strong>célibat vs PACS vs mariage</strong> en 2 minutes.
+              Découvrez combien vous pourriez économiser chaque année grâce au quotient familial
               et à l&apos;imposition commune.
             </p>
 
@@ -71,7 +71,7 @@ export default function Home() {
             </h2>
             <div className="grid md:grid-cols-2 gap-4 sm:gap-6">
               <Card variant="outlined" className="hover:border-orange-300 transition-colors">
-                <CardContent className="p-4 sm:p-6">
+                <CardContent className="p-0 sm:p-0">
                   <h3 className="text-xl font-semibold text-stone-900 mb-3 flex items-center gap-2">
                     <svg className="w-6 h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -79,8 +79,8 @@ export default function Home() {
                     Le PACS et les impôts
                   </h3>
                   <p className="text-stone-600 mb-4">
-                    Le <strong>PACS (Pacte Civil de Solidarité)</strong> permet une imposition commune 
-                    dès l&apos;année de signature. Les partenaires pacsés bénéficient du même quotient 
+                    Le <strong>PACS (Pacte Civil de Solidarité)</strong> permet une imposition commune
+                    dès l&apos;année de signature. Les partenaires pacsés bénéficient du même quotient
                     familial que les couples mariés.
                   </p>
                   <Link href="/pacs" className="text-orange-600 hover:text-orange-700 font-medium inline-flex items-center">
@@ -92,7 +92,7 @@ export default function Home() {
                 </CardContent>
               </Card>
               <Card variant="outlined" className="hover:border-orange-300 transition-colors">
-                <CardContent className="p-4 sm:p-6">
+                <CardContent className="p-0 sm:p-0">
                   <h3 className="text-lg sm:text-xl font-semibold text-stone-900 mb-2 sm:mb-3 flex items-center gap-2">
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -100,8 +100,8 @@ export default function Home() {
                     Le Mariage et les impôts
                   </h3>
                   <p className="text-stone-600 mb-4">
-                    Le <strong>mariage</strong> offre les mêmes avantages fiscaux que le PACS 
-                    (imposition commune, quotient familial) plus des avantages successoraux et 
+                    Le <strong>mariage</strong> offre les mêmes avantages fiscaux que le PACS
+                    (imposition commune, quotient familial) plus des avantages successoraux et
                     la pension de réversion.
                   </p>
                   <Link href="/mariage" className="text-orange-600 hover:text-orange-700 font-medium inline-flex items-center">
@@ -113,11 +113,11 @@ export default function Home() {
                 </CardContent>
               </Card>
             </div>
-            
+
             <div className="mt-6 sm:mt-8 bg-blue-50 border border-blue-200 rounded-xl p-4 sm:p-6 text-center">
               <p className="text-blue-800 text-sm sm:text-base">
-                <strong>Bon à savoir :</strong> Sur le plan strictement fiscal (impôt sur le revenu), 
-                le PACS et le mariage sont <strong>100% identiques</strong>. Notre simulateur compare 
+                <strong>Bon à savoir :</strong> Sur le plan strictement fiscal (impôt sur le revenu),
+                le PACS et le mariage sont <strong>100% identiques</strong>. Notre simulateur compare
                 les deux scénarios d&apos;union avec le célibat.
               </p>
             </div>
@@ -137,7 +137,7 @@ export default function Home() {
             </p>
           </div>
 
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-6 max-w-5xl mx-auto">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6 max-w-5xl mx-auto">
             {[
               {
                 step: "1",
@@ -180,7 +180,7 @@ export default function Home() {
                 ),
               },
             ].map((feature, index) => (
-              <Card key={index} variant="default" className="text-center hover:shadow-lg transition-shadow">
+              <Card key={index} variant="default" className="text-center hover:shadow-lg transition-shadow p-4 md:p-0">
                 <CardContent className="p-3 sm:pt-6 sm:p-6">
                   <div className="w-10 h-10 sm:w-12 sm:h-12 bg-orange-100 rounded-xl flex items-center justify-center mx-auto mb-3 sm:mb-4 text-orange-600">
                     {feature.icon}
@@ -222,32 +222,32 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-6 sm:mb-8 text-center">
               Pourquoi se pacser ou se marier peut réduire vos impôts ?
             </h2>
-            
+
             <div className="prose prose-stone max-w-none">
               <Card variant="elevated">
-                <CardContent className="p-4 sm:p-8">
+                <CardContent className="p-0 sm:p-0">
                   <h3 className="text-lg sm:text-xl font-semibold text-stone-900 mb-3 sm:mb-4">
                     Le mécanisme du quotient familial
                   </h3>
                   <p className="text-stone-600 mb-4">
-                    En France, l&apos;impôt sur le revenu est calculé selon un <strong>barème progressif</strong> : 
-                    plus vous gagnez, plus votre taux d&apos;imposition augmente. Le <strong>quotient familial</strong> 
+                    En France, l&apos;impôt sur le revenu est calculé selon un <strong>barème progressif</strong> :
+                    plus vous gagnez, plus votre taux d&apos;imposition augmente. Le <strong>quotient familial</strong>
                     permet de diviser vos revenus par le nombre de &quot;parts&quot; de votre foyer fiscal.
                   </p>
                   <p className="text-stone-600 mb-4">
-                    <strong>Exemple concret :</strong> Un célibataire gagnant 50 000 € a 1 part fiscale. 
-                    S&apos;il se pacse ou se marie avec quelqu&apos;un gagnant 20 000 €, le couple a 2 parts. 
-                    Leurs 70 000 € sont divisés par 2 = 35 000 € par part, ce qui les place dans une 
+                    <strong>Exemple concret :</strong> Un célibataire gagnant 50 000 € a 1 part fiscale.
+                    S&apos;il se pacse ou se marie avec quelqu&apos;un gagnant 20 000 €, le couple a 2 parts.
+                    Leurs 70 000 € sont divisés par 2 = 35 000 € par part, ce qui les place dans une
                     tranche d&apos;imposition plus basse.
                   </p>
                   <div className="bg-green-50 border border-green-200 rounded-lg p-4">
                     <p className="text-green-800 text-sm">
-                      <strong>Résultat :</strong> Plus l&apos;écart de revenus entre les conjoints est important, 
-                      plus l&apos;économie d&apos;impôts est significative. Un couple où l&apos;un gagne beaucoup plus que 
+                      <strong>Résultat :</strong> Plus l&apos;écart de revenus entre les conjoints est important,
+                      plus l&apos;économie d&apos;impôts est significative. Un couple où l&apos;un gagne beaucoup plus que
                       l&apos;autre peut économiser plusieurs milliers d&apos;euros par an.
                     </p>
                   </div>
-                  
+
                   <div className="mt-6 text-center">
                     <Link href="/quotient-familial" className="text-orange-600 hover:text-orange-700 font-medium">
                       → Tout comprendre sur le quotient familial
@@ -287,7 +287,7 @@ export default function Home() {
             <h2 className="text-2xl sm:text-3xl font-bold text-stone-900 mb-6 sm:mb-8 text-center">
               Nos guides pour comprendre la fiscalité des couples
             </h2>
-            
+
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               <Link href="/pacs">
                 <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
