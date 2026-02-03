@@ -4,11 +4,31 @@ import Link from "next/link";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Simulateur PACS Mariage 2026 - Calcul Impôts Couple Gratuit | ImpotsCouple",
+  title: "Simulateur PACS Mariage 2026 - Calcul Impôts Couple Gratuit",
   description:
-    "Calculez gratuitement votre économie d'impôts avec le PACS ou le mariage en 2026. Comparez célibat vs union en 2 minutes. Simulateur anonyme basé sur le barème fiscal officiel français.",
+    "Comparez célibat vs union en 2 minutes. Calculez gratuitement votre économie d'impôts avec le PACS ou le mariage en 2026.",
   alternates: {
     canonical: "https://impotscouple.fr",
+  },
+  openGraph: {
+    title: "Simulateur PACS Mariage 2026 - Calcul Impôts Couple Gratuit",
+    description: "Comparez célibat vs union en 2 minutes. Calculez gratuitement votre économie d'impôts.",
+    url: "https://impotscouple.fr",
+    type: "website",
+    images: [
+      {
+        url: "https://impotscouple.fr/social-image.png",
+        width: 1200,
+        height: 630,
+        alt: "Simulateur PACS Mariage 2026 - Calcul Impôts Couple Gratuit",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Simulateur PACS Mariage 2026 - Calcul Impôts Couple Gratuit",
+    description: "Comparez célibat vs union en 2 minutes. Calculez gratuitement votre économie d'impôts.",
+    images: ["https://impotscouple.fr/social-image.png"],
   },
 };
 
@@ -288,9 +308,9 @@ export default function Home() {
               Nos guides pour comprendre la fiscalité des couples
             </h2>
 
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
               <Link href="/pacs">
-                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
+                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full p-4 md:p-4">
                   <CardContent className="p-3 sm:p-5 text-center">
                     <svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
@@ -301,7 +321,7 @@ export default function Home() {
                 </Card>
               </Link>
               <Link href="/mariage">
-                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
+                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full p-4 md:p-4">
                   <CardContent className="p-3 sm:p-5 text-center">
                     <svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
@@ -312,7 +332,7 @@ export default function Home() {
                 </Card>
               </Link>
               <Link href="/quotient-familial">
-                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
+                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full p-4 md:p-4">
                   <CardContent className="p-3 sm:p-5 text-center">
                     <svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
@@ -323,7 +343,7 @@ export default function Home() {
                 </Card>
               </Link>
               <Link href="/faq">
-                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
+                <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full p-4 md:p-4">
                   <CardContent className="p-3 sm:p-5 text-center">
                     <svg className="w-6 h-6 sm:w-8 sm:h-8 mx-auto mb-2 sm:mb-3 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />

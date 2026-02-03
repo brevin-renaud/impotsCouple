@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { Header, Footer } from "@/components/layout";
+import { Analytics } from "@vercel/analytics/react";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_APP_URL || "https://impotscouple.fr"),
   title: {
     default: "Simulateur PACS Mariage 2026 - Calcul Impôts Couple Gratuit | ImpotsCouple",
-    template: "%s | ImpotsCouple - Simulateur Fiscal",
+    template: "%s - Simulation gratuite",
   },
   description:
     "Simulateur gratuit PACS et mariage 2026 : calculez vos économies d'impôts en couple. Comparez célibat vs union, quotient familial, déclaration commune. Outil anonyme et fiable basé sur le barème fiscal officiel français.",
@@ -33,25 +34,27 @@ export const metadata: Metadata = {
     url: "https://impotscouple.fr",
     siteName: "ImpotsCouple - Simulateur PACS Mariage",
     title: "Simulateur PACS Mariage 2026 - Calculez vos économies d'impôts",
-    description:
-      "Calculez gratuitement l'avantage fiscal du PACS ou mariage. Comparez célibat vs union en 2 minutes. Simulation anonyme basée sur le barème officiel 2026.",
     images: [
       {
-        url: "/og-image.png",
+        url: "https://impotscouple.fr/social-image.png",
         width: 1200,
         height: 630,
-        alt: "ImpotsCouple - Simulateur fiscal PACS et Mariage 2026",
+        alt: "Simulateur PACS Mariage 2026 - Économisez sur vos impôts",
       },
     ],
+    description:
+      "Calculez gratuitement l'avantage fiscal du PACS ou mariage. Comparez célibat vs union en 2 minutes. Simulation anonyme basée sur le barème officiel 2026.",
   },
   twitter: {
     card: "summary_large_image",
     site: "@ImpotsCouple",
     creator: "@ImpotsCouple",
     title: "Simulateur PACS Mariage 2026 - Économisez sur vos impôts",
+    images: [
+      "https://impotscouple.fr/social-image.png",
+    ],
     description:
       "Calculez en 2 minutes si le PACS ou le mariage peut vous faire économiser des impôts. Gratuit et anonyme.",
-    images: ["/og-image.png"],
   },
   robots: {
     index: true,
@@ -87,6 +90,7 @@ export default function RootLayout({
         <Header />
         <main className="min-h-screen">{children}</main>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );

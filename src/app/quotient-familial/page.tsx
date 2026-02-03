@@ -5,7 +5,7 @@ import { Card, CardContent, Button } from '@/components/ui'
 export const metadata: Metadata = {
   title: 'Quotient Familial 2026 : Calcul, Parts Fiscales et Plafonnement',
   description:
-    'Comprendre le quotient familial en 2026 : calcul des parts fiscales, plafonnement, avantages pour les couples et familles. Guide complet avec exemples et simulateur gratuit.',
+    'Comprendre le quotient familial en 2026 : calcul des parts fiscales, plafonnement, avantages pour les couples et familles. Guide complet et simulateur gratuit.',
   alternates: {
     canonical: 'https://impotscouple.fr/quotient-familial',
   },
@@ -15,6 +15,20 @@ export const metadata: Metadata = {
       'Guide complet sur le quotient familial : calcul des parts, plafonnement, avantages. Simulateur gratuit.',
     url: 'https://impotscouple.fr/quotient-familial',
     type: 'article',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
+    description: 'Guide complet sur le quotient familial : calcul des parts, plafonnement, avantages.',
+    images: ['https://impotscouple.fr/social-image.png'],
   },
 }
 

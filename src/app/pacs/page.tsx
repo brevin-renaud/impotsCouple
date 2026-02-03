@@ -3,9 +3,9 @@ import Link from 'next/link'
 import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'PACS 2026 : Guide Complet, Avantages Fiscaux et Démarches',
+  title: 'PACS 2026 : Guide, Avantages et Démarches',
   description:
-    'Tout savoir sur le PACS en 2026 : avantages fiscaux, impôts, quotient familial, différence avec le mariage. Guide complet avec simulateur gratuit pour calculer votre économie.',
+    'Tout savoir sur le PACS en 2026 : avantages fiscaux, impôts, quotient familial, différence avec le mariage. Guide complet et simulateur gratuit.',
   alternates: {
     canonical: 'https://impotscouple.fr/pacs',
   },
@@ -15,6 +15,20 @@ export const metadata: Metadata = {
       'Découvrez tous les avantages du PACS : impôts, succession, patrimoine. Simulateur gratuit pour calculer votre économie fiscale.',
     url: 'https://impotscouple.fr/pacs',
     type: 'article',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'PACS 2026 : Guide Complet, Avantages Fiscaux et Démarches',
+      },
+    ]
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'PACS 2026 : Guide Complet et Avantages Fiscaux',
+    description: 'Découvrez tous les avantages du PACS : impôts, succession, patrimoine.',
+    images: ['https://impotscouple.fr/social-image.png'],
   },
 }
 
@@ -412,7 +426,7 @@ export default function PacsPage() {
 
                   <div className="space-y-4 mb-6">
                     <div className="flex gap-4 items-start">
-                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold shrink-0">
                         1
                       </div>
                       <div>
@@ -423,7 +437,7 @@ export default function PacsPage() {
                       </div>
                     </div>
                     <div className="flex gap-4 items-start">
-                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold shrink-0">
                         2
                       </div>
                       <div>
@@ -434,7 +448,7 @@ export default function PacsPage() {
                       </div>
                     </div>
                     <div className="flex gap-4 items-start">
-                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold shrink-0">
                         3
                       </div>
                       <div>
@@ -445,7 +459,7 @@ export default function PacsPage() {
                       </div>
                     </div>
                     <div className="flex gap-4 items-start">
-                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold flex-shrink-0">
+                      <div className="w-8 h-8 bg-orange-100 rounded-full flex items-center justify-center text-orange-600 font-bold shrink-0">
                         4
                       </div>
                       <div>

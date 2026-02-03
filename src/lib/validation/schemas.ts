@@ -39,6 +39,11 @@ export const simulationSchema = z.object({
   // Champs legacy pour compatibilité (seront calculés automatiquement)
   childrenCount: z.number().min(0).max(20).optional(),
   children: z.array(childSchema).optional(),
+
+  // Consentement au traitement des données
+  consentData: z.boolean().refine((val) => val === true, {
+    message: 'Vous devez accepter le traitement de vos données pour continuer',
+  }),
 })
 
 // Type inféré du schéma
@@ -66,6 +71,7 @@ export const defaultSimulationValues: SimulationFormData = {
   childrenB: [],
   childrenCount: 0,
   children: [],
+  consentData: false,
 }
 
 // Fonction helper pour calculer les parts des enfants de manière cohérente

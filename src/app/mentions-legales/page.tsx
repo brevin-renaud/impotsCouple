@@ -4,6 +4,26 @@ import { Card, CardContent } from '@/components/ui'
 export const metadata: Metadata = {
   title: 'Mentions légales',
   description: 'Mentions légales du site ImpotsCouple - Simulateur fiscal PACS vs Mariage.',
+  openGraph: {
+    title: 'Mentions légales - ImpotsCouple',
+    description: 'Mentions légales du site ImpotsCouple - Simulateur fiscal PACS vs Mariage.',
+    url: 'https://impotscouple.fr/mentions-legales',
+    type: 'website',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Mentions légales - ImpotsCouple',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mentions légales - ImpotsCouple',
+    description: 'Mentions légales du site ImpotsCouple.',
+    images: ['https://impotscouple.fr/social-image.png'],
+  },
 }
 
 export default function MentionsLegalesPage() {

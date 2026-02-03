@@ -3,9 +3,9 @@ import Link from 'next/link'
 import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'Mariage 2026 : Avantages Fiscaux, Impôts et Guide Complet',
+  title: 'Mariage 2026 : Avantages, Impôts et Guide',
   description:
-    'Tout savoir sur le mariage en 2026 : avantages fiscaux, calcul des impôts, quotient familial, succession. Guide complet avec simulateur gratuit pour calculer votre économie.',
+    'Tout savoir sur le mariage en 2026 : avantages fiscaux, calcul des impôts, quotient familial, succession. Simulez votre économie gratuitement.',
   alternates: {
     canonical: 'https://impotscouple.fr/mariage',
   },
@@ -15,6 +15,20 @@ export const metadata: Metadata = {
       'Découvrez tous les avantages fiscaux du mariage : impôts, succession, patrimoine. Simulateur gratuit pour calculer votre économie.',
     url: 'https://impotscouple.fr/mariage',
     type: 'article',
+    images: [
+      {
+        url: 'https://impotscouple.fr/social-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'Mariage 2026 : Avantages Fiscaux et Guide Complet',
+      },
+    ],
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Mariage 2026 : Avantages Fiscaux et Guide Complet',
+    description: 'Découvrez tous les avantages fiscaux du mariage : impôts, succession, patrimoine.',
+    images: ['https://impotscouple.fr/social-image.png'],
   },
 }
 

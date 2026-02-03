@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react'
 import { UseFormRegister, UseFormWatch, UseFormSetValue, FieldErrors } from 'react-hook-form'
-import { Input, Button } from '@/components/ui'
+import { Input, Button, Checkbox } from '@/components/ui'
 import { PartsCalculator } from './PartsCalculator'
 import type { SimulationFormData } from '@/lib/validation/schemas'
 import { calculateSingleParts, defaultPartsOptions } from '@/lib/validation/schemas'
@@ -176,18 +176,33 @@ function StepConjointB({ register, watch, setValue, errors }: Omit<SimulatorForm
         </div>
       </div>
 
-      {/* Info Box */}
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-3 sm:p-4">
-        <div className="flex items-start gap-2 sm:gap-3">
-          <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div className="text-xs sm:text-sm text-blue-800">
-            <p className="font-medium mb-1">Comment ça marche ?</p>
-            <p>
-              Nous comparons l&apos;impôt que vous payeriez séparément (célibataires)
-              versus ensemble (PACS ou mariage) pour déterminer la situation la plus avantageuse.
-            </p>
+      {/* Consentement données */}
+      <div className="bg-stone-50 border border-stone-200 rounded-xl p-3 sm:p-4">
+        <div className="space-y-3">
+          <div className="flex items-start gap-2 sm:gap-3">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-stone-600 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+            </svg>
+            <div className="text-xs sm:text-sm text-stone-600">
+              <p className="font-medium text-stone-700 mb-1">Protection de vos données</p>
+              <p>
+                Vos données sont <strong>anonymes et intraçables</strong>. Elles sont utilisées uniquement 
+                pour effectuer le calcul de votre simulation et sont <strong>automatiquement supprimées après 30 jours</strong>.
+              </p>
+            </div>
+          </div>
+          
+          <div className="pt-2 border-t border-stone-200">
+            <Checkbox
+              {...register('consentData')}
+              label="J'accepte que mes données soient traitées et conservées"
+              description="Requis pour effectuer la simulation"
+            />
+            {errors.consentData && (
+              <p className="mt-2 text-xs sm:text-sm text-red-600">
+                {errors.consentData.message}
+              </p>
+            )}
           </div>
         </div>
       </div>
