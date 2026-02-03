@@ -80,9 +80,9 @@ export default function PacsPage() {
 
             {/* CTA Principal */}
             <Card variant="elevated" className="mb-12 bg-linear-to-r from-orange-500 to-orange-600 border-0">
-              <CardContent className="p-8 text-center">
+              <CardContent className="p-4 md:p-8 text-center">
                 <h2 className="text-2xl font-bold text-white mb-3 flex items-center justify-center gap-2">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-7 h-7  hidden md:inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                   Calculez votre économie d&apos;impôts avec le PACS
@@ -156,7 +156,7 @@ export default function PacsPage() {
             <article className="prose prose-stone max-w-none">
               {/* Définition */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="definition" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     1. Qu&apos;est-ce que le PACS ?
                   </h2>
@@ -185,7 +185,7 @@ export default function PacsPage() {
 
               {/* Avantages fiscaux */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="avantages-fiscaux" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     2. Les avantages fiscaux du PACS
                   </h2>
@@ -260,7 +260,7 @@ export default function PacsPage() {
 
               {/* Imposition commune */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="imposition-commune" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     3. L&apos;imposition commune
                   </h2>
@@ -295,7 +295,7 @@ export default function PacsPage() {
 
               {/* Quotient familial */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="quotient-familial" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     4. Le quotient familial en couple pacsé
                   </h2>
@@ -346,7 +346,7 @@ export default function PacsPage() {
 
               {/* PACS vs Mariage */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="difference-mariage" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     5. PACS vs Mariage : les différences
                   </h2>
@@ -402,7 +402,7 @@ export default function PacsPage() {
 
               {/* Démarches */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="demarches" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     6. Comment se pacser ?
                   </h2>
@@ -468,7 +468,7 @@ export default function PacsPage() {
 
               {/* Succession */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="succession" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     7. PACS et succession
                   </h2>

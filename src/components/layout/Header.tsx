@@ -15,6 +15,7 @@ export function Header() {
     { href: '/pacs', label: 'Guide PACS', title: 'Guide complet sur le PACS' },
     { href: '/mariage', label: 'Guide Mariage', title: 'Guide complet sur le mariage et les impôts' },
     { href: '/quotient-familial', label: 'Quotient Familial', title: 'Guide quotient familial et parts fiscales' },
+    { href: '/blog', label: 'Blog', title: 'Articles et conseils sur les impôts en couple' },
     { href: '/faq', label: 'FAQ', title: 'Questions fréquentes sur les impôts en couple' },
   ]
 

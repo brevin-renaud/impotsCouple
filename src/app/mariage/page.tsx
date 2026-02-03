@@ -79,11 +79,11 @@ export default function MariagePage() {
 
             {/* CTA Principal */}
             <Card variant="elevated" className="mb-12 bg-linear-to-r from-orange-500 to-orange-600 border-0">
-              <CardContent className="p-8 text-center">
+              <CardContent className="p-4 md:p-8 text-center">
                 <h2 className="text-2xl font-bold text-white mb-3 flex items-center justify-center gap-2">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-7 h-7 hidden md:inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                  </svg>
+                    </svg>
                   Calculez votre économie d&apos;impôts avec le mariage
                 </h2>
                 <p className="text-orange-100 mb-6">
@@ -155,7 +155,7 @@ export default function MariagePage() {
             <article className="prose prose-stone max-w-none">
               {/* Avantages fiscaux */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="avantages-fiscaux" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     1. Les avantages fiscaux du mariage
                   </h2>
@@ -251,7 +251,7 @@ export default function MariagePage() {
 
               {/* Imposition commune */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="imposition-commune" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     2. L&apos;imposition commune des époux
                   </h2>
@@ -287,7 +287,7 @@ export default function MariagePage() {
 
               {/* Quotient familial */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="quotient-familial" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     3. Le quotient familial pour les mariés
                   </h2>
@@ -338,7 +338,7 @@ export default function MariagePage() {
 
               {/* Succession */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="succession" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     4. Mariage et succession : une protection maximale
                   </h2>
@@ -386,7 +386,7 @@ export default function MariagePage() {
 
               {/* Pension de réversion */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="pension-reversion" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     5. La pension de réversion : un avantage exclusif du mariage
                   </h2>
@@ -425,7 +425,7 @@ export default function MariagePage() {
 
               {/* PACS vs Mariage */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="difference-pacs" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     6. Mariage vs PACS : que choisir ?
                   </h2>
@@ -481,7 +481,7 @@ export default function MariagePage() {
 
               {/* Régimes matrimoniaux */}
               <Card variant="elevated" className="mb-8">
-                <CardContent className="p-8">
+                <CardContent>
                   <h2 id="regimes-matrimoniaux" className="text-2xl font-bold text-stone-900 mb-4 scroll-mt-24">
                     7. Les régimes matrimoniaux et leur impact fiscal
                   </h2>

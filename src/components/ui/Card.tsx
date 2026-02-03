@@ -17,7 +17,7 @@ const Card = React.forwardRef<HTMLDivElement, CardProps>(
       <div
         ref={ref}
         className={cn(
-          'rounded-2xl p-6',
+          'rounded-2xl p-8 md:p-12',
           variants[variant],
           className
         )}

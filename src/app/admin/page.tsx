@@ -39,7 +39,7 @@ export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
       <Card variant="elevated" className="w-full max-w-md">
-        <CardContent className="p-8">
+        <CardContent>
           <div className="text-center mb-8">
             <h1 className="text-2xl font-bold text-stone-900 mb-2">
               Administration

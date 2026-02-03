@@ -95,7 +95,7 @@ export default async function BlogPage() {
           {/* CTA */}
           <div className="mt-12 text-center">
             <Card variant="elevated" className="bg-linear-to-br from-orange-500 to-orange-600 border-0">
-              <CardContent className="p-8">
+              <CardContent>
                 <h3 className="text-2xl font-bold text-white mb-2">
                   Prêt à calculer votre économie ?
                 </h3>
