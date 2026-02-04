@@ -18,6 +18,15 @@ export const metadata: Metadata = {
   description:
     "Simulateur gratuit PACS et mariage 2026 : calculez vos économies d'impôts en couple. Comparez célibat vs union, quotient familial, déclaration commune. Outil anonyme et fiable basé sur le barème fiscal officiel français.",
   authors: [{ name: "ImpotsCouple", url: "https://impotscouple.fr" }],
+  icons: {
+    icon: [
+      { url: '/favicon.ico' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
+    ],
+    apple: [
+      { url: '/apple-icon.svg', type: 'image/svg+xml' },
+    ],
+  },
   creator: "ImpotsCouple",
   publisher: "ImpotsCouple",
   alternates: {
