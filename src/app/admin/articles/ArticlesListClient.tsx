@@ -81,6 +81,12 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
             </div>
             <div className="flex items-center gap-4">
               <Link
+                href="/admin/avis"
+                className="px-4 py-2 text-stone-600 hover:text-orange-600 transition-colors text-sm"
+              >
+                Avis
+              </Link>
+              <Link
                 href="/admin/articles/nouveau"
                 className="px-4 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
               >

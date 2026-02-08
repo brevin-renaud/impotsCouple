@@ -51,6 +51,23 @@ model Simulation {
   @@index([createdAt])
 }
 
+// Avis / Feedback utilisateurs
+model Feedback {
+  id        String   @id @default(uuid()) @db.Uuid
+
+  // Note de 1 à 5
+  rating    Int
+
+  // Commentaire optionnel
+  comment   String?  @db.Text
+
+  // Metadata
+  createdAt DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([rating])
+}
+
 // Articles de blog
 model Article {
   id        String   @id @default(uuid()) @db.Uuid
