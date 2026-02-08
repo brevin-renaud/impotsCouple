@@ -3,6 +3,7 @@
 import { useEffect } from 'react'
 import Link from 'next/link'
 import { Card, CardContent, CardHeader, CardTitle, Button } from '@/components/ui'
+import { FeedbackWidget } from '@/components/simulator'
 import { formatCurrency } from '@/lib/utils'
 import type { SimulationResult } from '@/lib/fiscal/calculator'
 
@@ -228,6 +229,11 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                                 </CardContent>
                             </Card>
                         ))}
+                    </div>
+
+                    {/* Feedback */}
+                    <div className="mb-6 sm:mb-8">
+                        <FeedbackWidget />
                     </div>
 
                     {/* Info juridique */}
