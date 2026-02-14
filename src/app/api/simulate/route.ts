@@ -34,6 +34,20 @@ export async function POST(request: NextRequest) {
         incomeB: data.incomeB,
         partsB: data.partsB ?? 1,
         results: results as object,
+        // Nouveaux champs avec valeurs par défaut
+        fraisReelsA: data.fraisReelsA ?? 0,
+        fraisReelsB: data.fraisReelsB ?? 0,
+        children: data.childrenCount ?? 0,
+        gardeAlternee: data.gardeAlternee ?? false,
+        donsAssociations: data.donsAssociations ?? 0,
+        emploiDomicile: data.emploiDomicile ?? 0,
+        epargneRetraiteA: data.epargneRetraiteA ?? 0,
+        epargneRetraiteB: data.epargneRetraiteB ?? 0,
+        fraisGardeEnfants: data.fraisGardeEnfants ?? 0,
+        patrimoineImmoA: data.patrimoineImmoA ?? 0,
+        patrimoineImmoB: data.patrimoineImmoB ?? 0,
+        pensionVerseeA: data.pensionVerseeA ?? 0,
+        pensionVerseeB: data.pensionVerseeB ?? 0,
       },
     })
 
