@@ -126,6 +126,12 @@ export default function FeedbackListClient() {
             </div>
             <div className="flex items-center gap-4">
               <Link
+                href="/admin/stats"
+                className="px-4 py-2 text-stone-600 hover:text-orange-600 transition-colors text-sm"
+              >
+                Statistiques
+              </Link>
+              <Link
                 href="/admin/articles"
                 className="px-4 py-2 text-stone-600 hover:text-orange-600 transition-colors text-sm"
               >

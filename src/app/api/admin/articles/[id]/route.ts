@@ -19,6 +19,35 @@ const updateArticleSchema = z.object({
   isDraft: z.boolean().optional(),
 })
 
+// Fonction pour calculer la date de publication
+function calculatePublishDates(isDraft: boolean, publishedAt: string | null | undefined) {
+  // Si brouillon, pas de publication
+  if (isDraft) {
+    return { publishedAt: null, scheduledPublishAt: null }
+  }
+
+  // Si pas de date fournie, publier immédiatement
+  if (!publishedAt) {
+    return { publishedAt: new Date(), scheduledPublishAt: null }
+  }
+
+  const targetDate = new Date(publishedAt)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  targetDate.setHours(0, 0, 0, 0)
+
+  // Si la date est aujourd'hui ou dans le passé, publier immédiatement
+  if (targetDate <= today) {
+    return { publishedAt: new Date(), scheduledPublishAt: null }
+  }
+
+  // Si la date est dans le futur, programmer la publication à 10H
+  const scheduledDate = new Date(publishedAt)
+  scheduledDate.setHours(10, 0, 0, 0)
+  
+  return { publishedAt: null, scheduledPublishAt: scheduledDate }
+}
+
 // GET - Récupère un article par ID
 export async function GET(request: NextRequest, { params }: RouteParams) {
   try {
@@ -105,20 +134,30 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
       }
     }
     
+    // Calculer les dates de publication si nécessaire
+    const updateData: any = {
+      ...(data.title && { title: data.title }),
+      ...(data.slug && { slug: data.slug }),
+      ...(data.description && { description: data.description }),
+      ...(data.content && { content: data.content }),
+      ...(data.author && { author: data.author }),
+      ...(data.category && { category: data.category }),
+    }
+
+    // Si isDraft ou publishedAt sont modifiés, recalculer les dates
+    if (data.isDraft !== undefined || data.publishedAt !== undefined) {
+      const isDraft = data.isDraft !== undefined ? data.isDraft : existingArticle.isDraft
+      const publishedAtInput = data.publishedAt !== undefined ? data.publishedAt : (existingArticle.scheduledPublishAt || existingArticle.publishedAt)?.toISOString().split('T')[0]
+      
+      const { publishedAt, scheduledPublishAt } = calculatePublishDates(isDraft, publishedAtInput)
+      updateData.publishedAt = publishedAt
+      updateData.scheduledPublishAt = scheduledPublishAt
+      updateData.isDraft = isDraft // Toujours mettre à jour isDraft
+    }
+    
     const article = await prisma.article.update({
       where: { id },
-      data: {
-        ...(data.title && { title: data.title }),
-        ...(data.slug && { slug: data.slug }),
-        ...(data.description && { description: data.description }),
-        ...(data.content && { content: data.content }),
-        ...(data.author && { author: data.author }),
-        ...(data.category && { category: data.category }),
-        ...(data.publishedAt !== undefined && { 
-          publishedAt: data.publishedAt ? new Date(data.publishedAt) : null 
-        }),
-        ...(data.isDraft !== undefined && { isDraft: data.isDraft }),
-      },
+      data: updateData,
     })
     
     return NextResponse.json({ article })

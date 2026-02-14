@@ -27,9 +27,6 @@ export async function POST(request: NextRequest) {
       partsCouple: data.partsCouple ?? (data.partsA ?? 1) + (data.partsB ?? 1),
     })
 
-    const expiresAt = new Date()
-    expiresAt.setDate(expiresAt.getDate() + 30)
-
     const simulation = await prisma.simulation.create({
       data: {
         incomeA: data.incomeA,
@@ -37,7 +34,6 @@ export async function POST(request: NextRequest) {
         incomeB: data.incomeB,
         partsB: data.partsB ?? 1,
         results: results as object,
-        expiresAt,
       },
     })
 

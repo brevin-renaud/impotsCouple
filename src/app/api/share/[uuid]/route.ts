@@ -35,8 +35,24 @@ export async function GET(
       )
     }
 
+    // Vérifier si la simulation a été partagée
+    const hasBeenShared = await prisma.userAction.findFirst({
+      where: {
+        simulationId: uuid,
+        actionType: {
+          in: ['share_link', 'generate_pdf'],
+        },
+      },
+    })
+
+    // Calculer la date d'expiration
+    const now = new Date()
+    const expirationDays = hasBeenShared ? 30 : 7
+    const expirationDate = new Date(simulation.createdAt)
+    expirationDate.setDate(expirationDate.getDate() + expirationDays)
+
     // Vérification de l'expiration
-    if (new Date() > simulation.expiresAt) {
+    if (now > expirationDate) {
       // Suppression de la simulation expirée
       await prisma.simulation.delete({
         where: { id: uuid },
