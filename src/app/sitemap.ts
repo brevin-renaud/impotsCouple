@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next'
-import { getAllSlugs } from '@/lib/blog'
+import prisma from '@/lib/db/prisma'
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://impotscouple.fr'
   const currentDate = new Date()
 
@@ -71,13 +71,33 @@ export default function sitemap(): MetadataRoute.Sitemap {
   ]
 
   // Articles de blog - contenu éditorial important pour SEO
-  const blogSlugs = getAllSlugs()
-  const blogPages = blogSlugs.map((slug) => ({
-    url: `${baseUrl}/blog/${slug}`,
-    lastModified: currentDate,
-    changeFrequency: 'monthly' as const,
-    priority: 0.75,
-  }))
+  let blogPages: MetadataRoute.Sitemap = []
+  
+  try {
+    // Récupérer uniquement les articles publiés (publishedAt != null)
+    const publishedArticles = await prisma.article.findMany({
+      where: {
+        isDraft: false,
+        publishedAt: { not: null },
+      },
+      select: {
+        slug: true,
+        publishedAt: true,
+        updatedAt: true,
+      },
+      orderBy: { publishedAt: 'desc' },
+    })
+    
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    blogPages = publishedArticles.map((article: any) => ({
+      url: `${baseUrl}/blog/${article.slug}`,
+      lastModified: article.updatedAt || article.publishedAt || currentDate,
+      changeFrequency: 'monthly' as const,
+      priority: 0.75,
+    }))
+  } catch (error) {
+    console.warn('Failed to fetch blog articles for sitemap:', error)
+  }
 
   return [...staticPages, ...blogPages]
 }

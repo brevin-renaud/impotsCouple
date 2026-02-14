@@ -15,6 +15,35 @@ const createArticleSchema = z.object({
   isDraft: z.boolean().optional().default(true),
 })
 
+// Fonction pour calculer la date de publication
+function calculatePublishDates(isDraft: boolean, publishedAt: string | null | undefined) {
+  // Si brouillon, pas de publication
+  if (isDraft) {
+    return { publishedAt: null, scheduledPublishAt: null }
+  }
+
+  // Si pas de date fournie, publier immédiatement
+  if (!publishedAt) {
+    return { publishedAt: new Date(), scheduledPublishAt: null }
+  }
+
+  const targetDate = new Date(publishedAt)
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  targetDate.setHours(0, 0, 0, 0)
+
+  // Si la date est aujourd'hui ou dans le passé, publier immédiatement
+  if (targetDate <= today) {
+    return { publishedAt: new Date(), scheduledPublishAt: null }
+  }
+
+  // Si la date est dans le futur, programmer la publication à 10H
+  const scheduledDate = new Date(publishedAt)
+  scheduledDate.setHours(10, 0, 0, 0)
+  
+  return { publishedAt: null, scheduledPublishAt: scheduledDate }
+}
+
 // GET - Liste tous les articles
 export async function GET() {
   try {
@@ -37,6 +66,7 @@ export async function GET() {
         author: true,
         category: true,
         publishedAt: true,
+        scheduledPublishAt: true,
         createdAt: true,
         updatedAt: true,
         isDraft: true,
@@ -89,6 +119,8 @@ export async function POST(request: NextRequest) {
       )
     }
     
+    const { publishedAt, scheduledPublishAt } = calculatePublishDates(data.isDraft, data.publishedAt)
+    
     const article = await prisma.article.create({
       data: {
         title: data.title,
@@ -97,7 +129,8 @@ export async function POST(request: NextRequest) {
         content: data.content,
         author: data.author,
         category: data.category,
-        publishedAt: data.publishedAt ? new Date(data.publishedAt) : null,
+        publishedAt,
+        scheduledPublishAt,
         isDraft: data.isDraft,
       },
     })

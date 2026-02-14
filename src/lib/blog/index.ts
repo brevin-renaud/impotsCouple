@@ -32,8 +32,13 @@ function calculateReadingTime(content: string): string {
 export async function getAllPostsAsync(): Promise<BlogPostMeta[]> {
   try {
     const articles = await prisma.article.findMany({
-      where: { isDraft: false },
-      orderBy: { publishedAt: 'desc' },
+      where: { 
+        isDraft: false,
+        publishedAt: { not: null },
+      },
+      orderBy: { 
+        publishedAt: 'desc' 
+      },
     })
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -66,7 +71,8 @@ export async function getPostBySlugAsync(slug: string): Promise<BlogPost | null>
       where: { slug },
     })
 
-    if (!article || article.isDraft) {
+    // Ne retourner que les articles publiés (pas les brouillons ni les articles programmés)
+    if (!article || article.isDraft || !article.publishedAt) {
       return null
     }
 
@@ -74,7 +80,7 @@ export async function getPostBySlugAsync(slug: string): Promise<BlogPost | null>
       slug: article.slug,
       title: article.title,
       description: article.description,
-      date: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+      date: article.publishedAt.toISOString(),
       author: article.author,
       category: article.category,
       readingTime: calculateReadingTime(article.content),
@@ -97,7 +103,10 @@ export function getPostBySlug(slug: string): BlogPost | null {
 export async function getAllSlugsAsync(): Promise<string[]> {
   try {
     const articles = await prisma.article.findMany({
-      where: { isDraft: false },
+      where: { 
+        isDraft: false,
+        publishedAt: { not: null },
+      },
       select: { slug: true },
     })
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

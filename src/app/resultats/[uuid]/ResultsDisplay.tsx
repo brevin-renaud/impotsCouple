@@ -103,6 +103,50 @@ export function ResultsDisplay({ uuid, results, inputs }: ResultsDisplayProps) {
                         </CardContent>
                     </Card>
 
+                    {/* Share CTA Block */}
+                    <Card variant="elevated" className="mb-6 sm:mb-8 border-2 border-orange-200 bg-gradient-to-br from-orange-50 via-white to-orange-50">
+                        <CardContent className="p-0 sm:p-0">
+                            <div className="text-center mb-6">
+                                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                                    <svg className="w-6 h-6 sm:w-7 sm:h-7 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                    </svg>
+                                </div>
+                                <h3 className="text-xl sm:text-2xl font-bold text-stone-900 mb-2">
+                                    Partagez ces résultats !
+                                </h3>
+                                <p className="text-sm sm:text-base text-stone-600 max-w-2xl mx-auto">
+                                    Conserver un <span className='font-medium text-orange-600'>lien vers votre résultat</span> ou téléchargez un <span className='font-medium text-orange-600'>rapport PDF</span> détaillé à partager avec votre conjoint(e).
+                                </p>
+                            </div>
+
+                            <div className="flex justify-center max-w-2xl mx-auto">
+                                <Link href={`/resultats/${uuid}/partage`} className="block">
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="w-full group hover:shadow-lg transition-all"
+                                    >
+                                        <svg className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                                        </svg>
+                                        <span className="flex flex-col items-start">
+                                            <span className="font-semibold">Partager gratuitement</span>
+                                            <span className="text-xs opacity-90">Envoyez à votre conjoint(e)</span>
+                                        </span>
+                                    </Button>
+                                </Link>
+                            </div>
+
+                            <div className="mt-6 flex items-center justify-center gap-2 text-xs sm:text-sm text-stone-500">
+                                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                                </svg>
+                                <span>Lien sécurisé valide 30 jours</span>
+                            </div>
+                        </CardContent>
+                    </Card>
+
                     {/* Detail Section */}
                     <Card variant="default" className="mb-6 sm:mb-8">
                         <CardHeader>

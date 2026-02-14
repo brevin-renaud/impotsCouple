@@ -49,7 +49,25 @@ async function getSimulation(uuid: string) {
 
     if (!simulation) return null
 
-    if (new Date() > simulation.expiresAt) {
+    // Vérifier expiration selon la nouvelle logique
+    const now = new Date()
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000)
+    const thirtyDaysAgo = new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000)
+
+    // Vérifier si la simulation a été partagée
+    const sharedAction = await prisma.userAction.findFirst({
+      where: {
+        simulationId: uuid,
+        actionType: {
+          in: ['share_link', 'generate_pdf'],
+        },
+      },
+    })
+
+    const isShared = !!sharedAction
+    const expirationDate = isShared ? thirtyDaysAgo : sevenDaysAgo
+
+    if (simulation.createdAt < expirationDate) {
       await prisma.simulation.delete({ where: { id: uuid } })
       return null
     }

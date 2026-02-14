@@ -1,6 +1,3 @@
-// Schéma Prisma pour Fiscal Couple Optimizer
-// Base de données PostgreSQL hébergée sur Supabase
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -12,88 +9,67 @@ datasource db {
 }
 
 model Simulation {
-  id String @id @default(uuid()) @db.Uuid
+  id                String   @id @default(uuid()) @db.Uuid
+  incomeA           Float
+  fraisReelsA       Float    @default(0)
+  partsA            Float    @default(0)
+  incomeB           Float
+  fraisReelsB       Float    @default(0)
+  partsB            Float    @default(0)
+  children          Int      @default(0)
+  gardeAlternee     Boolean  @default(false)
+  results           Json
+  createdAt         DateTime @default(now())
+  donsAssociations  Float    @default(0)
+  emploiDomicile    Float    @default(0)
+  epargneRetraiteA  Float    @default(0)
+  epargneRetraiteB  Float    @default(0)
+  fraisGardeEnfants Float    @default(0)
+  patrimoineImmoA   Float    @default(0)
+  patrimoineImmoB   Float    @default(0)
+  pensionVerseeA    Float    @default(0)
+  pensionVerseeB    Float    @default(0)
 
-  // Conjoint A
-  incomeA          Float
-  fraisReelsA      Float   @default(0)
-  partsA           Float   @default(0)
-  pensionVerseeA   Float   @default(0)
-  patrimoineImmoA  Float   @default(0)
-  epargneRetraiteA Float   @default(0)
-
-  // Conjoint B
-  incomeB          Float
-  fraisReelsB      Float   @default(0)
-  partsB           Float   @default(0)
-  pensionVerseeB   Float   @default(0)
-  patrimoineImmoB  Float   @default(0)
-  epargneRetraiteB Float   @default(0)
-
-  // Foyer
-  children      Int     @default(0)
-  gardeAlternee Boolean @default(false)
-
-  // Charges et crédits d'impôt
-  fraisGardeEnfants Float @default(0)
-  emploiDomicile    Float @default(0)
-  donsAssociations  Float @default(0)
-
-  // Résultats calculés (stocké en JSON pour flexibilité)
-  results Json
-
-  // Metadata
-  createdAt DateTime @default(now())
-  expiresAt DateTime
-
-  // Index pour optimiser les requêtes de purge et de recherche
-  @@index([expiresAt])
   @@index([createdAt])
 }
 
-// Avis / Feedback utilisateurs
 model Feedback {
   id        String   @id @default(uuid()) @db.Uuid
-
-  // Note de 1 à 5
   rating    Int
-
-  // Commentaire optionnel
-  comment   String?  @db.Text
-
-  // Metadata
+  comment   String?
   createdAt DateTime @default(now())
 
   @@index([createdAt])
   @@index([rating])
 }
 
-// Articles de blog
 model Article {
-  id        String   @id @default(uuid()) @db.Uuid
-  slug      String   @unique
-  
-  // Metadata SEO
-  title       String
-  description String
-  
-  // Metadata article
-  author    String   @default("ImpotsCouple")
-  category  String   @default("Fiscalité")
-  
-  // Contenu MDX
-  content   String   @db.Text
-  
-  // Dates
-  publishedAt DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
-  
-  // Statut
-  isDraft   Boolean  @default(true)
-  
-  // Index pour optimiser les requêtes
+  id                 String    @id @default(uuid()) @db.Uuid
+  slug               String    @unique
+  title              String
+  description        String
+  author             String    @default("ImpotsCouple")
+  category           String    @default("Fiscalité")
+  content            String
+  publishedAt        DateTime? // Date de publication effective
+  scheduledPublishAt DateTime? // Date de publication programmée à 10H
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+  isDraft            Boolean   @default(true)
+
   @@index([slug])
   @@index([publishedAt])
+  @@index([scheduledPublishAt])
   @@index([isDraft])
+}
+
+model UserAction {
+  id           String   @id @default(uuid()) @db.Uuid
+  simulationId String   @db.Uuid
+  actionType   String // 'share_link' ou 'generate_pdf'
+  createdAt    DateTime @default(now())
+
+  @@index([createdAt])
+  @@index([actionType])
+  @@index([simulationId])
 }

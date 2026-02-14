@@ -13,6 +13,7 @@ interface Article {
   author: string
   category: string
   publishedAt: Date | null
+  scheduledPublishAt: Date | null
   createdAt: Date
   updatedAt: Date
   isDraft: boolean
@@ -81,6 +82,12 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
             </div>
             <div className="flex items-center gap-4">
               <Link
+                href="/admin/stats"
+                className="px-4 py-2 text-stone-600 hover:text-orange-600 transition-colors text-sm"
+              >
+                Statistiques
+              </Link>
+              <Link
                 href="/admin/avis"
                 className="px-4 py-2 text-stone-600 hover:text-orange-600 transition-colors text-sm"
               >
@@ -125,9 +132,15 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
                           <span className={`text-xs font-medium px-2 py-1 rounded ${
                             article.isDraft 
                               ? 'bg-yellow-100 text-yellow-700' 
+                              : article.scheduledPublishAt
+                              ? 'bg-blue-100 text-blue-700'
                               : 'bg-green-100 text-green-700'
                           }`}>
-                            {article.isDraft ? 'Brouillon' : 'Publié'}
+                            {article.isDraft 
+                              ? 'Brouillon' 
+                              : article.scheduledPublishAt
+                              ? `Programmé ${formatDate(article.scheduledPublishAt)}`
+                              : 'Publié'}
                           </span>
                           <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded">
                             {article.category}

@@ -23,11 +23,25 @@ export function SharePageClient({ uuid, results, inputs }: SharePageClientProps)
     ? `${window.location.origin}/resultats/${uuid}`
     : ''
 
+  const trackAction = async (actionType: 'share_link' | 'generate_pdf') => {
+    try {
+      await fetch('/api/user-actions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ simulationId: uuid, actionType }),
+      })
+    } catch (error) {
+      console.error('Error tracking action:', error)
+    }
+  }
+
   const handleCopy = async () => {
     try {
       await navigator.clipboard.writeText(shareUrl)
       setCopied(true)
       setTimeout(() => setCopied(false), 3000)
+      // Track share link action
+      await trackAction('share_link')
     } catch (err) {
       console.error('Erreur copie:', err)
     }
@@ -206,6 +220,8 @@ export function SharePageClient({ uuid, results, inputs }: SharePageClientProps)
       pdf.text('Basée sur le barème 2025 - impotscouple.fr', pageWidth / 2, y, { align: 'center' })
 
       pdf.save(`simulation-fiscale-${new Date().toISOString().split('T')[0]}.pdf`)
+      // Track PDF generation action
+      await trackAction('generate_pdf')
     } catch (error) {
       console.error('Erreur génération PDF:', error)
       alert('Erreur lors de la génération du PDF. Veuillez réessayer.')

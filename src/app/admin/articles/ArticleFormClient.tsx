@@ -14,6 +14,7 @@ interface Article {
   author: string
   category: string
   publishedAt: string | null
+  scheduledPublishAt: string | null
   createdAt: string
   updatedAt: string
   isDraft: boolean
@@ -47,6 +48,8 @@ export default function ArticleFormClient({ mode, article }: ArticleFormClientPr
   const [publishedAt, setPublishedAt] = useState(
     article?.publishedAt 
       ? new Date(article.publishedAt).toISOString().split('T')[0]
+      : article?.scheduledPublishAt
+      ? new Date(article.scheduledPublishAt).toISOString().split('T')[0]
       : ''
   )
   const [isDraft, setIsDraft] = useState(article?.isDraft ?? true)
@@ -240,7 +243,9 @@ export default function ArticleFormClient({ mode, article }: ArticleFormClientPr
                         className="w-full px-4 py-3 border border-stone-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent"
                       />
                       <p className="text-xs text-stone-500 mt-1">
-                        Laissez vide pour utiliser la date actuelle
+                        {!publishedAt || new Date(publishedAt) <= new Date() 
+                          ? 'Publication immédiate si publié' 
+                          : 'Publication programmée à 10h00'}
                       </p>
                     </div>
                   </CardContent>
