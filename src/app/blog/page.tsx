@@ -4,7 +4,7 @@ import { Card, CardContent } from '@/components/ui'
 import { getAllPostsAsync } from '@/lib/blog'
 
 export const metadata: Metadata = {
-  title: 'Fiscalité Couple 2026 : PACS, Mariage, Quotient Familial',
+  title: 'Blog Fiscalité Couple 2026 : Guides PACS et Mariage',
   description:
     'Articles et guides complets sur la fiscalité des couples en France : PACS, mariage, quotient familial, impôts, optimisation fiscale.',
   alternates: {
@@ -40,6 +40,19 @@ export default async function BlogPage() {
     <div className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto">
+          {/* Breadcrumb */}
+          <nav className="text-sm text-stone-500 mb-6" aria-label="Breadcrumb">
+            <ol className="flex items-center gap-2">
+              <li>
+                <Link href="/" className="hover:text-orange-600">
+                  Accueil
+                </Link>
+              </li>
+              <li>/</li>
+              <li className="text-stone-900 font-medium">Blog</li>
+            </ol>
+          </nav>
+
           {/* Header */}
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold text-stone-900 mb-4">
@@ -60,7 +73,7 @@ export default async function BlogPage() {
                     variant="default"
                     className="hover:shadow-lg transition-all duration-200 hover:border-orange-200"
                   >
-                    <CardContent className="p-6">
+                    <CardContent className="p-0">
                       <div className="flex flex-col md:flex-row md:items-center gap-4">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">

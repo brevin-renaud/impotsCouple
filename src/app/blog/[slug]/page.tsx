@@ -78,16 +78,24 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       <article className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
         <div className="container mx-auto px-4">
           <div className="max-w-3xl mx-auto">
-            {/* Back link */}
-            <Link
-              href="/blog"
-              className="inline-flex items-center text-sm text-stone-500 hover:text-orange-600 mb-8"
-            >
-              <svg className="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-              </svg>
-              Retour aux articles
-            </Link>
+            {/* Breadcrumb */}
+            <nav className="text-sm text-stone-500 mb-8" aria-label="Breadcrumb">
+              <ol className="flex items-center gap-2">
+                <li>
+                  <Link href="/" className="hover:text-orange-600">
+                    Accueil
+                  </Link>
+                </li>
+                <li>/</li>
+                <li>
+                  <Link href="/blog" className="hover:text-orange-600">
+                    Blog
+                  </Link>
+                </li>
+                <li>/</li>
+                <li className="text-stone-900 font-medium truncate max-w-xs">{post.title}</li>
+              </ol>
+            </nav>
 
             {/* Header */}
             <header className="mb-8">
@@ -114,7 +122,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
             {/* Content */}
             <Card variant="elevated">
-              <CardContent className="p-8 md:p-12">
+              <CardContent className="p-0">
                 <MarkdownRenderer content={post.content} />
               </CardContent>
             </Card>

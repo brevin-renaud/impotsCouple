@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Card, CardContent } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'À propos de ImpotsCouple - Simulateur Fiscal Gratuit',
+  title: 'À Propos | ImpotsCouple - Simulateur Fiscal Gratuit',
   description: 'Découvrez ImpotsCouple, le simulateur fiscal gratuit et anonyme pour comparer PACS, mariage et célibat. Notre mission : rendre la fiscalité des couples accessible à tous.',
   alternates: {
     canonical: 'https://impotscouple.fr/a-propos',

@@ -136,12 +136,12 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     
     // Calculer les dates de publication si nécessaire
     const updateData: any = {
-      ...(data.title && { title: data.title }),
-      ...(data.slug && { slug: data.slug }),
-      ...(data.description && { description: data.description }),
-      ...(data.content && { content: data.content }),
-      ...(data.author && { author: data.author }),
-      ...(data.category && { category: data.category }),
+      ...(data.title !== undefined && { title: data.title }),
+      ...(data.slug !== undefined && { slug: data.slug }),
+      ...(data.description !== undefined && { description: data.description }),
+      ...(data.content !== undefined && { content: data.content }),
+      ...(data.author !== undefined && { author: data.author }),
+      ...(data.category !== undefined && { category: data.category }),
     }
 
     // Si isDraft ou publishedAt sont modifiés, recalculer les dates
