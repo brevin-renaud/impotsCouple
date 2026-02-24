@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'FAQ Impôts Couple 2026 : Questions Fréquentes PACS, Mariage, Fiscalité',
+  title: 'FAQ Impôts Couple 2026 : PACS, Mariage et Fiscalité',
   description:
     'Réponses aux questions les plus fréquentes sur la fiscalité des couples en 2026 : PACS, mariage, quotient familial, déclaration commune, économie d\'impôts.',
   alternates: {

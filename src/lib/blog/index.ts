@@ -31,10 +31,14 @@ function calculateReadingTime(content: string): string {
 // Récupère tous les articles publiés depuis la base de données
 export async function getAllPostsAsync(): Promise<BlogPostMeta[]> {
   try {
+    const now = new Date()
     const articles = await prisma.article.findMany({
       where: { 
         isDraft: false,
-        publishedAt: { not: null },
+        publishedAt: { 
+          not: null,
+          lte: now, // Seulement les articles publiés jusqu'à maintenant
+        },
       },
       orderBy: { 
         publishedAt: 'desc' 
@@ -67,12 +71,13 @@ export function getAllPosts(): BlogPostMeta[] {
 // Récupère un article par son slug
 export async function getPostBySlugAsync(slug: string): Promise<BlogPost | null> {
   try {
+    const now = new Date()
     const article = await prisma.article.findUnique({
       where: { slug },
     })
 
-    // Ne retourner que les articles publiés (pas les brouillons ni les articles programmés)
-    if (!article || article.isDraft || !article.publishedAt) {
+    // Ne retourner que les articles publiés (pas les brouillons, ni les articles programmés, ni les articles futurs)
+    if (!article || article.isDraft || !article.publishedAt || article.publishedAt > now) {
       return null
     }
 

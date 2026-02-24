@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'Quotient Familial 2026 : Calcul, Parts Fiscales et Plafonnement',
+  title: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
   description:
     'Comprendre le quotient familial en 2026 : calcul des parts fiscales, plafonnement, avantages pour les couples et familles. Guide complet et simulateur gratuit.',
   alternates: {

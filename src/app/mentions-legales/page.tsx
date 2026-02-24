@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { Card, CardContent } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'Mentions légales',
+  title: 'Mentions Légales | ImpotsCouple',
   description: 'Mentions légales du site ImpotsCouple - Simulateur fiscal PACS vs Mariage.',
   openGraph: {
     title: 'Mentions légales - ImpotsCouple',
