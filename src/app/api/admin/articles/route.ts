@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { isAuthenticated } from '@/lib/admin/auth'
 import prisma from '@/lib/db/prisma'
 import { z } from 'zod'
@@ -134,6 +135,10 @@ export async function POST(request: NextRequest) {
         isDraft: data.isDraft,
       },
     })
+    
+    // Invalider le cache des pages du blog
+    revalidatePath('/blog')
+    revalidatePath(`/blog/${article.slug}`)
     
     return NextResponse.json({ article }, { status: 201 })
   } catch (error) {

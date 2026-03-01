@@ -3,6 +3,9 @@ import Link from 'next/link'
 import { Card, CardContent } from '@/components/ui'
 import { getAllPostsAsync } from '@/lib/blog'
 
+// Revalider la page toutes les 60 secondes
+export const revalidate = 60
+
 export const metadata: Metadata = {
   title: 'Blog Fiscalité Couple 2026 : Guides PACS et Mariage',
   description:
