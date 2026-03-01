@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
+import { revalidatePath } from 'next/cache'
 import { isAuthenticated } from '@/lib/admin/auth'
 import prisma from '@/lib/db/prisma'
 import { z } from 'zod'
@@ -147,18 +148,30 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
     // Si isDraft ou publishedAt sont modifiés, recalculer les dates
     if (data.isDraft !== undefined || data.publishedAt !== undefined) {
       const isDraft = data.isDraft !== undefined ? data.isDraft : existingArticle.isDraft
-      const publishedAtInput = data.publishedAt !== undefined ? data.publishedAt : (existingArticle.scheduledPublishAt || existingArticle.publishedAt)?.toISOString().split('T')[0]
       
-      const { publishedAt, scheduledPublishAt } = calculatePublishDates(isDraft, publishedAtInput)
-      updateData.publishedAt = publishedAt
-      updateData.scheduledPublishAt = scheduledPublishAt
-      updateData.isDraft = isDraft // Toujours mettre à jour isDraft
+      // Si l'article est déjà publié (publishedAt existe et est dans le passé), ne pas changer la date
+      if (existingArticle.publishedAt && existingArticle.publishedAt <= new Date() && data.publishedAt === undefined) {
+        // Simple édition d'un article déjà publié, garder la date de publication originale
+        updateData.isDraft = isDraft
+      } else {
+        // Nouveau statut de publication ou changement de date explicite
+        const publishedAtInput = data.publishedAt !== undefined ? data.publishedAt : (existingArticle.scheduledPublishAt || existingArticle.publishedAt)?.toISOString().split('T')[0]
+        
+        const { publishedAt, scheduledPublishAt } = calculatePublishDates(isDraft, publishedAtInput)
+        updateData.publishedAt = publishedAt
+        updateData.scheduledPublishAt = scheduledPublishAt
+        updateData.isDraft = isDraft
+      }
     }
     
     const article = await prisma.article.update({
       where: { id },
       data: updateData,
     })
+    
+    // Invalider le cache des pages du blog
+    revalidatePath('/blog')
+    revalidatePath(`/blog/${article.slug}`)
     
     return NextResponse.json({ article })
   } catch (error) {
@@ -199,6 +212,10 @@ export async function DELETE(request: NextRequest, { params }: RouteParams) {
     await prisma.article.delete({
       where: { id },
     })
+    
+    // Invalider le cache des pages du blog
+    revalidatePath('/blog')
+    revalidatePath(`/blog/${existingArticle.slug}`)
     
     return NextResponse.json({ success: true })
   } catch (error) {

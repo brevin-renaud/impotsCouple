@@ -11,7 +11,11 @@ export default async function AdminArticlesPage() {
   }
   
   const articles = await prisma.article.findMany({
-    orderBy: { createdAt: 'desc' },
+    orderBy: [
+      { publishedAt: 'desc' },
+      { scheduledPublishAt: 'desc' },
+      { createdAt: 'desc' },
+    ],
     select: {
       id: true,
       slug: true,
@@ -20,6 +24,7 @@ export default async function AdminArticlesPage() {
       author: true,
       category: true,
       publishedAt: true,
+      scheduledPublishAt: true,
       createdAt: true,
       updatedAt: true,
       isDraft: true,

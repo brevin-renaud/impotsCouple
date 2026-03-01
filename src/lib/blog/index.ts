@@ -31,13 +31,11 @@ function calculateReadingTime(content: string): string {
 // Récupère tous les articles publiés depuis la base de données
 export async function getAllPostsAsync(): Promise<BlogPostMeta[]> {
   try {
-    const now = new Date()
     const articles = await prisma.article.findMany({
       where: { 
         isDraft: false,
         publishedAt: { 
           not: null,
-          lte: now, // Seulement les articles publiés jusqu'à maintenant
         },
       },
       orderBy: { 

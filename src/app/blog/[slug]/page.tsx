@@ -5,6 +5,9 @@ import { getPostBySlugAsync, getAllSlugsAsync } from '@/lib/blog'
 import { Card, CardContent } from '@/components/ui'
 import { MarkdownRenderer } from '@/components/blog'
 
+// Revalider la page toutes les 60 secondes
+export const revalidate = 60
+
 interface BlogPostPageProps {
   params: Promise<{ slug: string }>
 }

@@ -66,6 +66,37 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
     })
   }
 
+  const getArticleStatus = (article: Article) => {
+    const now = new Date()
+    
+    if (article.isDraft) {
+      return { label: 'Brouillon', color: 'bg-yellow-100 text-yellow-700' }
+    }
+    
+    if (article.scheduledPublishAt) {
+      const scheduledDate = new Date(article.scheduledPublishAt)
+      if (scheduledDate > now) {
+        return { 
+          label: `Programmé pour le ${formatDate(article.scheduledPublishAt)}`, 
+          color: 'bg-blue-100 text-blue-700' 
+        }
+      }
+    }
+    
+    if (article.publishedAt) {
+      const publishedDate = new Date(article.publishedAt)
+      if (publishedDate > now) {
+        return { 
+          label: `Publié (visible le ${formatDate(article.publishedAt)})`, 
+          color: 'bg-purple-100 text-purple-700' 
+        }
+      }
+      return { label: 'Publié', color: 'bg-green-100 text-green-700' }
+    }
+    
+    return { label: 'En attente', color: 'bg-gray-100 text-gray-700' }
+  }
+
   return (
     <div className="min-h-screen py-8">
       <div className="container mx-auto px-4">
@@ -129,19 +160,14 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-2">
-                          <span className={`text-xs font-medium px-2 py-1 rounded ${
-                            article.isDraft 
-                              ? 'bg-yellow-100 text-yellow-700' 
-                              : article.scheduledPublishAt
-                              ? 'bg-blue-100 text-blue-700'
-                              : 'bg-green-100 text-green-700'
-                          }`}>
-                            {article.isDraft 
-                              ? 'Brouillon' 
-                              : article.scheduledPublishAt
-                              ? `Programmé ${formatDate(article.scheduledPublishAt)}`
-                              : 'Publié'}
-                          </span>
+                          {(() => {
+                            const status = getArticleStatus(article)
+                            return (
+                              <span className={`text-xs font-medium px-2 py-1 rounded ${status.color}`}>
+                                {status.label}
+                              </span>
+                            )
+                          })()}
                           <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded">
                             {article.category}
                           </span>
