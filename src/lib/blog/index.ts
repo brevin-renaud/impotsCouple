@@ -125,3 +125,66 @@ export function getAllSlugs(): string[] {
   console.warn('getAllSlugs() is deprecated, use getAllSlugsAsync() instead')
   return []
 }
+
+// Récupère les articles similaires (même catégorie, les plus récents, excluant l'article actuel)
+export async function getSimilarPostsAsync(slug: string, category: string, limit: number = 3): Promise<BlogPostMeta[]> {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { 
+        isDraft: false,
+        publishedAt: { not: null },
+        category: category,
+        slug: { not: slug }, // Exclure l'article actuel
+      },
+      orderBy: { 
+        publishedAt: 'desc' 
+      },
+      take: limit,
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return articles.map((article: any) => ({
+      slug: article.slug,
+      title: article.title,
+      description: article.description,
+      date: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+      author: article.author,
+      category: article.category,
+      readingTime: calculateReadingTime(article.content),
+    }))
+  } catch (error) {
+    console.warn('Database not available for similar posts:', error)
+    return []
+  }
+}
+
+// Récupère les articles récents si pas assez d'articles dans la même catégorie
+export async function getRecentPostsAsync(slug: string, limit: number = 3): Promise<BlogPostMeta[]> {
+  try {
+    const articles = await prisma.article.findMany({
+      where: { 
+        isDraft: false,
+        publishedAt: { not: null },
+        slug: { not: slug }, // Exclure l'article actuel
+      },
+      orderBy: { 
+        publishedAt: 'desc' 
+      },
+      take: limit,
+    })
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    return articles.map((article: any) => ({
+      slug: article.slug,
+      title: article.title,
+      description: article.description,
+      date: article.publishedAt?.toISOString() || article.createdAt.toISOString(),
+      author: article.author,
+      category: article.category,
+      readingTime: calculateReadingTime(article.content),
+    }))
+  } catch (error) {
+    console.warn('Database not available for recent posts:', error)
+    return []
+  }
+}
