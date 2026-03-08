@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { getPostBySlugAsync, getAllSlugsAsync } from '@/lib/blog'
+import { getPostBySlugAsync, getAllSlugsAsync, getSimilarPostsAsync, getRecentPostsAsync } from '@/lib/blog'
 import { Card, CardContent } from '@/components/ui'
 import { MarkdownRenderer } from '@/components/blog'
 
@@ -46,6 +46,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   if (!post) {
     notFound()
+  }
+
+  // Récupérer les articles similaires
+  let similarPosts = await getSimilarPostsAsync(slug, post.category, 3)
+  
+  // Si moins de 3 articles dans la catégorie, compléter avec les plus récents
+  if (similarPosts.length < 3) {
+    const recentPosts = await getRecentPostsAsync(slug, 3)
+    const remainingCount = 3 - similarPosts.length
+    similarPosts = [...similarPosts, ...recentPosts.slice(0, remainingCount)]
   }
 
   const formattedDate = new Date(post.date).toLocaleDateString('fr-FR', {
@@ -152,6 +162,54 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                 </CardContent>
               </Card>
             </div>
+
+            {/* Articles similaires */}
+            {similarPosts.length > 0 && (
+              <div className="mt-8">
+                <h2 className="text-xl font-bold text-stone-900 mb-4">
+                  Vous pourriez aussi aimer
+                </h2>
+                <div className="flex flex-col gap-4">
+                  {similarPosts.map((similarPost) => {
+                    const similarDate = new Date(similarPost.date).toLocaleDateString('fr-FR', {
+                      year: 'numeric',
+                      month: 'long',
+                      day: 'numeric',
+                    })
+                    
+                    return (
+                      <Link
+                        key={similarPost.slug}
+                        href={`/blog/${similarPost.slug}`}
+                        className="group"
+                      >
+                        <Card variant="elevated" className="h-full hover:shadow-lg transition-shadow">
+                          <CardContent className="p-4">
+                            <div className="flex items-center gap-2 mb-2">
+                              <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded-full">
+                                {similarPost.category}
+                              </span>
+                              <span className="text-xs text-stone-400">
+                                {similarPost.readingTime}
+                              </span>
+                            </div>
+                            <h3 className="text-base font-semibold text-stone-900 mb-2 group-hover:text-orange-600 transition-colors line-clamp-2">
+                              {similarPost.title}
+                            </h3>
+                            <p className="text-sm text-stone-600 mb-2 line-clamp-2">
+                              {similarPost.description}
+                            </p>
+                            <div className="text-xs text-stone-500">
+                              {similarDate}
+                            </div>
+                          </CardContent>
+                        </Card>
+                      </Link>
+                    )
+                  })}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </article>

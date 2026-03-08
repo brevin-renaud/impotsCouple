@@ -94,6 +94,17 @@
     }
   ],
 
+  "rewrites": [
+    {
+      "source": "/resultats/:uuid",
+      "destination": "/resultats/:uuid?_vercel_analytics_override=/resultats"
+    },
+    {
+      "source": "/resultats/:uuid/partage",
+      "destination": "/resultats/:uuid/partage?_vercel_analytics_override=/resultats/partage"
+    }
+  ],
+
   "headers": [
     {
       "source": "/(.*)",
