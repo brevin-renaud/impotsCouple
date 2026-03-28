@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import { Header, Footer } from "@/components/layout";
 import { Analytics } from "@vercel/analytics/react";
@@ -85,6 +86,7 @@ export const metadata: Metadata = {
     "geo.region": "FR",
     "geo.placename": "France",
     "content-language": "fr-FR",
+    "google-adsense-account": "ca-pub-6220317370024875",
   },
 };
 
@@ -95,6 +97,14 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="fr">
+      <head>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6220317370024875"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
+      </head>
       <body className={`${inter.variable} font-sans antialiased bg-stone-50`}>
         <Header />
         <main className="min-h-screen">{children}</main>
