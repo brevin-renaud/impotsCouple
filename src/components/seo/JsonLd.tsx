@@ -57,7 +57,7 @@ export function JsonLd() {
             name: "Mes données sont-elles sécurisées ?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Nous ne collectons aucune donnée personnelle identifiante (nom, email, IP). Les données de simulation sont anonymes et automatiquement supprimées après 30 jours. Le service est conforme au RGPD.",
+              text: "Vos données ne sont jamais stockées sur nos serveurs. Le calcul est effectué dans votre navigateur et vos informations restent uniquement dans le lien de partage. Aucune base de données, confidentialité maximale.",
             },
           },
         ],

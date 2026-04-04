@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getPostBySlugAsync, getAllSlugsAsync, getSimilarPostsAsync, getRecentPostsAsync } from '@/lib/blog'
 import { Card, CardContent } from '@/components/ui'
 import { MarkdownRenderer } from '@/components/blog'
+import BannerAd from '@/components/bannerAd/bannerAd'
 
 // Revalider la page toutes les 60 secondes
 export const revalidate = 60
@@ -50,7 +51,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
   // Récupérer les articles similaires
   let similarPosts = await getSimilarPostsAsync(slug, post.category, 3)
-  
+
   // Si moins de 3 articles dans la catégorie, compléter avec les plus récents
   if (similarPosts.length < 3) {
     const recentPosts = await getRecentPostsAsync(slug, 3)
@@ -133,6 +134,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
             </header>
 
+            <BannerAd />
+
             {/* Content */}
             <Card variant="elevated">
               <CardContent className="p-0">
@@ -163,6 +166,8 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
               </Card>
             </div>
 
+            <BannerAd />
+
             {/* Articles similaires */}
             {similarPosts.length > 0 && (
               <div className="mt-8">
@@ -176,7 +181,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                       month: 'long',
                       day: 'numeric',
                     })
-                    
+
                     return (
                       <Link
                         key={similarPost.slug}

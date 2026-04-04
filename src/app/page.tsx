@@ -370,11 +370,11 @@ export default function Home() {
                   </svg>
                 </div>
                 <div>
-                  <h3 className="font-semibold text-stone-900 mb-1 sm:mb-2 text-sm sm:text-base">Respect total de votre vie privée - Conforme RGPD</h3>
+                  <h3 className="font-semibold text-stone-900 mb-1 sm:mb-2 text-sm sm:text-base">Confidentialité maximale - Zéro stockage</h3>
                   <p className="text-stone-600 text-xs sm:text-sm">
-                    Nous ne collectons <strong>aucune donnée personnelle identifiante</strong>. Pas de nom, pas d&apos;email,
-                    pas d&apos;adresse IP. Vos données de simulation sont anonymes et automatiquement supprimées
-                    après 30 jours. Notre simulateur est 100% conforme au RGPD.
+                    Vos données ne sont <strong>jamais stockées sur nos serveurs</strong>. Le calcul est effectué 
+                    dans votre navigateur et vos informations restent uniquement dans le lien de partage. 
+                    Aucune base de données, aucun tracking.
                   </p>
                 </div>
               </div>

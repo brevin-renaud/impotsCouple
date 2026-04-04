@@ -68,14 +68,15 @@ export default function AboutPage() {
 
               <h2 className="text-2xl font-bold text-stone-900 mb-4 mt-8">Respect de votre vie privée</h2>
               <p className="text-stone-600 mb-6">
-                La confidentialité est au cœur de notre approche. Nous ne collectons 
-                <strong> aucune donnée personnelle identifiante</strong> :
+                La confidentialité est au cœur de notre approche. Nous fonctionnons en mode 
+                <strong> 100% stateless</strong> - vos données ne sont jamais stockées sur nos serveurs :
               </p>
               <ul className="list-disc list-inside text-stone-600 mb-6 space-y-2">
                 <li>Pas de nom, pas d&apos;email</li>
                 <li>Pas d&apos;adresse IP enregistrée</li>
                 <li>Pas de cookies de tracking</li>
-                <li>Suppression automatique des simulations après 30 jours</li>
+                <li>Aucune base de données pour les simulations</li>
+                <li>Vos données restent dans le lien de partage (encodées)</li>
               </ul>
 
               <h2 className="text-2xl font-bold text-stone-900 mb-4 mt-8">Avertissement</h2>

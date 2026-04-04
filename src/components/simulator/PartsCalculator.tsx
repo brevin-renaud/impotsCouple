@@ -3,8 +3,8 @@
 import { useEffect, useState } from 'react'
 import { UseFormRegister, UseFormWatch, UseFormSetValue, FieldErrors } from 'react-hook-form'
 import { Checkbox, Select } from '@/components/ui'
-import type { SimulationFormData, ChildOptions } from '@/lib/validation/schemas'
-import { calculateSingleParts, calculateChildrenParts, defaultPartsOptions } from '@/lib/validation/schemas'
+import type { SimulationFormData, ChildOptions, SpecialSituations } from '@/lib/validation/schemas'
+import { calculateSingleParts, calculateChildrenParts, defaultSpecialSituations } from '@/lib/validation/schemas'
 
 interface PartsCalculatorProps {
   register: UseFormRegister<SimulationFormData>
@@ -21,9 +21,13 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
   
   const childrenCount = watch(childrenCountKey) || 0
   const children = watch(childrenKey) || []
-  const partsOptions = watch(prefix) || defaultPartsOptions
+  const specialSituations = watch(prefix) || defaultSpecialSituations
 
   const [expandedChildren, setExpandedChildren] = useState<Set<number>>(new Set())
+  const [isSpecialSituationsOpen, setIsSpecialSituationsOpen] = useState(false)
+
+  // Détecter si des situations particulières sont actives
+  const hasActiveSpecialSituations = specialSituations.i || specialSituations.v || specialSituations.w || specialSituations.p || specialSituations.r
 
   // Synchroniser le tableau des enfants avec le nombre
   useEffect(() => {
@@ -68,7 +72,7 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
   }
 
   // Calculer les parts en temps réel
-  const calculatedParts = calculateSingleParts(partsOptions, childrenCount, children)
+  const calculatedParts = calculateSingleParts(specialSituations, childrenCount, children)
   const childrenParts = calculateChildrenParts(childrenCount, children)
 
   return (
@@ -180,43 +184,67 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
         </div>
       </div>
 
-      {/* Section Situations particulières */}
+      {/* Section Situations particulières (repliable) */}
       <div className="border-t border-stone-200 pt-4">
-        <h4 className="text-sm font-medium text-stone-700 mb-3">
-          Situations particulières (optionnel)
-        </h4>
+        <button
+          type="button"
+          onClick={() => setIsSpecialSituationsOpen(!isSpecialSituationsOpen)}
+          className="w-full flex items-center justify-between text-left"
+        >
+          <h4 className="text-sm font-medium text-stone-700 flex items-center gap-2">
+            <svg className="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Situations particulières (optionnel)
+            {hasActiveSpecialSituations && (
+              <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded">
+                Actif
+              </span>
+            )}
+          </h4>
+          <svg 
+            className={`w-5 h-5 text-stone-400 transition-transform ${isSpecialSituationsOpen ? 'rotate-180' : ''}`} 
+            fill="none" 
+            stroke="currentColor" 
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+          </svg>
+        </button>
         
-        <div className="space-y-3">
-          <Checkbox
-            label="Contribuable invalide"
-            description="Pension d'invalidité ≥ 40% ou carte d'invalidité/CMI (+0.5 part)"
-            {...register(`${prefix}.isInvalid`)}
-          />
+        {isSpecialSituationsOpen && (
+          <div className="mt-3 space-y-3 bg-stone-50 rounded-lg p-3">
+            <Checkbox
+              label="Contribuable invalide"
+              description="Pension d'invalidité ≥ 40% ou carte d'invalidité/CMI (+0.5 part)"
+              {...register(`${prefix}.i`)}
+            />
 
-          <Checkbox
-            label="Ancien combattant (74 ans ou plus)"
-            description="Titulaire de la carte du combattant (+0.5 part)"
-            {...register(`${prefix}.isVeteran`)}
-          />
+            <Checkbox
+              label="Ancien combattant (74 ans ou plus)"
+              description="Titulaire de la carte du combattant (+0.5 part)"
+              {...register(`${prefix}.v`)}
+            />
 
-          <Checkbox
-            label="Veuf/veuve d'ancien combattant"
-            description="Sous conditions (+0.5 part)"
-            {...register(`${prefix}.isVeteranWidow`)}
-          />
+            <Checkbox
+              label="Veuf/veuve d'ancien combattant"
+              description="Sous conditions (+0.5 part)"
+              {...register(`${prefix}.w`)}
+            />
 
-          <Checkbox
-            label="Parent isolé"
-            description="Célibataire, divorcé ou veuf avec enfant(s) à charge (+0.5 part pour le 1er enfant)"
-            {...register(`${prefix}.isSingleParent`)}
-          />
+            <Checkbox
+              label="Parent isolé"
+              description="Célibataire, divorcé ou veuf avec enfant(s) à charge (+0.5 part pour le 1er enfant)"
+              {...register(`${prefix}.p`)}
+            />
 
-          <Checkbox
-            label="A élevé seul un enfant pendant 5 ans"
-            description="Même si plus d'enfant à charge actuellement (+0.5 part)"
-            {...register(`${prefix}.hasRaisedChildAlone`)}
-          />
-        </div>
+            <Checkbox
+              label="A élevé seul un enfant pendant 5 ans"
+              description="Même si plus d'enfant à charge actuellement (+0.5 part)"
+              {...register(`${prefix}.r`)}
+            />
+          </div>
+        )}
       </div>
 
       {/* Affichage des parts calculées */}

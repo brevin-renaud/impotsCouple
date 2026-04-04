@@ -12,11 +12,14 @@ export default function ResultsNotFound() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-stone-900 mb-2">
-            Simulation introuvable
+            Lien obsolète
           </h1>
-          <p className="text-stone-600 mb-8">
-            Cette simulation n&apos;existe pas ou a expiré. Les résultats sont automatiquement 
-            supprimés après 30 jours pour protéger votre vie privée.
+          <p className="text-stone-600 mb-4">
+            Ce format de lien n&apos;est plus pris en charge. Notre simulateur utilise 
+            désormais un système plus sécurisé où vos données ne sont jamais stockées sur nos serveurs.
+          </p>
+          <p className="text-stone-500 text-sm mb-8">
+            Les nouveaux liens contiennent vos données directement (encodées) et fonctionnent indéfiniment.
           </p>
           <Link href="/simulateur">
             <Button size="lg">

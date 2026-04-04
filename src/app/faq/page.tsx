@@ -1,6 +1,7 @@
+import BannerAd from '@/components/bannerAd/bannerAd'
+import { Button, Card, CardContent } from '@/components/ui'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
   title: 'FAQ Impôts Couple 2026 : PACS, Mariage et Fiscalité',
@@ -115,7 +116,7 @@ export default function FaqPage() {
         {
           question: 'Mes données sont-elles en sécurité ?',
           answer:
-            'Absolument. Nous ne collectons aucune donnée personnelle identifiante (nom, email, IP). Les données de simulation sont anonymes, chiffrées et automatiquement supprimées après 30 jours. Le service est 100% conforme au RGPD.',
+            'Confidentialité maximale : vos données ne sont JAMAIS stockées sur nos serveurs. Le calcul est effectué localement dans votre navigateur. Si vous partagez, vos données sont encodées dans le lien lui-même. Aucune base de données, aucun tracking.',
         },
         {
           question: 'Pourquoi le simulateur compare-t-il 3 scénarios ?',
@@ -125,7 +126,7 @@ export default function FaqPage() {
         {
           question: 'Puis-je partager mes résultats ?',
           answer:
-            'Oui ! Après simulation, vous obtenez un lien unique que vous pouvez partager. Ce lien est valable 30 jours. Idéal pour discuter avec votre partenaire ou un conseiller fiscal.',
+            'Oui ! Après simulation, vous obtenez un lien contenant vos données (compressées). Ce lien fonctionne indéfiniment tant que vous le conservez. Partagez-le avec votre partenaire ou conservez-le pour plus tard.',
         },
       ],
     },
@@ -259,6 +260,7 @@ export default function FaqPage() {
                     </Card>
                   ))}
                 </div>
+                <BannerAd />
               </section>
             ))}
 
