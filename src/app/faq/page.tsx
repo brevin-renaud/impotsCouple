@@ -1,6 +1,7 @@
+import BannerAd from '@/components/bannerAd/bannerAd'
+import { Button, Card, CardContent } from '@/components/ui'
 import type { Metadata } from 'next'
 import Link from 'next/link'
-import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
   title: 'FAQ Impôts Couple 2026 : PACS, Mariage et Fiscalité',
@@ -259,6 +260,7 @@ export default function FaqPage() {
                     </Card>
                   ))}
                 </div>
+                <BannerAd />
               </section>
             ))}
 
