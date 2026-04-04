@@ -1,14 +1,17 @@
 import { z } from 'zod'
 
-// Schéma pour les options de parts supplémentaires d'un conjoint
-export const partsOptionsSchema = z.object({
-  // Situation de base
-  isInvalid: z.boolean(),           // Contribuable invalide (+0.5)
-  isVeteran: z.boolean(),           // Ancien combattant 74+ ans (+0.5)
-  isVeteranWidow: z.boolean(),      // Veuf/veuve d'ancien combattant (+0.5)
-  isSingleParent: z.boolean(),      // Parent isolé (+0.5 pour 1er enfant)
-  hasRaisedChildAlone: z.boolean(), // A élevé un enfant seul 5 ans (+0.5)
+// Schéma simplifié pour les situations particulières
+// Clés courtes : i=invalide, v=ancien combattant, w=veuf combattant, p=parent isolé, r=a élevé seul
+export const specialSituationsSchema = z.object({
+  i: z.boolean(),  // Contribuable invalide (+0.5)
+  v: z.boolean(),  // Ancien combattant 74+ ans (+0.5)
+  w: z.boolean(),  // Veuf/veuve d'ancien combattant (+0.5)
+  p: z.boolean(),  // Parent isolé (+0.5 pour 1er enfant)
+  r: z.boolean(),  // A élevé un enfant seul 5 ans (+0.5)
 })
+
+// Alias pour compatibilité (ancien nom)
+export const partsOptionsSchema = specialSituationsSchema
 
 // Schéma pour les enfants
 export const childSchema = z.object({
@@ -48,17 +51,22 @@ export const simulationSchema = z.object({
 
 // Type inféré du schéma
 export type SimulationFormData = z.infer<typeof simulationSchema>
-export type PartsOptions = z.infer<typeof partsOptionsSchema>
+export type SpecialSituations = z.infer<typeof specialSituationsSchema>
+// Alias pour compatibilité
+export type PartsOptions = SpecialSituations
 export type ChildOptions = z.infer<typeof childSchema>
 
-// Valeurs par défaut
-export const defaultPartsOptions: PartsOptions = {
-  isInvalid: false,
-  isVeteran: false,
-  isVeteranWidow: false,
-  isSingleParent: false,
-  hasRaisedChildAlone: false,
+// Valeurs par défaut pour les situations particulières
+export const defaultSpecialSituations: SpecialSituations = {
+  i: false,  // invalide
+  v: false,  // ancien combattant
+  w: false,  // veuf combattant
+  p: false,  // parent isolé
+  r: false,  // a élevé seul
 }
+
+// Alias pour compatibilité
+export const defaultPartsOptions = defaultSpecialSituations
 
 export const defaultSimulationValues: SimulationFormData = {
   incomeA: undefined as unknown as number,
@@ -134,7 +142,7 @@ export function calculateChildrenParts(
 
 // Fonction pour calculer les parts fiscales d'un célibataire
 export function calculateSingleParts(
-  options: PartsOptions,
+  options: SpecialSituations,
   childrenCount: number,
   children: ChildOptions[] = []
 ): number {
@@ -145,19 +153,19 @@ export function calculateSingleParts(
   parts += calculateChildrenParts(childrenCount, children)
 
   // Parts supplémentaires pour le contribuable
-  if (options.isInvalid) parts += 0.5
-  if (options.isVeteran) parts += 0.5
-  if (options.isVeteranWidow) parts += 0.5
-  if (options.isSingleParent && childrenCount > 0) parts += 0.5
-  if (options.hasRaisedChildAlone) parts += 0.5
+  if (options.i) parts += 0.5  // invalide
+  if (options.v) parts += 0.5  // ancien combattant
+  if (options.w) parts += 0.5  // veuf combattant
+  if (options.p && childrenCount > 0) parts += 0.5  // parent isolé
+  if (options.r) parts += 0.5  // a élevé seul
 
   return parts
 }
 
 // Fonction pour calculer les parts fiscales d'un couple (PACS/Mariage)
 export function calculateCoupleParts(
-  optionsA: PartsOptions,
-  optionsB: PartsOptions,
+  optionsA: SpecialSituations,
+  optionsB: SpecialSituations,
   childrenCount: number,
   children: ChildOptions[] = []
 ): number {
@@ -168,14 +176,14 @@ export function calculateCoupleParts(
   parts += calculateChildrenParts(childrenCount, children)
 
   // Parts supplémentaires pour chaque conjoint
-  if (optionsA.isInvalid) parts += 0.5
-  if (optionsA.isVeteran) parts += 0.5
-  if (optionsA.isVeteranWidow) parts += 0.5
-  // Note: isSingleParent et hasRaisedChildAlone ne s'appliquent pas en couple
+  if (optionsA.i) parts += 0.5  // invalide
+  if (optionsA.v) parts += 0.5  // ancien combattant
+  if (optionsA.w) parts += 0.5  // veuf combattant
+  // Note: p (parent isolé) et r (a élevé seul) ne s'appliquent pas en couple
 
-  if (optionsB.isInvalid) parts += 0.5
-  if (optionsB.isVeteran) parts += 0.5
-  if (optionsB.isVeteranWidow) parts += 0.5
+  if (optionsB.i) parts += 0.5
+  if (optionsB.v) parts += 0.5
+  if (optionsB.w) parts += 0.5
 
   return parts
 }

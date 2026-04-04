@@ -25,3 +25,14 @@ export function formatPercent(num: number): string {
     maximumFractionDigits: 1,
   }).format(num / 100)
 }
+
+// URL Serialization exports
+export {
+  generateTinyURL,
+  generateSimulationCode,
+  parseTinyURL,
+  estimateURLLength,
+  fitsInLimit,
+  type SimulationData,
+  type ParsedSimulation,
+} from './url-serializer'

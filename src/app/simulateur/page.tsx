@@ -5,11 +5,10 @@ import { Button, Card, CardContent } from '@/components/ui'
 import { 
   defaultSimulationValues, 
   simulationSchema, 
-  calculateSingleParts, 
-  calculateCoupleParts,
   defaultPartsOptions,
   type SimulationFormData 
 } from '@/lib/validation/schemas'
+import { generateTinyURL, type SimulationData } from '@/lib/utils'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { useState } from 'react'
@@ -66,7 +65,7 @@ export default function SimulateurPage() {
     setError(null)
 
     try {
-      // Calculer les parts automatiquement
+      // Récupérer les options de parts
       const partsOptionsA = data.partsOptionsA || defaultPartsOptions
       const partsOptionsB = data.partsOptionsB || defaultPartsOptions
       
@@ -75,46 +74,26 @@ export default function SimulateurPage() {
       const childrenA = data.childrenA || []
       const childrenCountB = data.childrenCountB || 0
       const childrenB = data.childrenB || []
-      
-      // Total des enfants pour le couple (combinaison des deux)
-      const totalChildrenCount = childrenCountA + childrenCountB
-      const allChildren = [...childrenA, ...childrenB]
 
-      const partsA = calculateSingleParts(partsOptionsA, childrenCountA, childrenA)
-      const partsB = calculateSingleParts(partsOptionsB, childrenCountB, childrenB)
-      const partsCouple = calculateCoupleParts(partsOptionsA, partsOptionsB, totalChildrenCount, allChildren)
-
-      const cleanedData = {
+      // Construire l'objet SimulationData pour l'URL
+      const simulationData: SimulationData = {
         incomeA: data.incomeA || 0,
-        partsA,
         incomeB: data.incomeB || 0,
-        partsB,
-        childrenCount: totalChildrenCount,
-        children: allChildren,
-        partsOptionsA,
-        partsOptionsB,
-        partsCouple,
+        specialSituationsA: partsOptionsA,
+        specialSituationsB: partsOptionsB,
+        childrenCountA,
+        childrenCountB,
+        childrenA,
+        childrenB,
       }
 
-      const response = await fetch('/api/simulate', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(cleanedData),
-      })
+      // Générer l'URL avec les données encodées
+      const tinyUrl = generateTinyURL(simulationData)
 
-      const result = await response.json()
-
-      if (!result.success) {
-        throw new Error(result.error || 'Erreur lors de la simulation')
-      }
-
-      // Redirection vers la page de résultats
-      router.push(`/resultats/${result.uuid}`)
+      // Redirection vers la page de résultats avec les données dans l'URL
+      router.push(tinyUrl)
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue')
-    } finally {
       setIsSubmitting(false)
     }
   }

@@ -38,15 +38,42 @@ export default function ConfidentialitePage() {
           <Card variant="elevated">
             <CardContent className="p-8 md:p-12 prose prose-stone max-w-none">
               <p className="text-stone-600 mb-6">
-                <strong>Dernière mise à jour :</strong> Janvier 2025
+                <strong>Dernière mise à jour :</strong> Avril 2026
               </p>
 
-              <h2 className="text-xl font-bold text-stone-900 mb-4">Notre engagement</h2>
+              <h2 className="text-xl font-bold text-stone-900 mb-4">Notre engagement : Zéro stockage</h2>
               <p className="text-stone-600 mb-6">
-                ImpotsCouple s&apos;engage à protéger votre vie privée. Cette politique de 
-                confidentialité explique comment nous collectons, utilisons et protégeons 
-                vos informations.
+                ImpotsCouple fonctionne en mode <strong>100% stateless</strong> : vos données 
+                ne sont <strong>jamais stockées sur nos serveurs</strong>. Le calcul est effectué 
+                localement dans votre navigateur et vos informations sont uniquement transportées 
+                dans l&apos;URL de partage (compressée et encodée).
               </p>
+
+              <div className="bg-green-50 border border-green-200 rounded-xl p-4 mb-6">
+                <div className="flex items-start gap-3">
+                  <svg className="w-6 h-6 text-green-600 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <div>
+                    <p className="font-semibold text-green-800">Confidentialité maximale</p>
+                    <p className="text-green-700 text-sm">
+                      Aucune base de données, aucun stockage serveur, aucun tracking. 
+                      Vos données financières restent entièrement sous votre contrôle.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
+                Comment ça fonctionne ?
+              </h2>
+              <ol className="list-decimal list-inside text-stone-600 mb-6 space-y-2">
+                <li>Vous saisissez vos revenus dans le simulateur</li>
+                <li>Le calcul est effectué <strong>dans votre navigateur</strong></li>
+                <li>Les résultats sont affichés immédiatement</li>
+                <li>Si vous partagez : vos données sont <strong>compressées dans l&apos;URL</strong></li>
+                <li>Quand quelqu&apos;un ouvre le lien : les données sont décodées côté client</li>
+              </ol>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
                 Données collectées
@@ -62,80 +89,54 @@ export default function ConfidentialitePage() {
                 <li>Numéro de téléphone</li>
                 <li>Adresse IP (non enregistrée)</li>
                 <li>Cookies de suivi publicitaire</li>
+                <li><strong>Revenus ou données fiscales</strong> (jamais stockés)</li>
               </ul>
 
               <h3 className="text-lg font-semibold text-stone-800 mb-3">
-                Ce que nous collectons
+                Ce qui transite dans l&apos;URL de partage
               </h3>
               <p className="text-stone-600 mb-4">
-                Lors d&apos;une simulation, les données suivantes sont temporairement stockées :
+                Si vous choisissez de partager vos résultats, les données suivantes sont encodées dans l&apos;URL :
               </p>
               <ul className="list-disc list-inside text-stone-600 mb-6 space-y-1">
-                <li>Revenus déclarés (anonymes)</li>
+                <li>Revenus déclarés (compressés)</li>
                 <li>Nombre d&apos;enfants</li>
-                <li>Options de calcul (frais réels, garde alternée...)</li>
-                <li>Résultats de la simulation</li>
-                <li>Identifiant unique (UUID) généré aléatoirement</li>
-                <li>Date de création</li>
+                <li>Options de calcul</li>
               </ul>
+              <p className="text-stone-600 mb-6">
+                Ces données sont <strong>uniquement dans l&apos;URL</strong> et ne transitent jamais par nos serveurs pour stockage.
+              </p>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
                 Durée de conservation
               </h2>
               <p className="text-stone-600 mb-6">
-                Les données de simulation sont automatiquement supprimées après 
-                <strong> 30 jours</strong>. Cette suppression est irréversible et 
-                intervient sans action de votre part.
+                <strong>Aucune durée</strong> : nous ne conservons aucune donnée. Le lien de partage 
+                fonctionne tant que vous le conservez. Si vous perdez le lien, les données sont perdues 
+                car elles n&apos;existent nulle part ailleurs.
               </p>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
-                Finalité du traitement
-              </h2>
-              <p className="text-stone-600 mb-6">
-                Les données sont utilisées exclusivement pour :
-              </p>
-              <ul className="list-disc list-inside text-stone-600 mb-6 space-y-1">
-                <li>Effectuer le calcul de la simulation fiscale</li>
-                <li>Permettre le partage temporaire des résultats via un lien unique</li>
-              </ul>
-
-              <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
-                Base légale
-              </h2>
-              <p className="text-stone-600 mb-6">
-                Le traitement est fondé sur votre <strong>consentement</strong>, que vous 
-                manifestez en utilisant le simulateur. Aucune donnée n&apos;est collectée 
-                sans votre action volontaire.
-              </p>
-
-              <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
-                Sécurité des données
+                Sécurité
               </h2>
               <p className="text-stone-600 mb-6">
                 Vos données sont protégées par :
               </p>
               <ul className="list-disc list-inside text-stone-600 mb-6 space-y-1">
                 <li>Chiffrement SSL/TLS pour toutes les communications</li>
-                <li>Hébergement sécurisé (Vercel + Supabase)</li>
-                <li>Identifiants UUID v4 non prévisibles</li>
-                <li>Suppression automatique après 30 jours</li>
+                <li>Compression et encodage des données dans l&apos;URL</li>
+                <li>Calculs effectués côté client (navigateur)</li>
+                <li>Aucune persistance serveur</li>
               </ul>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
                 Vos droits (RGPD)
               </h2>
               <p className="text-stone-600 mb-6">
-                Conformément au Règlement Général sur la Protection des Données (RGPD), 
-                vous disposez des droits suivants :
-              </p>
-              <ul className="list-disc list-inside text-stone-600 mb-6 space-y-1">
-                <li><strong>Droit d&apos;accès</strong> : consulter vos résultats via le lien de partage</li>
-                <li><strong>Droit à l&apos;effacement</strong> : vos données sont supprimées automatiquement après 30 jours</li>
-                <li><strong>Droit à la portabilité</strong> : vous pouvez copier/sauvegarder vos résultats</li>
-              </ul>
-              <p className="text-stone-600 mb-6">
-                Note : étant donné l&apos;anonymat des données, nous ne pouvons pas identifier 
-                le propriétaire d&apos;une simulation spécifique.
+                Comme nous ne stockons aucune donnée personnelle, les droits RGPD classiques 
+                (accès, rectification, effacement) ne s&apos;appliquent pas de manière traditionnelle. 
+                Vous avez un <strong>contrôle total</strong> : supprimez simplement le lien de partage 
+                pour effacer toute trace de vos données.
               </p>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
@@ -148,17 +149,11 @@ export default function ConfidentialitePage() {
               </p>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
-                Transferts de données
+                Hébergement
               </h2>
               <p className="text-stone-600 mb-6">
-                Vos données peuvent être traitées par nos sous-traitants :
-              </p>
-              <ul className="list-disc list-inside text-stone-600 mb-6 space-y-1">
-                <li><strong>Vercel</strong> (hébergement) - États-Unis</li>
-                <li><strong>Supabase</strong> (base de données) - États-Unis/Europe</li>
-              </ul>
-              <p className="text-stone-600 mb-6">
-                Ces prestataires sont conformes au RGPD et disposent de garanties appropriées.
+                Le site est hébergé sur <strong>Vercel</strong> (infrastructure Edge). 
+                Aucune base de données n&apos;est utilisée pour les simulations.
               </p>
 
               <h2 className="text-xl font-bold text-stone-900 mb-4 mt-8">
