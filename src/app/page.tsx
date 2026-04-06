@@ -251,7 +251,7 @@ export default function Home() {
                   </h3>
                   <p className="text-stone-600 mb-4">
                     En France, l&apos;impôt sur le revenu est calculé selon un <strong>barème progressif</strong> :
-                    plus vous gagnez, plus votre taux d&apos;imposition augmente. Le <strong>quotient familial</strong>
+                    plus vous gagnez, plus votre taux d&apos;imposition augmente. Le <strong>quotient familial </strong>
                     permet de diviser vos revenus par le nombre de &quot;parts&quot; de votre foyer fiscal.
                   </p>
                   <p className="text-stone-600 mb-4">
