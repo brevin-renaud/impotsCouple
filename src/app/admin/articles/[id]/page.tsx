@@ -30,6 +30,7 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
       article={{
         ...article,
         publishedAt: article.publishedAt?.toISOString() || null,
+        scheduledPublishAt: article.scheduledPublishAt?.toISOString() || null,
         createdAt: article.createdAt.toISOString(),
         updatedAt: article.updatedAt.toISOString(),
       }} 
