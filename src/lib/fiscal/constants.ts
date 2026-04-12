@@ -1,10 +1,10 @@
 export const FISCAL_YEAR = 2025
 
 export const TAX_BRACKETS = [
-    { threshold: 180295, rate: 0.45 },
-    { threshold: 83824, rate: 0.41 },
-    { threshold: 29316, rate: 0.30 },
-    { threshold: 11498, rate: 0.11 },
+    { threshold: 181918, rate: 0.45 },
+    { threshold: 84478, rate: 0.41 },
+    { threshold: 29580, rate: 0.30 },
+    { threshold: 11604, rate: 0.11 },
     { threshold: 0, rate: 0 },
 ];
 
