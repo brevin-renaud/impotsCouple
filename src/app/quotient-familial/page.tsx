@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import BannerAd from '@/components/bannerAd/bannerAd'
 import Link from 'next/link'
 import { Card, CardContent, Button } from '@/components/ui'
 
@@ -113,6 +114,8 @@ export default function QuotientFamilialPage() {
                 </Link>
               </CardContent>
             </Card>
+
+            <BannerAd />
 
             {/* Sommaire */}
             <Card variant="outlined" className="mb-8">

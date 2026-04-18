@@ -31,9 +31,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
   return {
     title: post.title,
     description: post.description,
+    alternates: {
+      canonical: `https://impotscouple.fr/blog/${slug}`,
+    },
     openGraph: {
       title: post.title,
       description: post.description,
+      url: `https://impotscouple.fr/blog/${slug}`,
       type: 'article',
       publishedTime: post.date,
       authors: [post.author],

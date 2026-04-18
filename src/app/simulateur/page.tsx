@@ -1,5 +1,6 @@
 'use client'
 
+import BannerAd from '@/components/bannerAd/bannerAd'
 import { SimulatorForm } from '@/components/simulator'
 import { Button, Card, CardContent } from '@/components/ui'
 import { 
@@ -144,6 +145,8 @@ export default function SimulateurPage() {
               </form>
             </CardContent>
           </Card>
+
+          <BannerAd />
 
           {/* Disclaimer */}
           <p className="text-center text-xs text-stone-400 mt-6">

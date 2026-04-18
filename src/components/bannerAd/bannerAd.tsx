@@ -2,7 +2,6 @@
 'use client'
 
 import { useEffect } from 'react'
-import Script from 'next/script'
 
 export default function BannerAd() {
   useEffect(() => {
@@ -15,12 +14,6 @@ export default function BannerAd() {
 
   return (
     <>
-      <Script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6220317370024875"
-        crossOrigin="anonymous"
-        strategy="afterInteractive"
-      />
       <ins
         className="adsbygoogle"
         style={{ display: 'block' }}

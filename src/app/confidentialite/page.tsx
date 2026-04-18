@@ -4,6 +4,9 @@ import { Card, CardContent } from '@/components/ui'
 export const metadata: Metadata = {
   title: 'Politique de Confidentialité | ImpotsCouple',
   description: 'Politique de confidentialité et protection des données personnelles de ImpotsCouple.',
+  alternates: {
+    canonical: 'https://impotscouple.fr/confidentialite',
+  },
   openGraph: {
     title: 'Politique de confidentialité - ImpotsCouple',
     description: 'Politique de confidentialité et protection des données personnelles de ImpotsCouple.',

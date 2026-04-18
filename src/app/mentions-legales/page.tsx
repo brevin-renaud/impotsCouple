@@ -4,6 +4,9 @@ import { Card, CardContent } from '@/components/ui'
 export const metadata: Metadata = {
   title: 'Mentions Légales | ImpotsCouple',
   description: 'Mentions légales du site ImpotsCouple - Simulateur fiscal PACS vs Mariage.',
+  alternates: {
+    canonical: 'https://impotscouple.fr/mentions-legales',
+  },
   openGraph: {
     title: 'Mentions légales - ImpotsCouple',
     description: 'Mentions légales du site ImpotsCouple - Simulateur fiscal PACS vs Mariage.',
