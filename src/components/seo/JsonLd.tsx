@@ -41,15 +41,39 @@ export function JsonLd() {
             name: "Le PACS et le mariage ont-ils le même impact fiscal ?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Oui, du point de vue fiscal, le PACS et le mariage sont équivalents. Les deux permettent une imposition commune dès l'année de l'union. C'est pourquoi notre simulateur compare célibat vs union.",
+              text: "Oui, du point de vue de l'impôt sur le revenu, le PACS et le mariage sont équivalents. Les deux permettent une imposition commune dès l'année de l'union et donnent droit à 2 parts fiscales de base. Le mariage offre des avantages supplémentaires : pension de réversion, succession exonérée et protection du conjoint.",
             },
           },
           {
             "@type": "Question",
-            name: "Quand faut-il s'unir pour optimiser ses impôts ?",
+            name: "Comment calculer ses impôts en couple marié ?",
             acceptedAnswer: {
               "@type": "Answer",
-              text: "Pour bénéficier de l'imposition commune sur une année entière, il faut se pacser ou se marier avant le 31 décembre de l'année en cours. L'avantage fiscal s'applique alors sur tous les revenus de l'année.",
+              text: "Pour calculer vos impôts après le mariage, additionnez les revenus des deux conjoints, divisez par 2 (quotient familial), appliquez le barème progressif 2026, puis multipliez par 2. Notre simulateur gratuit effectue ce calcul en 2 minutes et compare avec la situation de célibat.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Qu'est-ce que le quotient familial et comment affecte-t-il mes impôts ?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Le quotient familial divise votre revenu imposable par le nombre de parts de votre foyer (2 pour un couple, +0,5 par enfant pour les 2 premiers, +1 à partir du 3ème). Plus vous avez de parts, plus votre revenu imposable par part est faible, et moins vous payez d'impôts grâce au barème progressif. L'avantage par demi-part est plafonné à 1 759 € en 2026.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Quand faut-il se marier ou se pacser pour optimiser ses impôts ?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "Pour bénéficier de l'imposition commune sur une année entière, il faut se marier ou se pacser avant le 31 décembre de l'année en cours. L'avantage fiscal s'applique alors sur tous les revenus de l'année. Plus l'écart de revenus entre conjoints est important, plus l'économie d'impôts est significative.",
+            },
+          },
+          {
+            "@type": "Question",
+            name: "Combien peut-on économiser d'impôts avec le mariage ou le PACS ?",
+            acceptedAnswer: {
+              "@type": "Answer",
+              text: "L'économie d'impôts dépend de l'écart de revenus entre les conjoints. Si les revenus sont très différents, l'économie peut atteindre plusieurs milliers d'euros par an. Utilisez notre simulateur gratuit pour calculer votre économie personnalisée en fonction de vos revenus réels.",
             },
           },
           {

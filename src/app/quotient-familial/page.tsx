@@ -4,16 +4,28 @@ import Link from 'next/link'
 import { Card, CardContent, Button } from '@/components/ui'
 
 export const metadata: Metadata = {
-  title: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
+  title: 'Calcul Quotient Familial 2026 : Parts Fiscales, Barème et Simulation',
   description:
-    'Comprendre le quotient familial en 2026 : calcul des parts fiscales, plafonnement, avantages pour les couples et familles. Guide complet et simulateur gratuit.',
+    'Calculez votre quotient familial 2026 : nombre de parts fiscales selon votre situation, plafonnement, barème progressif. Guide complet avec exemples et simulateur gratuit.',
+  keywords: [
+    'quotient familial',
+    'calcul quotient familial',
+    'quotient familial 2026',
+    'parts fiscales',
+    'calcul parts fiscales',
+    'quotient familial enfants',
+    'plafonnement quotient familial',
+    'quotient familial couple',
+    'simulation quotient familial',
+    'barème quotient familial',
+  ],
   alternates: {
     canonical: 'https://impotscouple.fr/quotient-familial',
   },
   openGraph: {
-    title: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
+    title: 'Calcul Quotient Familial 2026 : Parts Fiscales et Simulation',
     description:
-      'Guide complet sur le quotient familial : calcul des parts, plafonnement, avantages. Simulateur gratuit.',
+      'Calculez votre quotient familial 2026 : parts fiscales selon votre situation, plafonnement à 1 759 €, exemples détaillés. Simulation gratuite et anonyme.',
     url: 'https://impotscouple.fr/quotient-familial',
     type: 'article',
     images: [
@@ -21,48 +33,118 @@ export const metadata: Metadata = {
         url: 'https://impotscouple.fr/social-image.png',
         width: 1200,
         height: 630,
-        alt: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
+        alt: 'Calcul Quotient Familial 2026 : Parts Fiscales et Barème',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Quotient Familial 2026 : Calcul et Parts Fiscales',
-    description: 'Guide complet sur le quotient familial : calcul des parts, plafonnement, avantages.',
+    title: 'Calcul Quotient Familial 2026 : Parts Fiscales et Simulation',
+    description: 'Calculez votre quotient familial 2026 : parts fiscales, plafonnement, barème. Guide complet et simulation gratuite.',
     images: ['https://impotscouple.fr/social-image.png'],
   },
 }
 
 export default function QuotientFamilialPage() {
-  const quotientJsonLd = {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: 'Quotient Familial 2026 : Calcul, Parts Fiscales et Plafonnement',
-    description:
-      'Guide complet sur le quotient familial : calcul des parts fiscales, plafonnement, avantages pour les couples.',
-    author: {
-      '@type': 'Organization',
-      name: 'ImpotsCouple',
+  const quotientJsonLd = [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'BreadcrumbList',
+      itemListElement: [
+        {
+          '@type': 'ListItem',
+          position: 1,
+          name: 'Accueil',
+          item: 'https://impotscouple.fr',
+        },
+        {
+          '@type': 'ListItem',
+          position: 2,
+          name: 'Calcul du quotient familial',
+          item: 'https://impotscouple.fr/quotient-familial',
+        },
+      ],
     },
-    publisher: {
-      '@type': 'Organization',
-      name: 'ImpotsCouple',
-      logo: {
-        '@type': 'ImageObject',
-        url: 'https://impotscouple.fr/og-image.png',
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Article',
+      headline: 'Calcul Quotient Familial 2026 : Parts Fiscales, Barème et Plafonnement',
+      description:
+        'Guide complet sur le quotient familial : calcul des parts fiscales, plafonnement à 1 759 €, barème progressif 2026, exemples détaillés.',
+      author: {
+        '@type': 'Organization',
+        name: 'ImpotsCouple',
+        url: 'https://impotscouple.fr',
       },
+      publisher: {
+        '@type': 'Organization',
+        name: 'ImpotsCouple',
+        logo: {
+          '@type': 'ImageObject',
+          url: 'https://impotscouple.fr/og-image.png',
+        },
+      },
+      datePublished: '2025-01-01',
+      dateModified: '2026-05-01',
+      mainEntityOfPage: 'https://impotscouple.fr/quotient-familial',
     },
-    datePublished: '2025-01-01',
-    dateModified: '2026-01-28',
-    mainEntityOfPage: 'https://impotscouple.fr/quotient-familial',
-  }
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        {
+          '@type': 'Question',
+          name: 'Qu\'est-ce que le quotient familial ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Le quotient familial est un mécanisme fiscal français qui divise le revenu imposable du foyer par un nombre de parts selon la composition familiale. Plus vous avez de parts (enfants, conjoint), plus votre revenu par part est faible, ce qui réduit votre impôt grâce au barème progressif.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Comment calculer son quotient familial ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Pour calculer votre quotient familial : 1) Additionnez tous les revenus nets imposables du foyer, 2) Divisez par le nombre de parts (2 pour un couple, +0,5 par enfant pour les 2 premiers, +1 par enfant à partir du 3ème), 3) Appliquez le barème progressif 2026 sur ce quotient, 4) Multipliez par le nombre de parts. Notre simulateur effectue ce calcul automatiquement.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Combien de parts fiscales pour un couple avec enfants ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Un couple marié ou pacsé a 2 parts de base. Chaque enfant à charge ajoute : 0,5 part pour le 1er et le 2ème enfant, 1 part à partir du 3ème enfant. Exemple : couple + 2 enfants = 3 parts ; couple + 3 enfants = 4 parts.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Quel est le plafonnement du quotient familial en 2026 ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'En 2026, l\'avantage fiscal procuré par chaque demi-part supplémentaire est plafonné à 1 759 €. Pour un parent isolé, le plafond de la première demi-part est de 4 149 €. Pour les personnes invalides ou anciens combattants, il est de 3 512 € par demi-part.',
+          },
+        },
+        {
+          '@type': 'Question',
+          name: 'Le quotient familial est-il identique pour le PACS et le mariage ?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Oui, le quotient familial fonctionne de manière strictement identique pour les couples mariés et pacsés. Dans les deux cas, le foyer bénéficie de 2 parts de base, auxquelles s\'ajoutent les parts pour les enfants à charge.',
+          },
+        },
+      ],
+    },
+  ]
 
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(quotientJsonLd) }}
-      />
+      {quotientJsonLd.map((schema, i) => (
+        <script
+          key={i}
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+        />
+      ))}
 
       <div className="min-h-screen py-12 bg-linear-to-b from-orange-50 to-stone-50">
         <div className="container mx-auto px-4">
@@ -75,7 +157,7 @@ export default function QuotientFamilialPage() {
                     Accueil
                   </Link>
                 </li>
-                <li>/</li>
+                <li aria-hidden="true">/</li>
                 <li className="text-stone-900 font-medium">Quotient familial</li>
               </ol>
             </nav>
@@ -83,12 +165,12 @@ export default function QuotientFamilialPage() {
             {/* Header */}
             <header className="text-center mb-12">
               <h1 className="text-4xl md:text-5xl font-bold text-stone-900 mb-6">
-                Le Quotient Familial en 2026 :{' '}
-                <span className="text-orange-500">Guide Complet</span>
+                Calcul du Quotient Familial 2026 :{' '}
+                <span className="text-orange-500">Parts Fiscales et Barème</span>
               </h1>
               <p className="text-xl text-stone-600 max-w-3xl mx-auto">
-                Comprenez le mécanisme des parts fiscales, leur impact sur vos impôts et
-                comment optimiser votre situation familiale.
+                Calculez votre quotient familial : nombre de parts selon votre situation,
+                barème progressif 2026, plafonnement et exemples détaillés pour couples et familles.
               </p>
             </header>
 
@@ -96,7 +178,7 @@ export default function QuotientFamilialPage() {
             <Card variant="elevated" className="mb-12 bg-linear-to-r from-orange-500 to-orange-600 border-0">
               <CardContent className="p-4 md:p-8 text-center">
                 <h2 className="text-2xl font-bold text-white mb-3 flex items-center justify-center gap-2">
-                  <svg className="w-7 h-7  hidden md:inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg aria-hidden="true" className="w-7 h-7  hidden md:inline-block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                   Calculez vos parts fiscales automatiquement
@@ -107,7 +189,7 @@ export default function QuotientFamilialPage() {
                 <Link href="/simulateur">
                   <Button className="bg-white text-orange-600 hover:bg-orange-50">
                     Simuler mon quotient familial
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </Button>
@@ -121,7 +203,7 @@ export default function QuotientFamilialPage() {
             <Card variant="outlined" className="mb-8">
               <CardContent className="p-6">
                 <h2 className="text-lg font-semibold text-stone-900 mb-4 flex items-center gap-2">
-                  <svg className="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg aria-hidden="true" className="w-5 h-5 text-stone-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 10h16M4 14h16M4 18h16" />
                   </svg>
                   Sommaire
@@ -275,8 +357,8 @@ export default function QuotientFamilialPage() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="bg-stone-100">
-                          <th className="text-left p-3 font-semibold">Situation</th>
-                          <th className="text-center p-3 font-semibold">Parts</th>
+                          <th scope="col" className="text-left p-3 font-semibold">Situation</th>
+                          <th scope="col" className="text-center p-3 font-semibold">Parts</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-stone-200">
@@ -305,8 +387,8 @@ export default function QuotientFamilialPage() {
                     <table className="w-full text-sm">
                       <thead>
                         <tr className="bg-orange-100">
-                          <th className="text-left p-3 font-semibold">Situation</th>
-                          <th className="text-center p-3 font-semibold">Parts</th>
+                          <th scope="col" className="text-left p-3 font-semibold">Situation</th>
+                          <th scope="col" className="text-center p-3 font-semibold">Parts</th>
                         </tr>
                       </thead>
                       <tbody className="divide-y divide-stone-200">
@@ -358,7 +440,7 @@ export default function QuotientFamilialPage() {
 
                   <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4 mb-4">
                     <h3 className="font-semibold text-yellow-800 mb-2 flex items-center gap-2">
-                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                     </svg>
                     Plafonds 2026
@@ -477,7 +559,7 @@ export default function QuotientFamilialPage() {
                 <Link href="/simulateur">
                   <Button className="bg-white text-orange-600 hover:bg-orange-50">
                     Calculer mes parts fiscales
-                    <svg className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                     </svg>
                   </Button>
@@ -490,7 +572,7 @@ export default function QuotientFamilialPage() {
               <Link href="/pacs">
                 <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
                   <CardContent className="p-4 text-center">
-                    <svg className="w-8 h-8 mx-auto mb-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-8 h-8 mx-auto mb-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                     <h3 className="font-medium text-stone-900">Guide PACS</h3>
@@ -501,7 +583,7 @@ export default function QuotientFamilialPage() {
               <Link href="/mariage">
                 <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
                   <CardContent className="p-4 text-center">
-                    <svg className="w-8 h-8 mx-auto mb-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-8 h-8 mx-auto mb-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
                     <h3 className="font-medium text-stone-900">Guide Mariage</h3>
@@ -512,7 +594,7 @@ export default function QuotientFamilialPage() {
               <Link href="/faq">
                 <Card variant="outlined" className="hover:border-orange-300 transition-colors h-full">
                   <CardContent className="p-4 text-center">
-                    <svg className="w-8 h-8 mx-auto mb-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-8 h-8 mx-auto mb-2 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
                     <h3 className="font-medium text-stone-900">FAQ</h3>

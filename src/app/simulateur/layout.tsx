@@ -1,16 +1,25 @@
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
-  title: 'Impôts PACS Mariage 2026 - Calcul en 2 Minutes',
+  title: 'Simulateur Impôts Mariage et PACS 2026 - Calcul Quotient Familial Gratuit',
   description:
-    'Simulateur fiscal PACS et mariage 2026 : calculez gratuitement votre économie d\'impôts. Comparez célibat vs union avec quotient familial. Barème officiel, 100% anonyme.',
+    'Simulez vos impôts en couple : mariage, PACS ou célibat. Calcul du quotient familial, imposition commune, économie réelle. Barème officiel 2026, gratuit et 100% anonyme.',
+  keywords: [
+    'simulateur impôts mariage',
+    'simulation impôts mariage',
+    'calculateur quotient familial',
+    'simulation impôts couple',
+    'calcul impôts PACS mariage',
+    'imposition commune calcul',
+    'simulateur fiscal gratuit',
+  ],
   alternates: {
     canonical: 'https://impotscouple.fr/simulateur',
   },
   openGraph: {
-    title: 'Simulateur Impôts PACS Mariage 2026 - Calcul Gratuit',
+    title: 'Simulateur Impôts Mariage et PACS 2026 - Calcul Quotient Familial',
     description:
-      'Calculez votre économie d\'impôts avec le PACS ou le mariage. Simulation gratuite en 2 minutes.',
+      'Calculez vos impôts avec le mariage ou le PACS : quotient familial, imposition commune, économie réelle. Simulation gratuite en 2 minutes.',
     url: 'https://impotscouple.fr/simulateur',
     type: 'website',
     images: [
@@ -18,14 +27,14 @@ export const metadata: Metadata = {
         url: 'https://impotscouple.fr/social-image.png',
         width: 1200,
         height: 630,
-        alt: 'Simulateur Impôts PACS Mariage 2026 - Calcul Gratuit',
+        alt: 'Simulateur Impôts Mariage et PACS 2026 - Calcul Gratuit',
       },
     ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Simulateur Impôts PACS Mariage 2026 - Calcul Gratuit',
-    description: 'Calculez votre économie d\'impôts avec le PACS ou le mariage. Simulation gratuite en 2 minutes.',
+    title: 'Simulateur Impôts Mariage et PACS 2026 - Calcul Gratuit',
+    description: 'Calculez vos impôts avec le mariage ou le PACS : quotient familial, imposition commune. Gratuit et anonyme.',
     images: ['https://impotscouple.fr/social-image.png'],
   },
 }

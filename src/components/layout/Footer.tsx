@@ -46,7 +46,7 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/mariage" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
-                  Guide Mariage impôts
+                  Guide Mariage 2026
                 </Link>
               </li>
               <li>
@@ -56,12 +56,12 @@ export function Footer() {
               </li>
               <li>
                 <Link href="/faq" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
-                  FAQ impôts couple
+                  FAQ Mariage et Pacs
                 </Link>
               </li>
               <li>
                 <Link href="/blog" className="text-xs sm:text-sm text-stone-400 hover:text-orange-400 transition-colors">
-                  Blog fiscalité
+                  Blog impots et fiscalité
                 </Link>
               </li>
             </ul>

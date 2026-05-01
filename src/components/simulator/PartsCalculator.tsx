@@ -80,7 +80,7 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
       {/* Section Enfants */}
       <div className="border-t border-stone-200 pt-4">
         <h4 className="text-sm font-medium text-stone-700 mb-3 flex items-center gap-2">
-          <svg className="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg aria-hidden="true" className="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
           </svg>
           Enfants à charge
@@ -123,44 +123,47 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
                 
                 return (
                   <div key={index} className="bg-white rounded-lg border border-stone-200 overflow-hidden">
-                    <div 
-                      className="flex items-center justify-between p-2 cursor-pointer hover:bg-stone-50 transition-colors"
+                    <button
+                      type="button"
+                      className="w-full flex items-center justify-between p-2 hover:bg-stone-50 transition-colors text-left"
                       onClick={() => toggleChildDetails(index)}
+                      aria-expanded={isExpanded}
+                      aria-controls={`child-details-${person}-${index}`}
                     >
                       <div className="flex items-center gap-2">
-                        <span className="w-5 h-5 bg-stone-100 rounded-full flex items-center justify-center text-xs font-medium text-stone-600">
+                        <span aria-hidden="true" className="w-5 h-5 bg-stone-100 rounded-full flex items-center justify-center text-xs font-medium text-stone-600">
                           {index + 1}
                         </span>
                         <span className="text-xs font-medium text-stone-700">
                           Enfant {index + 1}
                         </span>
                         {hasSpecialOptions && !isExpanded && (
-                          <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded">
+                          <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded" aria-label="situation modifiée">
                             Modifié
                           </span>
                         )}
                       </div>
-                      <button
-                        type="button"
+                      <span
+                        aria-hidden="true"
                         className={`w-6 h-6 rounded-full flex items-center justify-center transition-colors ${
-                          isExpanded 
-                            ? 'bg-orange-500 text-white' 
-                            : 'bg-stone-100 text-stone-600 hover:bg-stone-200'
+                          isExpanded
+                            ? 'bg-orange-500 text-white'
+                            : 'bg-stone-100 text-stone-600'
                         }`}
                       >
-                        <svg 
-                          className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-45' : ''}`} 
-                          fill="none" 
-                          stroke="currentColor" 
+                        <svg
+                          className={`w-3 h-3 transition-transform ${isExpanded ? 'rotate-45' : ''}`}
+                          fill="none"
+                          stroke="currentColor"
                           viewBox="0 0 24 24"
                         >
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                         </svg>
-                      </button>
-                    </div>
+                      </span>
+                    </button>
                     
                     {isExpanded && (
-                      <div className="px-3 pb-3 pt-1 border-t border-stone-100 bg-stone-50/50">
+                      <div id={`child-details-${person}-${index}`} className="px-3 pb-3 pt-1 border-t border-stone-100 bg-stone-50/50">
                         <div className="space-y-2 ml-7">
                           <Checkbox
                             label="Garde alternée"
@@ -190,22 +193,25 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
           type="button"
           onClick={() => setIsSpecialSituationsOpen(!isSpecialSituationsOpen)}
           className="w-full flex items-center justify-between text-left"
+          aria-expanded={isSpecialSituationsOpen}
+          aria-controls={`special-situations-${person}`}
         >
           <h4 className="text-sm font-medium text-stone-700 flex items-center gap-2">
-            <svg className="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" className="w-4 h-4 text-stone-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
             </svg>
             Situations particulières (optionnel)
             {hasActiveSpecialSituations && (
-              <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded">
+              <span className="px-1.5 py-0.5 bg-orange-100 text-orange-700 text-xs rounded" aria-label="situations actives">
                 Actif
               </span>
             )}
           </h4>
-          <svg 
-            className={`w-5 h-5 text-stone-400 transition-transform ${isSpecialSituationsOpen ? 'rotate-180' : ''}`} 
-            fill="none" 
-            stroke="currentColor" 
+          <svg
+            aria-hidden="true"
+            className={`w-5 h-5 text-stone-400 transition-transform ${isSpecialSituationsOpen ? 'rotate-180' : ''}`}
+            fill="none"
+            stroke="currentColor"
             viewBox="0 0 24 24"
           >
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
@@ -213,7 +219,7 @@ export function PartsCalculator({ register, watch, setValue, errors, person }: P
         </button>
         
         {isSpecialSituationsOpen && (
-          <div className="mt-3 space-y-3 bg-stone-50 rounded-lg p-3">
+          <div id={`special-situations-${person}`} className="mt-3 space-y-3 bg-stone-50 rounded-lg p-3">
             <Checkbox
               label="Contribuable invalide"
               description="Pension d'invalidité ≥ 40% ou carte d'invalidité/CMI (+0.5 part)"

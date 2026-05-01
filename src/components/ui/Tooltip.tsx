@@ -12,6 +12,7 @@ interface TooltipProps {
 export function Tooltip({ content, children, className }: TooltipProps) {
   const [isVisible, setIsVisible] = React.useState(false)
   const closeTimeout = React.useRef<NodeJS.Timeout | null>(null)
+  const tooltipId = React.useId()
 
   const open = () => {
     if (closeTimeout.current) {
@@ -37,12 +38,14 @@ export function Tooltip({ content, children, className }: TooltipProps) {
         onFocus={open}
         onBlur={() => setIsVisible(false)}
         aria-label="Plus d'informations"
+        aria-describedby={isVisible ? tooltipId : undefined}
       >
         {children}
       </button>
 
       {isVisible && (
         <div
+          id={tooltipId}
           className="absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-stone-900 text-white text-xs rounded-lg shadow-lg max-w-sm whitespace-normal w-48"
           role="tooltip"
           onMouseEnter={open}
@@ -50,7 +53,7 @@ export function Tooltip({ content, children, className }: TooltipProps) {
         >
           <div className="relative">
             {content}
-            <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 rotate-45" />
+            <div aria-hidden="true" className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-stone-900 rotate-45" />
           </div>
         </div>
       )}

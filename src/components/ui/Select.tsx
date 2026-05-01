@@ -36,6 +36,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
             className
           )}
           aria-invalid={error ? 'true' : 'false'}
+          aria-describedby={error ? `${selectId}-error` : undefined}
           {...props}
         >
           {options.map((option) => (
@@ -45,7 +46,7 @@ const Select = React.forwardRef<HTMLSelectElement, SelectProps>(
           ))}
         </select>
         {error && (
-          <p className="mt-1.5 text-sm text-red-600">{error}</p>
+          <p id={`${selectId}-error`} className="mt-1.5 text-sm text-red-600">{error}</p>
         )}
       </div>
     )

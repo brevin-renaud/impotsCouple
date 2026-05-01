@@ -81,29 +81,32 @@ export function Header() {
         className={`lg:hidden overflow-hidden transition-all duration-300 ease-in-out ${
           isMenuOpen ? 'max-h-96 border-t border-stone-200' : 'max-h-0'
         }`}
+        aria-hidden={!isMenuOpen}
       >
-        <nav className="container mx-auto px-3 py-3 bg-white" aria-label="Navigation mobile">
-          <div className="flex flex-col space-y-1">
-            {navLinks.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className="px-3 py-2.5 text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50 rounded-lg transition-colors"
-                title={link.title}
-                onClick={closeMenu}
-              >
-                {link.label}
-              </Link>
-            ))}
-            <div className="pt-2 mt-2 border-t border-stone-100">
-              <Link href="/simulateur" onClick={closeMenu}>
-                <Button className="w-full" size="sm">
-                  Simuler gratuitement
-                </Button>
-              </Link>
+        {isMenuOpen && (
+          <nav className="container mx-auto px-3 py-3 bg-white" aria-label="Navigation mobile">
+            <div className="flex flex-col space-y-1">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className="px-3 py-2.5 text-sm font-medium text-stone-600 hover:text-stone-900 hover:bg-stone-50 rounded-lg transition-colors"
+                  title={link.title}
+                  onClick={closeMenu}
+                >
+                  {link.label}
+                </Link>
+              ))}
+              <div className="pt-2 mt-2 border-t border-stone-100">
+                <Link href="/simulateur" onClick={closeMenu}>
+                  <Button className="w-full" size="sm">
+                    Simuler gratuitement
+                  </Button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </nav>
+          </nav>
+        )}
       </div>
     </header>
   )

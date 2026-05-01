@@ -11,6 +11,7 @@ export interface CheckboxProps extends Omit<React.InputHTMLAttributes<HTMLInputE
 const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
   ({ className, label, description, id, ...props }, ref) => {
     const checkboxId = id || React.useId()
+    const descriptionId = React.useId()
 
     return (
       <div className="flex items-start gap-3">
@@ -25,6 +26,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
             'cursor-pointer',
             className
           )}
+          aria-describedby={description ? descriptionId : undefined}
           {...props}
         />
         {(label || description) && (
@@ -38,7 +40,7 @@ const Checkbox = React.forwardRef<HTMLInputElement, CheckboxProps>(
               </label>
             )}
             {description && (
-              <span className="text-sm text-stone-500">{description}</span>
+              <span id={descriptionId} className="text-sm text-stone-500">{description}</span>
             )}
           </div>
         )}

@@ -25,11 +25,11 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
   ]
 
   return (
-    <div className="mb-6 sm:mb-8">
-      <div className="flex items-center justify-between">
+    <div className="mb-6 sm:mb-8" aria-label="Progression du formulaire">
+      <ol className="flex items-center justify-between list-none p-0 m-0">
         {steps.map((step, index) => (
           <Fragment key={step.number}>
-            <div className="flex items-center">
+            <li className="flex items-center" aria-current={currentStep === step.number ? 'step' : undefined}>
               <div className="flex flex-col items-center">
                 <div
                   className={`w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center font-semibold text-xs sm:text-sm transition-colors ${
@@ -39,26 +39,35 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
                         ? 'bg-orange-400 text-white'
                         : 'bg-stone-200 text-stone-500'
                   }`}
+                  aria-label={
+                    currentStep > step.number
+                      ? `Étape ${step.number} ${step.label} : complétée`
+                      : currentStep === step.number
+                        ? `Étape ${step.number} ${step.label} : en cours`
+                        : `Étape ${step.number} ${step.label} : à venir`
+                  }
                 >
                   {currentStep > step.number ? (
-                    <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg aria-hidden="true" className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                     </svg>
                   ) : (
-                    step.number
+                    <span aria-hidden="true">{step.number}</span>
                   )}
                 </div>
                 <span
                   className={`mt-1.5 sm:mt-2 text-[10px] sm:text-xs font-medium ${
                     currentStep === step.number ? 'text-orange-600' : currentStep > step.number ? 'text-orange-500' : 'text-stone-500'
                   }`}
+                  aria-hidden="true"
                 >
                   {step.label}
                 </span>
               </div>
-            </div>
+            </li>
             {index < steps.length - 1 && (
               <div
+                aria-hidden="true"
                 className={`flex-1 h-0.5 sm:h-1 mx-2 rounded ${
                   currentStep > step.number ? 'bg-orange-400' : 'bg-stone-200'
                 }`}
@@ -66,7 +75,7 @@ function StepIndicator({ currentStep }: { currentStep: number }) {
             )}
           </Fragment>
         ))}
-      </div>
+      </ol>
     </div>
   )
 }
@@ -230,7 +239,7 @@ export function SimulatorForm({ register, watch, setValue, errors, currentStep, 
             onClick={onPrevStep}
             size="sm"
           >
-            <svg className="w-4 h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" className="w-4 h-4 mr-1 sm:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             <span className="hidden sm:inline">Précédent</span>
@@ -247,7 +256,7 @@ export function SimulatorForm({ register, watch, setValue, errors, currentStep, 
             size="sm"
           >
             Suivant
-            <svg className="w-4 h-4 ml-1 sm:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg aria-hidden="true" className="w-4 h-4 ml-1 sm:ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </Button>

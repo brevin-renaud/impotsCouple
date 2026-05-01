@@ -107,8 +107,14 @@ export default function RootLayout({
         />
       </head>
       <body className={`${inter.variable} font-sans antialiased bg-stone-50`}>
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-100 focus:px-4 focus:py-2 focus:bg-white focus:text-orange-600 focus:rounded-lg focus:shadow-lg focus:ring-2 focus:ring-orange-500 focus:outline-none"
+        >
+          Aller au contenu principal
+        </a>
         <Header />
-        <main className="min-h-screen">{children}</main>
+        <main id="main-content" className="min-h-screen">{children}</main>
         <Footer />
         <Analytics />
         <SpeedInsightsGate />
