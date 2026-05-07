@@ -8,15 +8,10 @@ export function SpeedInsightsGate() {
   const pathname = usePathname();
   const isSampledInRef = useRef(Math.random() < 0.5);
 
-  // Disable Speed Insights on admin routes only.
-  if (pathname?.startsWith("/admin")) {
-    return null;
-  }
+  // TODO: réactiver quand quota Vercel Insights rechargé
+  return null;
 
-  // Reduce quota usage by sending Speed Insights events for ~50% of visits.
-  if (!isSampledInRef.current) {
-    return null;
-  }
-
-  return <SpeedInsights />;
+  if (pathname?.startsWith("/admin")) return null; // eslint-disable-line no-unreachable
+  if (!isSampledInRef.current) return null; // eslint-disable-line no-unreachable
+  return <SpeedInsights />; // eslint-disable-line no-unreachable
 }

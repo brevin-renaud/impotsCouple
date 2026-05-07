@@ -18,7 +18,9 @@ export async function GET(request: NextRequest) {
     startDate.setDate(startDate.getDate() - days)
 
     // Statistiques globales
-    const totalSimulations = await prisma.simulation.count({
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const db = prisma as any
+    const totalSimulations = await db.simulation.count({
       where: {
         createdAt: { gte: startDate },
       },
@@ -30,14 +32,14 @@ export async function GET(request: NextRequest) {
     let actions: any[] = []
 
     try {
-      totalShares = await prisma.userAction.count({
+      totalShares = await db.userAction.count({
         where: {
           actionType: 'share_link',
           createdAt: { gte: startDate },
         },
       })
 
-      totalPDFs = await prisma.userAction.count({
+      totalPDFs = await db.userAction.count({
         where: {
           actionType: 'generate_pdf',
           createdAt: { gte: startDate },
@@ -45,7 +47,7 @@ export async function GET(request: NextRequest) {
       })
 
       // Actions par jour
-      actions = await prisma.userAction.findMany({
+      actions = await db.userAction.findMany({
         where: {
           createdAt: { gte: startDate },
         },
@@ -58,7 +60,7 @@ export async function GET(request: NextRequest) {
       // Continue avec des valeurs par défaut
     }
 
-    const simulations = await prisma.simulation.findMany({
+    const simulations = await db.simulation.findMany({
       where: {
         createdAt: { gte: startDate },
       },
