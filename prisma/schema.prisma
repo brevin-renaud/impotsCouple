@@ -1,36 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client"
+  output          = "../src/generated/prisma"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
-}
-
-model Simulation {
-  id                String   @id @default(uuid()) @db.Uuid
-  incomeA           Float
-  fraisReelsA       Float    @default(0)
-  partsA            Float    @default(0)
-  incomeB           Float
-  fraisReelsB       Float    @default(0)
-  partsB            Float    @default(0)
-  children          Int      @default(0)
-  gardeAlternee     Boolean  @default(false)
-  results           Json
-  createdAt         DateTime @default(now())
-  donsAssociations  Float    @default(0)
-  emploiDomicile    Float    @default(0)
-  epargneRetraiteA  Float    @default(0)
-  epargneRetraiteB  Float    @default(0)
-  fraisGardeEnfants Float    @default(0)
-  patrimoineImmoA   Float    @default(0)
-  patrimoineImmoB   Float    @default(0)
-  pensionVerseeA    Float    @default(0)
-  pensionVerseeB    Float    @default(0)
-
-  @@index([createdAt])
+  provider = "postgresql"
+  schemas  = ["impotscouple"]
 }
 
 model Feedback {
@@ -41,6 +17,7 @@ model Feedback {
 
   @@index([createdAt])
   @@index([rating])
+  @@schema("impotscouple")
 }
 
 model Article {
@@ -51,8 +28,8 @@ model Article {
   author             String    @default("ImpotsCouple")
   category           String    @default("Fiscalité")
   content            String
-  publishedAt        DateTime? // Date de publication effective
-  scheduledPublishAt DateTime? // Date de publication programmée à 10H
+  publishedAt        DateTime?
+  scheduledPublishAt DateTime?
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
   isDraft            Boolean   @default(true)
@@ -61,15 +38,5 @@ model Article {
   @@index([publishedAt])
   @@index([scheduledPublishAt])
   @@index([isDraft])
-}
-
-model UserAction {
-  id           String   @id @default(uuid()) @db.Uuid
-  simulationId String   @db.Uuid
-  actionType   String // 'share_link' ou 'generate_pdf'
-  createdAt    DateTime @default(now())
-
-  @@index([createdAt])
-  @@index([actionType])
-  @@index([simulationId])
+  @@schema("impotscouple")
 }

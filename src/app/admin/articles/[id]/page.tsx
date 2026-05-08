@@ -29,10 +29,11 @@ export default async function EditArticlePage({ params }: EditArticlePageProps) 
       mode="edit" 
       article={{
         ...article,
-        publishedAt: article.publishedAt?.toISOString() || null,
+        publishedAt: article.publishedAt?.toISOString() ?? null,
+        scheduledPublishAt: article.scheduledPublishAt?.toISOString() ?? null,
         createdAt: article.createdAt.toISOString(),
         updatedAt: article.updatedAt.toISOString(),
-      }} 
+      }}
     />
   )
 }
