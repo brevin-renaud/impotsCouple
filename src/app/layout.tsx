@@ -116,8 +116,8 @@ export default function RootLayout({
         <Header />
         <main id="main-content" className="min-h-screen">{children}</main>
         <Footer />
-        {/* <Analytics /> */}{/* TODO: réactiver quand quota Vercel Insights rechargé */}
-        {/* <SpeedInsightsGate /> */}{/* TODO: réactiver quand quota Vercel Insights rechargé */}
+        <Analytics />
+        {/* <SpeedInsightsGate /> */}
       </body>
     </html>
   );
