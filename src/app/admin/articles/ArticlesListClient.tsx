@@ -19,6 +19,13 @@ interface Article {
   isDraft: boolean
 }
 
+interface ScheduledResult {
+  id: string
+  title: string
+  slug: string
+  scheduledPublishAt: string
+}
+
 interface ArticlesListClientProps {
   initialArticles: Article[]
 }
@@ -27,11 +34,66 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
   const router = useRouter()
   const [articles, setArticles] = useState(initialArticles)
   const [deleting, setDeleting] = useState<string | null>(null)
+  const [importing, setImporting] = useState(false)
+  const [importResult, setImportResult] = useState<{ imported: { slug: string; title: string }[]; skipped: string[]; errors: { file: string; reason: string }[]; empty?: boolean } | null>(null)
+  const [generating, setGenerating] = useState(false)
+  const [scheduleResult, setScheduleResult] = useState<ScheduledResult[] | null>(null)
+
+  const draftCount = articles.filter((a) => a.isDraft).length
 
   const handleLogout = async () => {
     await fetch('/api/admin/logout', { method: 'POST' })
     router.push('/admin')
     router.refresh()
+  }
+
+  const handleImport = async () => {
+    if (!confirm('Importer les fichiers .md du dossier drafts/ comme brouillons ?')) return
+
+    setImporting(true)
+    setImportResult(null)
+
+    try {
+      const res = await fetch('/api/admin/articles/import', { method: 'POST' })
+      const data = await res.json()
+
+      if (!res.ok) {
+        alert(data.error ?? 'Erreur lors de l\'import')
+        return
+      }
+
+      setImportResult(data)
+      if (data.imported.length > 0) router.refresh()
+    } catch {
+      alert('Erreur réseau')
+    } finally {
+      setImporting(false)
+    }
+  }
+
+  const handleGenerate = async () => {
+    if (draftCount === 0) return
+    if (!confirm(`Planifier ${draftCount} brouillon${draftCount > 1 ? 's' : ''} chaque mercredi et samedi ?\n\nLes articles seront programmés à partir du prochain créneau disponible.`)) return
+
+    setGenerating(true)
+    setScheduleResult(null)
+
+    try {
+      const res = await fetch('/api/admin/articles/generate', { method: 'POST' })
+      const data = await res.json()
+
+      if (!res.ok) {
+        alert(data.error ?? 'Erreur lors de la planification')
+        return
+      }
+
+      setScheduleResult(data.scheduled)
+      router.refresh()
+    } catch {
+      alert('Erreur réseau')
+    } finally {
+      setGenerating(false)
+    }
   }
 
   const handleDelete = async (id: string, title: string) => {
@@ -109,6 +171,11 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
               </h1>
               <p className="text-stone-600 text-sm mt-1">
                 {articles.length} article{articles.length > 1 ? 's' : ''}
+                {draftCount > 0 && (
+                  <span className="ml-2 text-yellow-600">
+                    · {draftCount} brouillon{draftCount > 1 ? 's' : ''}
+                  </span>
+                )}
               </p>
             </div>
             <div className="flex items-center gap-4">
@@ -124,6 +191,22 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
               >
                 Avis
               </Link>
+              <button
+                onClick={handleImport}
+                disabled={importing}
+                className="px-4 py-2 bg-stone-100 text-stone-700 font-medium rounded-lg hover:bg-stone-200 transition-colors disabled:opacity-50 text-sm"
+              >
+                {importing ? 'Import…' : 'Importer drafts/'}
+              </button>
+              {draftCount > 0 && (
+                <button
+                  onClick={handleGenerate}
+                  disabled={generating}
+                  className="px-4 py-2 bg-yellow-100 text-yellow-800 font-medium rounded-lg hover:bg-yellow-200 transition-colors disabled:opacity-50 text-sm"
+                >
+                  {generating ? 'Planification…' : `Générer le planning (${draftCount})`}
+                </button>
+              )}
               <Link
                 href="/admin/articles/nouveau"
                 className="px-4 py-2 bg-orange-500 text-white font-medium rounded-lg hover:bg-orange-600 transition-colors"
@@ -138,6 +221,71 @@ export default function ArticlesListClient({ initialArticles }: ArticlesListClie
               </button>
             </div>
           </div>
+
+          {/* Résultat import */}
+          {importResult && !importResult.empty && (
+            <Card variant="elevated" className="mb-6 border-stone-200">
+              <CardContent className="p-5">
+                <div className="flex items-center justify-between mb-3">
+                  <p className="text-sm font-semibold text-stone-700">
+                    Import drafts/
+                    {importResult.imported.length > 0 && <span className="ml-2 text-green-700">· {importResult.imported.length} importé{importResult.imported.length > 1 ? 's' : ''}</span>}
+                    {importResult.skipped.length > 0 && <span className="ml-2 text-stone-500">· {importResult.skipped.length} déjà présent{importResult.skipped.length > 1 ? 's' : ''}</span>}
+                    {importResult.errors.length > 0 && <span className="ml-2 text-red-600">· {importResult.errors.length} erreur{importResult.errors.length > 1 ? 's' : ''}</span>}
+                  </p>
+                  <button onClick={() => setImportResult(null)} className="text-xs text-stone-400 hover:text-stone-600">Fermer</button>
+                </div>
+                {importResult.imported.length > 0 && (
+                  <div className="space-y-1 mb-2">
+                    {importResult.imported.map((a) => (
+                      <p key={a.slug} className="text-xs text-green-700">✓ {a.title}</p>
+                    ))}
+                  </div>
+                )}
+                {importResult.errors.length > 0 && (
+                  <div className="space-y-1">
+                    {importResult.errors.map((e) => (
+                      <p key={e.file} className="text-xs text-red-600">{e.file} — {e.reason}</p>
+                    ))}
+                  </div>
+                )}
+              </CardContent>
+            </Card>
+          )}
+          {importResult?.empty && (
+            <Card variant="elevated" className="mb-6">
+              <CardContent className="p-4">
+                <p className="text-sm text-stone-500">Aucun fichier .md trouvé dans <code className="bg-stone-100 px-1 rounded">drafts/</code>.</p>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Planning généré */}
+          {scheduleResult && scheduleResult.length > 0 && (
+            <Card variant="elevated" className="mb-6 border-green-200">
+              <CardContent className="p-5">
+                <p className="text-sm font-semibold text-green-700 mb-3">
+                  Planning généré — {scheduleResult.length} article{scheduleResult.length > 1 ? 's' : ''} programmé{scheduleResult.length > 1 ? 's' : ''}
+                </p>
+                <div className="space-y-2">
+                  {scheduleResult.map((item) => (
+                    <div key={item.id} className="flex items-center gap-3 text-sm">
+                      <span className="text-xs font-medium px-2 py-1 rounded bg-blue-100 text-blue-700 shrink-0">
+                        {new Intl.DateTimeFormat('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(item.scheduledPublishAt))}
+                      </span>
+                      <span className="text-stone-700">{item.title}</span>
+                    </div>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setScheduleResult(null)}
+                  className="mt-3 text-xs text-stone-400 hover:text-stone-600"
+                >
+                  Fermer
+                </button>
+              </CardContent>
+            </Card>
+          )}
 
           {/* Liste des articles */}
           {articles.length === 0 ? (
